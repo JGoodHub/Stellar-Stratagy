@@ -1,0 +1,161 @@
+fileFormatVersion: 2
+guid: cca6d5844c702354082f871f8e9fcb92
+timeCreated: 1501451047
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Body
+    100002: Bridge
+    100004: Bridge Tower
+    100006: Engine
+    100008: Engine Connector
+    100010: Engine Connector.001
+    100012: Engine.001
+    100014: Engine.002
+    100016: //RootNode
+    100018: Rear Body
+    100020: Hardpoint Small
+    100022: Hardpoint Small.001
+    100024: Hardpoint Small.002
+    100026: Hardpoint Small.003
+    100028: Hardpoint Small.004
+    100030: Hardpoint Small.005
+    400000: Body
+    400002: Bridge
+    400004: Bridge Tower
+    400006: Engine
+    400008: Engine Connector
+    400010: Engine Connector.001
+    400012: Engine.001
+    400014: Engine.002
+    400016: //RootNode
+    400018: Rear Body
+    400020: Hardpoint Small
+    400022: Hardpoint Small.001
+    400024: Hardpoint Small.002
+    400026: Hardpoint Small.003
+    400028: Hardpoint Small.004
+    400030: Hardpoint Small.005
+    2300000: Body
+    2300002: Bridge
+    2300004: Bridge Tower
+    2300006: Engine
+    2300008: Engine Connector
+    2300010: Engine Connector.001
+    2300012: Engine.001
+    2300014: Engine.002
+    2300016: Rear Body
+    2300018: Hardpoint Small
+    2300020: Hardpoint Small.001
+    2300022: Hardpoint Small.002
+    2300024: Hardpoint Small.003
+    2300026: Hardpoint Small.004
+    2300028: Hardpoint Small.005
+    3300000: Body
+    3300002: Bridge
+    3300004: Bridge Tower
+    3300006: Engine
+    3300008: Engine Connector
+    3300010: Engine Connector.001
+    3300012: Engine.001
+    3300014: Engine.002
+    3300016: Rear Body
+    3300018: Hardpoint Small
+    3300020: Hardpoint Small.001
+    3300022: Hardpoint Small.002
+    3300024: Hardpoint Small.003
+    3300026: Hardpoint Small.004
+    3300028: Hardpoint Small.005
+    4300000: Rear Body
+    4300002: Engine Connector.001
+    4300004: Engine
+    4300006: Bridge
+    4300008: Bridge Tower
+    4300010: Body
+    4300012: Hardpoint Small.005
+    6400000: Body
+    6400002: Bridge
+    6400004: Bridge Tower
+    6400006: Engine
+    6400008: Engine Connector
+    6400010: Engine Connector.001
+    6400012: Engine.001
+    6400014: Engine.002
+    6400016: Rear Body
+    6400018: Hardpoint Small
+    6400020: Hardpoint Small.001
+    6400022: Hardpoint Small.002
+    6400024: Hardpoint Small.003
+    6400026: Hardpoint Small.004
+    6400028: Hardpoint Small.005
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
