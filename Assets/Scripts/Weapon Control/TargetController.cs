@@ -6,47 +6,51 @@ public class TargetController : MonoBehaviour {
 
 	public float range;
 
-	public bool isFriendly;
+	private TurretManager turretManager;
+    private ShipController shipController;
 
-	public TurretManager turretManager;
-
-	private Transform target;
-	private List<Transform> enemiesInRange;
+	private ShipController currentTarget;
+	private HashSet<ShipController> targetsInRange;
 
 	void Start () {
-		enemiesInRange = new List<Transform> ();
+        turretManager = GetComponentInChildren<TurretManager>();
+        shipController = GetComponent<ShipController>();
 
-		turretManager.IsFriendly = isFriendly;
+        targetsInRange = new HashSet<ShipController>();
+    }
 
-		GetComponent<ShipData> ().IsFriendly = isFriendly;
-	}
-	
-	void Update () {
-		enemiesInRange.Clear ();
-		Collider[] overlapColliders = Physics.OverlapSphere (transform.position, range);
-		for (int i = 0; i < overlapColliders.Length; i++) {
-			if (overlapColliders [i].tag == "Enemy Root") {
-				enemiesInRange.Add(overlapColliders[i].transform);
+    void Update () {
+		targetsInRange.Clear();
+		Collider[] overlappingColliders = Physics.OverlapSphere(transform.position, range);
+		foreach (Collider collider in overlappingColliders) {
+			if (collider.tag == "Ship") {
+                ShipController otherShip = collider.gameObject.GetComponent<ShipController>();
+                if (otherShip.isAlliedShip != shipController.isAlliedShip) {
+                    targetsInRange.Add(otherShip);
+                }
 
-				if (target == null) {
-					target = overlapColliders [i].transform;
-					turretManager.SetTarget (target);
-				}
+                if (currentTarget == null) {
+                    currentTarget = otherShip;
+                }
 			}
 		}
 
-		if (target != null && !enemiesInRange.Contains(target)) {
-			target = null;
+        if (targetsInRange.Contains(currentTarget) == false) {
+            //Pick a new target
+        } else {
+            //Fire at the target
+        }    
+        
 
-			turretManager.CeaseFire ();
+    }
 
-		}
-			
-
-	}
-
-	void OnDrawGizmos () {		
-		GizmoExtras.GetWireCircle (range, transform.position);
+    public bool drawGizmos;
+	void OnDrawGizmos () {	
+        if (drawGizmos) {
+            Gizmos.color = Color.white;
+            GizmoExtras.DrawWireCircle(range, transform.position);
+        }
+		
 
 
 	}

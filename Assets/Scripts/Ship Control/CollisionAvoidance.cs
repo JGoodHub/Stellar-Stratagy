@@ -53,10 +53,10 @@ public class CollisionAvoidance : MonoBehaviour {
 
 
 	void OnDrawGizmos () {		
-		GizmoExtras.GetWireCircle (shipRadius, transform.position);		
+		GizmoExtras.DrawWireCircle (shipRadius, transform.position);		
 
 		Gizmos.color = Color.red;
-		GizmoExtras.GetWireCircle (shipRadius * 2, transform.position);
+		GizmoExtras.DrawWireCircle (shipRadius * 2, transform.position);
 
 		Gizmos.DrawSphere (transform.position, 2.5f);
 

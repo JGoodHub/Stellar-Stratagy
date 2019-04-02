@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
         //Independent initialisations
         CameraManager.instance.Initalise();
         PlayerManager.instance.Initialise();
+        EnemyManager.instance.Initialise();
 
         //Dependent initialisations
 

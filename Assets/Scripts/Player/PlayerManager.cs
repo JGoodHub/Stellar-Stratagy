@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    
+
     //-----VARIABLES-----
 
     public HashSet<ShipController> alliedShips;
@@ -30,14 +32,13 @@ public class PlayerManager : MonoBehaviour {
         alliedShips = new HashSet<ShipController>();
         selectedShips = new HashSet<ShipController>();
 
-        foreach (GameObject shipObject in GameObject.FindGameObjectsWithTag("Ship")) {
-            if (shipObject.layer == 9) {
-                alliedShips.Add(shipObject.GetComponent<ShipController>());
-            }
-        }
+        alliedShips.Add(ShipFactory.instance.SpawnShip(Vector3.zero, Quaternion.identity, ShipFactory.SpawnRestriction.PLAYER, "Dreadnought"));
 
-        foreach (ShipController ship in alliedShips) {
-            ship.Initialise();
+        foreach (ShipController shipControl in alliedShips) {
+            shipControl.Initialise();
+            shipControl.isAlliedShip = true;
+
+            shipControl.transform.SetParent(gameObject.transform);
         }
     }
 
@@ -47,9 +48,12 @@ public class PlayerManager : MonoBehaviour {
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
             CheckForNewShipSelection();
+        } else if (Input.GetMouseButtonDown(1)) {
+            MoveSelectedShips();
         }
     }
 
+    #region Selection Management
     /// <summary>
     /// 
     /// </summary>
@@ -69,7 +73,7 @@ public class PlayerManager : MonoBehaviour {
             ClearShipSelection();
         }
     }
-
+        
     /// <summary>
     /// 
     /// </summary>
@@ -102,6 +106,24 @@ public class PlayerManager : MonoBehaviour {
 
         selectedShips.Clear();
     }
+    #endregion
+
+    #region Ship Movement
+    public void MoveSelectedShips () {
+        int navPlaneLayerMask = 1 << 8;
+        Physics.Raycast(CameraManager.instance.GetCameraRay(), out RaycastHit rayHit, 1000f, navPlaneLayerMask);
+
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            foreach (ShipController shipControl in selectedShips) {
+                shipControl.MovementController.AddMoveToPosition(rayHit.point, true);
+            }
+        } else {
+            foreach (ShipController shipControl in selectedShips) {
+                shipControl.MovementController.AddMoveToPosition(rayHit.point, false);
+            }
+        }        
+    }
+    #endregion
 
     //-----GIZMOS-----
     //public bool drawGizmos;

@@ -14,7 +14,6 @@ public class ShipData : MonoBehaviour {
 	private float currentShieldStrength;
 
 	public GameObject shieldParent;
-
 	public GameObject shipExplosionPrefab;
 
 	private GameObject uiStatsBarClone;
@@ -34,13 +33,7 @@ public class ShipData : MonoBehaviour {
 		currentHullStrength = maxHullStrength;
 		currentShieldStrength = maxShieldStrength;
 
-	}
-	
-    /// <summary>
-    /// 
-    /// </summary>
-	void Update () {
-		//TakeDamage (Time.deltaTime);
+        SelfDestruct();
 	}
 
     /// <summary>

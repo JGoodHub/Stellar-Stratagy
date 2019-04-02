@@ -7,7 +7,15 @@ public class ShipController : MonoBehaviour {
     //-----VARIABLES-----
 
     private MovementController movementController;
+    public MovementController MovementController { get => movementController; }
+
     private ShipData shipData;
+
+    private FogOfWarMask fogMask;
+    public FogOfWarMask FogMask { get => fogMask; }
+
+    [HideInInspector]
+    public bool isAlliedShip;
 
     [SerializeField]
     private GameObject selectionRing;
@@ -20,6 +28,10 @@ public class ShipController : MonoBehaviour {
 	public void Initialise() {
         movementController = GetComponent<MovementController>();
         shipData = GetComponent<ShipData>();
+        fogMask = GetComponent<FogOfWarMask>();
+
+        fogMask.Initialise();
+
         DeselectShip();
 	}
 
@@ -30,6 +42,8 @@ public class ShipController : MonoBehaviour {
     public void DeselectShip () {
         selectionRing.SetActive(false);
     }
+
+
 	
 	//-----GIZMOS-----
 	//public bool drawGizmos;

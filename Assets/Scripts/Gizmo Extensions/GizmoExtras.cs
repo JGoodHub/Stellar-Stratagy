@@ -10,7 +10,7 @@ public class GizmoExtras : MonoBehaviour {
     /// <param name="radius"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-	public static void GetWireCircle (float radius, Vector3 offset) {
+	public static void DrawWireCircle (float radius, Vector3 offset) {
 		List<Vector3> points = new List<Vector3> ();
 		for (float theta = 0f; theta < 2f * Mathf.PI; theta += 0.1f) {
 			float x = radius * Mathf.Cos (theta);

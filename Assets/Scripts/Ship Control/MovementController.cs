@@ -44,23 +44,6 @@ public class MovementController : MonoBehaviour {
     /// <summary>
     /// 
     /// </summary>
-	void Update () {
-		if (Input.GetMouseButtonDown (1)) {
-			RaycastHit hit;
-			int layerMask = 1 << 8;
-			Physics.Raycast (CameraManager.instance.GetCameraRay(), out hit, 1000f, layerMask);
-
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				AddMoveToPosition (hit.point, true);
-			} else {
-				AddMoveToPosition (hit.point, false);
-			}
-		}
-	}
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="position"></param>
     /// <param name="chain"></param>
 	public void AddMoveToPosition (Vector3 position, bool chain) {
@@ -68,22 +51,10 @@ public class MovementController : MonoBehaviour {
 			targetPositions [targetPositions.Count - 1] = trueLastPositionAdded;
 			trueLastPositionAdded = position;
 
-			Vector3 offset = new Vector3 (RandomSign(Random.Range (0.1f, 1f)), 0f, RandomSign(Random.Range (0.1f, 1f)));
-			position += offset;
-
-			CollisionAvoidance colAvoid = GetComponent<CollisionAvoidance> ();
-			position = colAvoid.UpdateFinalTargetPosition (position);
-
 			targetPositions.Add (position);
 		} else {
             targetPositions.Clear();
             trueLastPositionAdded = position;
-
-            Vector3 offset = new Vector3 (RandomSign(Random.Range (0.1f, 1f)), 0f, RandomSign(Random.Range (0.1f, 1f)));
-			position += offset;
-
-			CollisionAvoidance colAvoid = GetComponent<CollisionAvoidance>();
-			position = colAvoid.UpdateFinalTargetPosition (position);
 
 			targetPositions.Add(position);
 		}
@@ -127,7 +98,6 @@ public class MovementController : MonoBehaviour {
 				} else {
 					currentForwardSpeed = 0f;
 					targetPositions.Clear ();
-					GetComponent<CollisionAvoidance> ().FinalTargetPosition = Vector3.zero;
 				}
 			} else {
 				float angleFalloffModifier = Mathf.Clamp (Quaternion.Angle (transform.rotation, endRotation) / angleFalloff, 0f, 1f);

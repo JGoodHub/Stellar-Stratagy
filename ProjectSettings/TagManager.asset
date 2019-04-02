@@ -20,9 +20,9 @@ TagManager:
   - 
   - 
   - NavPlane
-  - Friendly Units
-  - Enemies In View Range
-  - Enemies Out Of View Range
+  - Fog Of War Replacement
+  - 
+  - 
   - Fog Of War
   - 
   - 

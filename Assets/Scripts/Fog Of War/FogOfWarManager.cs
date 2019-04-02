@@ -19,7 +19,8 @@ public class FogOfWarManager : MonoBehaviour {
     //-----VARIABLES-----
 
     public GameObject shipMaskPrefab;
-    private Dictionary<Transform, Transform> friendlyShipMasks = new Dictionary<Transform, Transform>();
+    private Dictionary<Transform, Transform> alliedShipMasks = new Dictionary<Transform, Transform>();
+    private Dictionary<Transform, Transform> axisShipMasks = new Dictionary<Transform, Transform>();
 
     //-----METHODS-----
 
@@ -34,8 +35,8 @@ public class FogOfWarManager : MonoBehaviour {
     /// 
     /// </summary>
     void Update() {
-        foreach (Transform shipTransform in friendlyShipMasks.Keys) {
-            friendlyShipMasks[shipTransform].position = new Vector3(shipTransform.position.x, 999, shipTransform.position.z);
+        foreach (Transform shipTransform in alliedShipMasks.Keys) {
+            alliedShipMasks[shipTransform].position = new Vector3(shipTransform.position.x, 999, shipTransform.position.z);
         }
     }
 
@@ -48,7 +49,7 @@ public class FogOfWarManager : MonoBehaviour {
         GameObject shipMaskObject = Instantiate(shipMaskPrefab, new Vector3(0, 1000, 0), Quaternion.identity);
         shipMaskObject.transform.localScale = Vector3.one * (maskRadius / 4f);
 
-        friendlyShipMasks.Add(shipTransform, shipMaskObject.transform);
+        alliedShipMasks.Add(shipTransform, shipMaskObject.transform);
     }
 
     /// <summary>
@@ -56,9 +57,9 @@ public class FogOfWarManager : MonoBehaviour {
     /// </summary>
     /// <param name="shipTransform"></param>
     public void RemoveShipMask (Transform shipTransform) {
-        if (friendlyShipMasks.ContainsKey(shipTransform)) {
-            Destroy(friendlyShipMasks[shipTransform]);
-            friendlyShipMasks.Remove(shipTransform);
+        if (alliedShipMasks.ContainsKey(shipTransform)) {
+            Destroy(alliedShipMasks[shipTransform].gameObject);
+            alliedShipMasks.Remove(shipTransform);
         } else {
             Debug.LogError("Trying to destory mask with an invalid ship transform");
         }

@@ -184,8 +184,7 @@ GameObject:
   - component: {fileID: 114402398059062662}
   - component: {fileID: 114229944330938514}
   - component: {fileID: 8801159080003547629}
-  - component: {fileID: 4383321101770407331}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Dreadnought Unit
   m_TagString: Ship
   m_Icon: {fileID: 0}
@@ -218,7 +217,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035279820876408}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 22
@@ -235,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68dae4f1cfcd774099437223a7492e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlliedShip: 0
   selectionRing: {fileID: 1197951171}
 --- !u!114 &114112314395609622
 MonoBehaviour:
@@ -271,8 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 135
-  isFriendly: 1
-  turretManager: {fileID: 114258474025217958}
+  drawGizmos: 0
 --- !u!114 &114229944330938514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHullStrength: 3
   maxShieldStrength: 2
-  shieldParent: {fileID: 0}
+  shieldParent: {fileID: 1378464450}
   shipExplosionPrefab: {fileID: 1405095429825760, guid: 33342c178c7add6429b467a3c8a0babc,
     type: 3}
 --- !u!114 &8801159080003547629
@@ -304,20 +303,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maskRadius: 150
   drawGizmos: 0
---- !u!114 &4383321101770407331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035279820876408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4deb95a36c87c9c41a41cfafbeddfe64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipRadius: 20
-  drawAvoidencePath: 1
 --- !u!1 &1193585667721296
 GameObject:
   m_ObjectHideFlags: 0
