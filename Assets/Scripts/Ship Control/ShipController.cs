@@ -9,6 +9,8 @@ public class ShipController : MonoBehaviour {
     private MovementController movementController;
     public MovementController MovementController { get => movementController; }
 
+    private TargetController targetController;
+
     private ShipData shipData;
 
     private FogOfWarMask fogMask;
@@ -27,23 +29,29 @@ public class ShipController : MonoBehaviour {
     /// </summary>
 	public void Initialise() {
         movementController = GetComponent<MovementController>();
+        targetController = GetComponent<TargetController>();
         shipData = GetComponent<ShipData>();
         fogMask = GetComponent<FogOfWarMask>();
 
+        targetController.Initialise();
         fogMask.Initialise();
 
         DeselectShip();
 	}
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void SelectShip () {
         selectionRing.SetActive(true);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void DeselectShip () {
         selectionRing.SetActive(false);
     }
-
-
 	
 	//-----GIZMOS-----
 	//public bool drawGizmos;

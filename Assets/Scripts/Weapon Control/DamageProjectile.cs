@@ -67,7 +67,7 @@ public class DamageProjectile : MonoBehaviour {
 					break;
 				}
 
-				effectClone.GetComponent<ShieldHit> ().Init ();
+				//effectClone.GetComponent<ShieldHit> ().Init ();
 				effectClone.transform.parent = GameObject.Find ("Runtime Objects/Shield Hits").transform;
 			} else if (other.tag == "Enemy Hull") {	
 				
@@ -102,7 +102,7 @@ public class DamageProjectile : MonoBehaviour {
 				}
 			}
 
-			rootTransform.GetComponent<ShipData> ().TakeDamage (damage);
+			//rootTransform.GetComponent<ShipData> ().TakeDamage (damage);
 
 
 			if (showDebugInfo) {

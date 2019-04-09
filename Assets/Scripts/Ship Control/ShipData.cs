@@ -7,22 +7,17 @@ public class ShipData : MonoBehaviour {
 
     //-----VARIABLES-----
 
-	public float maxHullStrength;
-	private float currentHullStrength;
+	public float hullStrength;
+	private float currentHull;
 
-	public float maxShieldStrength;
-	private float currentShieldStrength;
+	public float shieldStrength;
+	private float currentShield;
 
 	public GameObject shieldParent;
 	public GameObject shipExplosionPrefab;
 
-	private GameObject uiStatsBarClone;
-	private RectTransform uiStatsTransform;
-
 	private bool isFriendly;
-	public bool IsFriendly {
-		set { isFriendly = value; }
-	}
+	public bool IsFriendly { set => isFriendly = value; }
 
     //-----METHODS-----
 
@@ -30,32 +25,55 @@ public class ShipData : MonoBehaviour {
     /// 
     /// </summary>
 	public void Initialise () {
-		currentHullStrength = maxHullStrength;
-		currentShieldStrength = maxShieldStrength;
+		currentHull = hullStrength;
+		currentShield = shieldStrength;
 
         SelfDestruct();
 	}
 
     /// <summary>
+    /// Return the current amount of the specified resource
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public float GetResourceOfType(StatType type) {
+        switch (type) {
+            case StatType.HULL:
+                return currentHull;
+            case StatType.SHIELD:
+                return currentShield;
+            default:
+                Debug.LogError("Attempting to get a resource that doesn't exist");
+                return 0;
+        }
+    }
+
+    //Reduce the specified resource by the specified amount in the cost
+    /// <summary>
     /// 
     /// </summary>
-    /// <param name="amount"></param>
-	public void TakeDamage (float amount) {
-		if (currentShieldStrength > 0) {
-			currentShieldStrength -= amount;
+    /// <param name="change"></param>
+    public void ApplyChangeToData(StatChange change) {
+        switch (change.Resource) {
+            case StatType.HULL:
+                currentHull += change.Amount;
+                if (currentHull <= 0) {
+                    SelfDestruct();
+                }
+                break;
+            case StatType.SHIELD:
+                currentShield += change.Amount;
 
-			if (currentShieldStrength <= 0) {
-				shieldParent.SetActive (false);
-			}
-		} else {			
-			currentHullStrength -= amount;
+                if (currentShield <= 0) {
+                    shieldParent.SetActive(false);
+                }
+                break;           
+            default:
+                Debug.LogError("Attempting to change a resource that doesn't exist");
+                break;
+        }
+    }
 
-			if (currentHullStrength <= 0) {
-				SelfDestruct ();
-			}	
-		}
-
-	}
 
     /// <summary>
     /// 
@@ -72,5 +90,20 @@ public class ShipData : MonoBehaviour {
 
 		Destroy (gameObject);
 	}
+
+
+    //-----RELATED DATA STRUCTURES-----
+
+    public enum StatType { HULL, SHIELD };
+
+    public struct StatChange {
+        public StatType Resource;
+        public float Amount;
+
+        public StatChange(StatType _resource, int _amount) {
+            Resource = _resource;
+            Amount = _amount;
+        }
+    }
 
 }

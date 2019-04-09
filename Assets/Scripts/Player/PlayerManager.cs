@@ -14,14 +14,15 @@ public class PlayerManager : MonoBehaviour {
         } else {
             Destroy(gameObject);
         }
-    }
-
-    
+    }      
 
     //-----VARIABLES-----
 
     public HashSet<ShipController> alliedShips;
     public HashSet<ShipController> selectedShips;
+
+    [Header("Debug Variables")]
+    public GameObject[] preExisitingShips;
 
     //-----METHODS-----
 
@@ -32,7 +33,16 @@ public class PlayerManager : MonoBehaviour {
         alliedShips = new HashSet<ShipController>();
         selectedShips = new HashSet<ShipController>();
 
-        alliedShips.Add(ShipFactory.instance.SpawnShip(Vector3.zero, Quaternion.identity, ShipFactory.SpawnRestriction.PLAYER, "Dreadnought"));
+        //alliedShips.Add(ShipFactory.instance.SpawnShip(Vector3.zero, Quaternion.identity, ShipFactory.SpawnRestriction.PLAYER, "Laser Frigate"));
+
+        foreach (GameObject ship in preExisitingShips) {
+            ShipController shipControl = ship.GetComponent<ShipController>();
+            if (shipControl == null) {
+                Debug.LogError("Non ship object placed in pre exisiting ships array");
+            } else {
+                alliedShips.Add(shipControl);
+            }
+        }
 
         foreach (ShipController shipControl in alliedShips) {
             shipControl.Initialise();

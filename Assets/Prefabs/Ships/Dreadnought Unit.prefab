@@ -270,8 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768638dac8d99004c85da2237d5c5852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 135
-  drawGizmos: 0
+  range: 130
+  drawGizmos: 1
 --- !u!114 &114229944330938514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20725a31b4784d49a47ac37582a4c4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maskRadius: 150
+  maskRadius: 145
   drawGizmos: 0
 --- !u!1 &1193585667721296
 GameObject:

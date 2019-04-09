@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TurretManager : MonoBehaviour {
 
-	private bool isFriendly;
-	public bool IsFriendly {
-		set { isFriendly = value; }
-	}
+    //-----VARIABLES-----
+
+    private bool isFriendly;
+	public bool IsFriendly { set => isFriendly = value; }
 
 	public Transform[] hardpointTransforms;
 	private TurretController[] turretControllers;
@@ -15,9 +15,9 @@ public class TurretManager : MonoBehaviour {
 	private Transform targetTransform;
 	private bool targetChanged;
 
+    //-----METHODS-----
 
-	// Use this for initialization
-	void Start () {
+	void Initialise () {
 		turretControllers = new TurretController[hardpointTransforms.Length];
 
 		for (int i = 0; i < hardpointTransforms.Length; i++) {
@@ -54,8 +54,7 @@ public class TurretManager : MonoBehaviour {
 			turretClone.transform.parent = hardID.transform;
 
 			turretCloneController = turretClone.GetComponent<TurretController> ();
-			turretCloneController.IsFriendly = isFriendly;
-			turretCloneController.Init ();
+			turretCloneController.Initialise ();
 			turretControllers [i] = turretCloneController;
 		}
 		
@@ -66,7 +65,7 @@ public class TurretManager : MonoBehaviour {
 		targetTransform = newTarget;
 
 		foreach (TurretController turretCont in turretControllers) {
-			turretCont.Target = newTarget;		
+			//turretCont.target = newTarget;		
 		}
 
 	}
@@ -76,7 +75,7 @@ public class TurretManager : MonoBehaviour {
 		targetTransform = null;
 
 		foreach (TurretController turretCont in turretControllers) {
-			turretCont.Target = null;		
+			//turretCont.target = null;		
 		}
 
 	}

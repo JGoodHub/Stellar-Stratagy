@@ -22,6 +22,8 @@ public class FogOfWarManager : MonoBehaviour {
     private Dictionary<Transform, Transform> alliedShipMasks = new Dictionary<Transform, Transform>();
     private Dictionary<Transform, Transform> axisShipMasks = new Dictionary<Transform, Transform>();
 
+    public Transform maskParent;
+
     //-----METHODS-----
 
     /// <summary>
@@ -48,6 +50,7 @@ public class FogOfWarManager : MonoBehaviour {
     public void AddNewShipMask (Transform shipTransform, float maskRadius) {
         GameObject shipMaskObject = Instantiate(shipMaskPrefab, new Vector3(0, 1000, 0), Quaternion.identity);
         shipMaskObject.transform.localScale = Vector3.one * (maskRadius / 4f);
+        shipMaskObject.transform.SetParent(maskParent);
 
         alliedShipMasks.Add(shipTransform, shipMaskObject.transform);
     }

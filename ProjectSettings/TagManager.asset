@@ -4,12 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy Hull
-  - Enemy Shield
-  - Enemy Root
-  - Friendly Ship
-  - Level Hitbox
   - Ship
+  - Shield
+  - Hull
   layers:
   - Default
   - TransparentFX
@@ -20,10 +17,10 @@ TagManager:
   - 
   - 
   - NavPlane
-  - Fog Of War Replacement
-  - 
-  - 
   - Fog Of War
+  - Hitable
+  - 
+  - 
   - 
   - 
   - 

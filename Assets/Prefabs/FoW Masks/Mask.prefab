@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4311228485133815180}
   - component: {fileID: 4006425395379294818}
   - component: {fileID: 1269834739086453349}
-  m_Layer: 12
-  m_Name: FoW Mask
+  m_Layer: 9
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
