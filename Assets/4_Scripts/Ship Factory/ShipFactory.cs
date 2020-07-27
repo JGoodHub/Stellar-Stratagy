@@ -1,89 +1,85 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Faction = GameManager.Faction;
 
-public class ShipFactory : MonoBehaviour {
+public class ShipFactory : MonoBehaviour
+{
 
-    //-----SINGLETON SETUP-----
-
-	public static ShipFactory instance = null;
-	
-	void Awake() {
-		if (instance == null) {
-			instance = this;
-		} else {
-			Destroy(gameObject);
-		}
-	}
-
-    //-----ENUM-----
-
-    public enum SpawnRestriction { PLAYER, ENEMY, EITHER };
-
-    //-----STRUCTS-----
-
-    [System.Serializable]
-    public struct Ship {
-        public string shipClass;
-        public GameObject shipPrefab;
-        public SpawnRestriction shipSpawnRestriction;
+    public enum Size
+    {
+        SHUTTLE,
+        FIGHTER,
+        CORVETTE,
+        FRIGATE,
+        CRUISER,
+        DESTROYER,
+        CARRIER
     }
 
-    //-----VARIABLES-----
+    [System.Serializable]
+    public struct Ship
+    {
+        public GameObject prefab;
+        public Size size;
+        public Faction sourceRestriction;
+    }
 
+    public Faction owner;
     public Ship[] ships;
 
-    //-----METHODS-----
+    private Transform shipsParent;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public void Initialise() {
-	
-	}
+    #region Inherited Method
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="position"></param>
-    /// <param name="rotation"></param>
-    /// <param name="sourceSpawner"></param>
-    /// <param name="requestedShipClass"></param>
-    /// <returns></returns>
-    public ShipController SpawnShip(Vector3 position, Quaternion rotation, SpawnRestriction sourceSpawner, string requestedShipClass) {
-        GameObject prefab = null;
-        foreach(Ship ship in ships) {
-            if (ship.shipClass == requestedShipClass && (ship.shipSpawnRestriction == sourceSpawner || ship.shipSpawnRestriction == SpawnRestriction.EITHER)) {
-                prefab = ship.shipPrefab;
-                break;
+    private void Start()
+    {
+        GameObject shipsParentObject = GameObject.Find("[SHIPS]");
+        if (shipsParentObject == null)
+        {
+            Debug.LogError("No [SHIPS] game object found");
+        }
+        else
+        {
+            shipsParent = shipsParentObject.transform;
+        }
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public ShipController RequestShip(Faction sourceFaction, Size requestedClass)
+    {
+        foreach (Ship ship in ships)
+        {
+            if (ship.size == requestedClass && (ship.sourceRestriction == Faction.NONE || ship.sourceRestriction == sourceFaction))
+            {
+                //Animate the ship flying into the battlefield
+                GameObject shipInstance = Instantiate(ship.prefab, transform.position, transform.rotation);
+                return shipInstance.GetComponent<ShipController>();
             }
         }
 
-        if (prefab == null) {
-            Debug.LogError("Searching for a non existent ship");
-            return null;
-        } else {
-            GameObject shipInstance = Instantiate(prefab, position, rotation);
-            return shipInstance.GetComponent<ShipController>();
+        return null;
+
+    }
+
+    public static ShipFactory GetFactionFactory(Faction faction)
+    {
+        ShipFactory[] allFactories = FindObjectsOfType<ShipFactory>();
+
+        foreach (ShipFactory factory in allFactories)
+        {
+            if (factory.owner == faction)
+            {
+                return factory;
+            }
         }
+
+        return null;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="position"></param>
-    /// <param name="direction"></param>
-    /// <param name="sourceSpawner"></param>
-    /// <param name="requestedShipClass"></param>
-    /// <returns></returns>
-    public ShipController SpawnShip(Vector3 position, Vector3 direction, SpawnRestriction sourceSpawner, string requestedShipClass) {
-        return SpawnShip(position, Quaternion.LookRotation(direction, Vector3.up), sourceSpawner, requestedShipClass);
-    }
+    #endregion
 
-    //-----GIZMOS-----
-    //public bool drawGizmos;
-    void OnDrawGizmos() {
-	
-	}
-	
 }

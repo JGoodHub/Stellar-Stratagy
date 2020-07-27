@@ -2,61 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipController : MonoBehaviour {
+public class ShipController : MonoBehaviour
+{
 
     //-----VARIABLES-----
 
-    private MovementController movementController;
-    public MovementController MovementController { get => movementController; }
+    public MovementController MovementController { get; private set; }
+    public ShipData ShipData { get; private set; }
+    public FogOfWarMask FogMask { get; private set; }
 
-    private TargetController targetController;
+    public GameManager.Faction faction;
 
-    private ShipData shipData;
-
-    private FogOfWarMask fogMask;
-    public FogOfWarMask FogMask { get => fogMask; }
-
-    [HideInInspector]
-    public bool isAlliedShip;
-
-    [SerializeField]
-    private GameObject selectionRing;
+    [SerializeField] private GameObject selectionRing;
 
     //-----METHODS-----
-	
-    /// <summary>
-    /// 
-    /// </summary>
-	public void Initialise() {
-        movementController = GetComponent<MovementController>();
-        targetController = GetComponent<TargetController>();
-        shipData = GetComponent<ShipData>();
-        fogMask = GetComponent<FogOfWarMask>();
-
-        targetController.Initialise();
-        fogMask.Initialise();
-
-        DeselectShip();
-	}
 
     /// <summary>
     /// 
     /// </summary>
-    public void SelectShip () {
-        selectionRing.SetActive(true);
+    private void Start()
+    {
+        MovementController = GetComponent<MovementController>();
+        ShipData = GetComponent<ShipData>();
+        FogMask = GetComponent<FogOfWarMask>();
+
+        SetSelectionState(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public void DeselectShip () {
-        selectionRing.SetActive(false);
+
+    public void SetSelectionState(bool state)
+    {
+        selectionRing.SetActive(state);
     }
-	
-	//-----GIZMOS-----
-	//public bool drawGizmos;
-	void OnDrawGizmos() {
-	
-	}
-	
 }

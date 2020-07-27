@@ -27,7 +27,6 @@ public class MoveTargeter : MonoBehaviour {
 		selectedUnits [1] = unitsSizeOne.ToList ();
 		selectedUnits [2] = new List<GameObject>();
 		selectedUnits [3] = unitsSizeThree.ToList ();
-
 	}
 	
 	// Update is called once per frame

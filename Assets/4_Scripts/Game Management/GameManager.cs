@@ -2,43 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : Singleton<GameManager>
+{
+    public enum Faction
+    {
+        PLAYER,
+        ENEMY,
+        NONE
+    };
 
-    //-----SINGLETON SETUP-----
-
-	public static GameManager instance = null;
-	
-	void Awake() {
-		if (instance == null) {
-			instance = this;
-		} else {
-			Destroy(gameObject);
-		}
-	}
-
-	//-----VARIABLES-----
-	
-	
-
-    //-----METHODS-----
-	
-    /// <summary>
-    /// 
-    /// </summary>
-	void Start() {
-        //Independent initialisations
-        CameraManager.instance.Initalise();
-        PlayerManager.instance.Initialise();
-        EnemyManager.instance.Initialise();
-
-        //Dependent initialisations
-
-    }
-
-    //-----GIZMOS-----
-    //public bool drawGizmos;
-    void OnDrawGizmos() {
-	
-	}
-	
 }

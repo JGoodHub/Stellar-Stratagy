@@ -29,13 +29,6 @@ public class TurretController : MonoBehaviour {
     public GameObject hullHitExplosionPrefab;
 
     //-----METHODS-----
-
-    /// <summary>
-    /// 
-    /// </summary>
-	public void Initialise () {
-
-	}
     	
 	/// <summary>
     /// 

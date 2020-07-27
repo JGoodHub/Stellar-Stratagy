@@ -13,7 +13,7 @@ public class FogOfWarMask : MonoBehaviour {
     /// <summary>
     /// 
     /// </summary>
-    public void Initialise () {
+    private void Start () {
         FogOfWarManager.instance.AddNewShipMask(gameObject.transform, maskRadius);
 	}
 
