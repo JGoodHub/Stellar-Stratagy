@@ -9,7 +9,7 @@ public class CameraController : Singleton<CameraController>
     private new Camera camera;
 
     [Header("Pan Controls")]
-    public float lerpingFactor;
+    public float smoothTime;
     [SerializeField] private Transform target;
 
     [Header("Zoom Controls")]
@@ -21,29 +21,25 @@ public class CameraController : Singleton<CameraController>
     public float orbitSpeedHorizontal;
     private Quaternion resetRotation;
 
-    private RaycastHit frameRayHit;
-    public RaycastHit FrameRayHit { get => frameRayHit; }
-
-
     public void Start()
     {
         camera = GetComponentInChildren<Camera>();
         resetRotation = transform.rotation;
     }
 
-    /// <summary>
-    /// Get the ray from the camera is the direction of the mouse
-    /// </summary>
-    /// <returns></returns>
+    
     public Ray GetCameraRay()
     {
         return camera.ScreenPointToRay(Input.mousePosition);
     }
 
+    public bool GetCameraRaycast(out RaycastHit rayHit)
+    {
+        return Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out rayHit, 2000f);
+    }
+
     void Update()
     {
-        Physics.Raycast(GetCameraRay(), out frameRayHit, 1000f);
-
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Rotate(Vector3.up, orbitSpeedHorizontal * Time.deltaTime, Space.World);
@@ -56,15 +52,14 @@ public class CameraController : Singleton<CameraController>
         {
             transform.rotation = resetRotation;
         }
-
-        
     }
 
     private void LateUpdate()
     {
         if (target != null)
         {
-            transform.position = Vector3.Lerp(transform.position, target.position, lerpingFactor * Time.deltaTime);
+            Vector3 velocity = Vector3.zero;
+            transform.position = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smoothTime);
         }
     }
 

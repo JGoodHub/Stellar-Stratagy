@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 6818464701170848765}
   - component: {fileID: 6668877147896334041}
   - component: {fileID: 2023250363642813550}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Engine Halo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3180941791144438087}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!122 &6668877147896334041
 Halo:
@@ -243,7 +243,6 @@ GameObject:
   - component: {fileID: 3180941791144438086}
   - component: {fileID: 3180941791144438083}
   - component: {fileID: 3180941791144438080}
-  - component: {fileID: 3180941791144438081}
   - component: {fileID: 3180941791144438082}
   m_Layer: 0
   m_Name: Transport Shuttle Prefab
@@ -265,6 +264,7 @@ Transform:
   m_Children:
   - {fileID: 991528036747533649}
   - {fileID: 4887366168015231529}
+  - {fileID: 747150867673283000}
   - {fileID: 851474786288676352}
   - {fileID: 598214720103061114}
   - {fileID: 6818464701170848765}
@@ -297,8 +297,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68dae4f1cfcd774099437223a7492e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAlliedShip: 0
+  hullStrength: 10
+  hullRegenerationRate: 0.1
+  shieldObject: {fileID: 4889151478378834485}
+  shieldStrength: 20
+  shieldRegenerationRate: 2
+  destructionPrefab: {fileID: 1405095429825760, guid: 33342c178c7add6429b467a3c8a0babc,
+    type: 3}
   selectionRing: {fileID: 5653769843969933708}
+  owner: 0
 --- !u!114 &3180941791144438080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,30 +319,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxForwardSpeed: 30
-  forwardAcceleration: 10
-  distanceFalloff: 30
+  forwardAcceleration: 8
+  distanceFalloff: 45
   earlyTurnDistance: 60
   maxRotationSpeed: 50
   rotationAcceleration: 5
   logSpeedValues: 0
   showVisualisations: 0
---- !u!114 &3180941791144438081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3180941791144438084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b896333e37014e49872a1ba108bf89b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hullStrength: 10
-  shieldStrength: 10
-  shieldParent: {fileID: 4889151478378834485}
-  shipExplosionPrefab: {fileID: 1405095429825760, guid: 33342c178c7add6429b467a3c8a0babc,
-    type: 3}
 --- !u!114 &3180941791144438082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +340,107 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maskRadius: 100
   drawGizmos: 0
+--- !u!1 &3420634969446640469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747150867673283000}
+  - component: {fileID: 473659649374186165}
+  - component: {fileID: 8073575590427503161}
+  - component: {fileID: 6775604411468756711}
+  - component: {fileID: 7843078716122217161}
+  - component: {fileID: 4549210648315478403}
+  m_Layer: 10
+  m_Name: Hull Colliders
+  m_TagString: Hull
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &747150867673283000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420634969446640469}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3180941791144438087}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &473659649374186165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420634969446640469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0018091, y: 2.7497873, z: 7.381448}
+  m_Center: {x: 0, y: 4.152716, z: -7.308313}
+--- !u!65 &8073575590427503161
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420634969446640469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0287156, y: 2.0334997, z: 7.381448}
+  m_Center: {x: -5.58821, y: -2.3376765, z: -7.308313}
+--- !u!65 &6775604411468756711
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420634969446640469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0287156, y: 2.0334997, z: 7.381448}
+  m_Center: {x: 5.58821, y: -2.3376765, z: -7.308313}
+--- !u!65 &7843078716122217161
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420634969446640469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.281162, y: 0.5176811, z: 4.744954}
+  m_Center: {x: 0, y: -2.1559105, z: -5.6645446}
+--- !u!136 &4549210648315478403
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420634969446640469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 2.7328444
+  m_Height: 20.713497
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.034065723, z: 0.7486992}
 --- !u!1 &4889151478378834485
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +454,7 @@ GameObject:
   - component: {fileID: 1711874999939637556}
   - component: {fileID: 4823770377690877430}
   m_Layer: 10
-  m_Name: Shield
+  m_Name: Shield Collider
   m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -442,7 +533,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
-  m_CookingOptions: 30
+  m_CookingOptions: -1
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &5595550587821567208
 GameObject:
@@ -455,7 +546,7 @@ GameObject:
   - component: {fileID: 598214720103061114}
   - component: {fileID: 6890894814522965774}
   - component: {fileID: 5595550587821567211}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Engine Halo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +565,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3180941791144438087}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!122 &6890894814522965774
 Halo:
@@ -624,7 +715,7 @@ Transform:
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 3180941791144438087}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &1044625220516778965
 MeshFilter:
@@ -684,7 +775,7 @@ GameObject:
   - component: {fileID: 1213535394422795490}
   - component: {fileID: 360026967399064314}
   - component: {fileID: 8056220967674549658}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Engine Halo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +794,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3180941791144438087}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!122 &360026967399064314
 Halo:

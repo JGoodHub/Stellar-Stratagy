@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-
-
     ///<summary>Controls the point in the turn (in degrees) when the ships decelerates its annular velocity</summary>
-    private const float DECELERATION_ANGLE_CUTOFF = 15f;
-
+    private const float DECELERATION_ANGLE_CUTOFF = 10f;
 
     //-----VARIABLES-----
 

@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
 
     public ShipController playerShip;
-    private ShipController selectedShip;
+    private Entity selectedEntity;
 
     public void Start()
     {
-
+        SelectEntity(playerShip);
     }
 
     void Update()
@@ -28,8 +29,36 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public void CheckForNewSelection()
     {
-        RaycastHit rayHit = CameraController.Instance.FrameRayHit;
+        RaycastHit rayHit;
+        if (CameraController.Instance.GetCameraRaycast(out rayHit))
+        {
+            selectedEntity?.SetRingActive(false);
+            selectedEntity = null;
 
+            if (rayHit.transform.TryGetComponent(out selectedEntity))
+            {
+                selectedEntity.SetRingActive(true);
+            }
+            else
+            {
+                selectedEntity = playerShip;
+            }
+        }
+        else
+        {
+            selectedEntity = playerShip;
+        }
+    }
+
+    public void SelectEntity(Entity entity)
+    {
+        if (selectedEntity != null)
+        {
+            selectedEntity.SetRingActive(false);
+        }
+
+        selectedEntity = entity;
+        selectedEntity.SetRingActive(true);
     }
 
 

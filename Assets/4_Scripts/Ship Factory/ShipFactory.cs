@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Faction = GameManager.Faction;
 
-public class ShipFactory : MonoBehaviour
+public class ShipFactory : Entity
 {
 
     public enum Size
@@ -25,25 +25,12 @@ public class ShipFactory : MonoBehaviour
         public Faction sourceRestriction;
     }
 
-    public Faction owner;
+    [Header("Ship Factory")]
+
+    [SerializeField] private GameObject shipsParentObject;
     public Ship[] ships;
 
-    private Transform shipsParent;
-
     #region Inherited Method
-
-    private void Start()
-    {
-        GameObject shipsParentObject = GameObject.Find("[SHIPS]");
-        if (shipsParentObject == null)
-        {
-            Debug.LogError("No [SHIPS] game object found");
-        }
-        else
-        {
-            shipsParent = shipsParentObject.transform;
-        }
-    }
 
     #endregion
 
@@ -57,6 +44,7 @@ public class ShipFactory : MonoBehaviour
             {
                 //Animate the ship flying into the battlefield
                 GameObject shipInstance = Instantiate(ship.prefab, transform.position, transform.rotation);
+                shipInstance.transform.parent = shipsParentObject.transform;
                 return shipInstance.GetComponent<ShipController>();
             }
         }
@@ -65,7 +53,7 @@ public class ShipFactory : MonoBehaviour
 
     }
 
-    public static ShipFactory GetFactionFactory(Faction faction)
+    public static ShipFactory GetNearestFactionFactory(Faction faction)
     {
         ShipFactory[] allFactories = FindObjectsOfType<ShipFactory>();
 

@@ -30,7 +30,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
         foreach (ShipController shipControl in enemyShips)
         {
-            shipControl.faction = GameManager.Faction.ENEMY;
+            shipControl.owner = GameManager.Faction.ENEMY;
             shipControl.FogMask.MarkAsEnemy();
         }
     }

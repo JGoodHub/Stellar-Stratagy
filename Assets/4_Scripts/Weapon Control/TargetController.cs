@@ -43,7 +43,7 @@ public class TargetController : MonoBehaviour
             if (collider.tag == "Ship")
             {
                 ShipController otherShip = collider.gameObject.GetComponent<ShipController>();
-                if (otherShip.faction != shipController.faction)
+                if (otherShip.owner != shipController.owner)
                 {
                     targetsInRange.Add(otherShip);
                 }
@@ -65,7 +65,7 @@ public class TargetController : MonoBehaviour
             }
         }
 
-        if (target != null && shipController.faction == Faction.PLAYER)
+        if (target != null && shipController.owner == Faction.PLAYER)
         {
             //Check which turrets have line of sight
             foreach (TurretController turretControl in turretControllers)
