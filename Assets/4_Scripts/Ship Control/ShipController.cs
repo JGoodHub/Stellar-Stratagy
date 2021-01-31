@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ShipController : Entity
 {
-
     public MovementController MovementController { get; private set; }
     public ShipData ShipData { get; private set; }
     public FogOfWarMask FogMask { get; private set; }
