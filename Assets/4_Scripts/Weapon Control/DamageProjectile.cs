@@ -6,29 +6,29 @@ public class DamageProjectile : MonoBehaviour {
 	
 	private float damage;
 	public float Damage {
-		set { damage = value; }
+		set => damage = value;
 	}
 
 	private bool dead;
 	private float currentLifetime;
 	private float maxLifetime;
 	public float MaxLifetime {
-		set { maxLifetime = value; }
+		set => maxLifetime = value;
 	}
 
 	private bool isFriendly;
 	public bool IsFriendly {
-		set { isFriendly = value; }
+		set => isFriendly = value;
 	}
 
 	private HardpointID.HardpointSize projectileSize;
 	public HardpointID.HardpointSize ProjectileSize {
-		set { projectileSize = value; }
+		set => projectileSize = value;
 	}
 
 	private HardpointID.HardpointType projectileType;
 	public HardpointID.HardpointType ProjectileType {
-		set { projectileType = value; }
+		set => projectileType = value;
 	} 
 
 	public bool showDebugInfo;
@@ -38,7 +38,7 @@ public class DamageProjectile : MonoBehaviour {
 		dead = false;
 	}
 
-	void Update () {
+	private void Update () {
 		currentLifetime -= Time.deltaTime;
 
 		if (currentLifetime <= 0f) {
@@ -47,7 +47,7 @@ public class DamageProjectile : MonoBehaviour {
 
 	}
 
-	void OnTriggerEnter (Collider other) {
+	private void OnTriggerEnter (Collider other) {
 		if (other.gameObject.layer == 10 && (other.tag == "Enemy Shield" || other.tag == "Enemy Hull") && !dead) {
 			RaycastHit hit;
 			int layerMask = 1 << 10;
@@ -159,7 +159,7 @@ public class DamageProjectile : MonoBehaviour {
 		RuntimeObjects.AddObject (objectToStore, destination, move);
 	}
 
-	void OnDrawGizmos () {
+	private void OnDrawGizmos () {
 		if (showDebugInfo) {
 			Gizmos.DrawSphere (transform.position - (transform.forward * 0.8f), 0.05f);
 		}

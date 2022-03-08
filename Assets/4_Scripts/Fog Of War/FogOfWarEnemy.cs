@@ -11,14 +11,12 @@ public class FogOfWarEnemy : MonoBehaviour {
 	private Transform[] shipTransforms;
 
 	private bool isVisible = true;
-	public bool IsVisible {
-		get { return isVisible; }
-	}
+	public bool IsVisible => isVisible;
 
 	private float hideDelay = 0.1f;
 	private float hideCountdown;
 
-	void Start () {
+	private void Start () {
 		hideCountdown = hideDelay;
 
 		shipTransforms = GetComponentsInChildren<Transform> ();
@@ -28,7 +26,7 @@ public class FogOfWarEnemy : MonoBehaviour {
 	}
 
 
-	void Update () {
+	private void Update () {
 		hideCountdown -= Time.deltaTime;
 		if (hideCountdown < 0 && isVisible == true) {
 			Hide ();

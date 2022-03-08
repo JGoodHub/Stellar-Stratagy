@@ -19,7 +19,7 @@ public class SpinFree : MonoBehaviour {
 	public float directionChangeSpeed = 2f;
 
 	// Update is called once per frame
-	void Update() {
+	private void Update() {
 		if (direction < 1f) {
 			direction += Time.deltaTime / (directionChangeSpeed / 2);
 		}

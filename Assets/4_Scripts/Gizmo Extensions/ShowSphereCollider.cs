@@ -7,7 +7,7 @@ public class ShowSphereCollider : MonoBehaviour {
 	public bool showWireFrame;
 	public bool showSolid;
 
-	void OnDrawGizmos () {
+	private void OnDrawGizmos () {
 		Gizmos.color = Color.green;
 		if (showWireFrame) {			
 			SphereCollider[] sphereCols = GetComponents<SphereCollider> ();

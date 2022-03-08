@@ -34,7 +34,7 @@ public class TargetController : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    void Update()
+    private void Update()
     {
         targetsInRange.Clear();
         Collider[] overlappingColliders = Physics.OverlapSphere(transform.position, range);

@@ -8,7 +8,7 @@ public class FogOfWarManager : MonoBehaviour {
 
     public static FogOfWarManager instance = null;
 
-    void Awake() {
+    private void Awake() {
         if (instance == null) {
             instance = this;
         } else {
@@ -36,7 +36,7 @@ public class FogOfWarManager : MonoBehaviour {
     /// <summary>
     /// 
     /// </summary>
-    void Update() {
+    private void Update() {
         foreach (Transform shipTransform in alliedShipMasks.Keys) {
             alliedShipMasks[shipTransform].position = new Vector3(shipTransform.position.x, 999, shipTransform.position.z);
         }
@@ -70,7 +70,7 @@ public class FogOfWarManager : MonoBehaviour {
 	
 	//-----GIZMOS-----
 	//public bool drawGizmos;
-	void OnDrawGizmos() {
+    private void OnDrawGizmos() {
 	
 	}
 	

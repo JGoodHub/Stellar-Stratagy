@@ -33,7 +33,7 @@ public class TurretController : MonoBehaviour {
 	/// <summary>
     /// 
     /// </summary>
-	void Update () {
+	private void Update () {
 		fireCountdown -= Time.deltaTime;
 
 		if (target != null) {
@@ -117,7 +117,7 @@ public class TurretController : MonoBehaviour {
 
     //-----GIZMOS-----
     //public bool drawGizmos;
-    void OnDrawGizmos () {
+    private void OnDrawGizmos () {
         
 	}
 

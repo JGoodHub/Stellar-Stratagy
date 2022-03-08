@@ -18,7 +18,7 @@ public class TurretManager : MonoBehaviour
 
     //-----METHODS-----
 
-    void Initialise()
+    private void Initialise()
     {
         turretControllers = new TurretController[hardpointTransforms.Length];
 

@@ -19,7 +19,7 @@ public class MoveTargeter : MonoBehaviour {
 	private Vector3 pivotForward;
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
 		pivotPoint = new Vector3 (9999, 9999, 9999);
 
 		selectedUnits = new List<GameObject>[4];
@@ -30,7 +30,7 @@ public class MoveTargeter : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
 		if (Input.GetMouseButtonDown(1)) {
 			RaycastHit hit;
 			int layerMask = 1 << 8;
@@ -139,8 +139,8 @@ public class MoveTargeter : MonoBehaviour {
 	private float GetSpacingModForSize (int size) {
 		return (26f * size) + 31f;
 	}
-		
-	void OnDrawGizmos () {
+
+	private void OnDrawGizmos () {
 		if (Application.isPlaying) {
 			Gizmos.color = Color.red;
 			if (pivotPoint.x != 9999) {

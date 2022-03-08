@@ -7,7 +7,8 @@ public class CameraFollower : Singleton<CameraController> {
 
     private new Camera camera;
 
-    [Header("Pan Controls")]
+    [Header("Follow Controls")]
+
     public float smoothTime;
     [SerializeField] private Transform target;
 
@@ -22,7 +23,7 @@ public class CameraFollower : Singleton<CameraController> {
     }
 
     public bool GetCameraRaycast(out RaycastHit rayHit) {
-        return Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out rayHit, 2000f);
+        return Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out rayHit, 100f);
     }
 
     private void LateUpdate() {
@@ -35,7 +36,7 @@ public class CameraFollower : Singleton<CameraController> {
     [Header("Gizmo's")]
     public bool drawGizmos;
 
-    void OnDrawGizmos() {
+    private void OnDrawGizmos() {
         if (drawGizmos) {
             Vector3 yLockedForward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
             Vector3 yLockedRight = new Vector3(transform.right.x, 0, transform.right.z).normalized;

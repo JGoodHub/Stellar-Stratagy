@@ -2,19 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipController : Entity
-{
-    public MovementController MovementController { get; private set; }
-    public ShipData ShipData { get; private set; }
-    public FogOfWarMask FogMask { get; private set; }
+public class ShipController : Entity {
 
-    protected override void Start()
-    {
-        base.Start();
+    public ManualFlightController FlightController => GetComponent<ManualFlightController>();
+    public ShipStats ShipStats => GetComponent<ShipStats>();
+    public FogOfWarMask FogMask => GetComponent<FogOfWarMask>();
 
-        MovementController = GetComponent<MovementController>();
-        ShipData = GetComponent<ShipData>();
-        FogMask = GetComponent<FogOfWarMask>();
-    }
+    //protected override void Start() {
+    //    base.Start();
+    //}
 
 }

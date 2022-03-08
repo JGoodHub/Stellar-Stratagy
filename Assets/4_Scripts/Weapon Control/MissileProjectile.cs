@@ -7,17 +7,15 @@ public class MissileProjectile : MonoBehaviour {
 	public float speed;
 	private Transform target;
 	public Transform Target {
-		set { target = value; }
+		set => target = value;
 	}
 
 	[SerializeField] private ParticleSystem smokeTrail;
-	public ParticleSystem SmokeTrail {
-		get { return smokeTrail; }
-	}
+	public ParticleSystem SmokeTrail => smokeTrail;
 
 	private bool missed = false;
 
-	void Start () {
+	private void Start () {
 		Init ();
 	}
 
@@ -26,7 +24,7 @@ public class MissileProjectile : MonoBehaviour {
 		transform.LookAt (target.position);
 	}
 
-	void FixedUpdate () {
+	private void FixedUpdate () {
 		if (missed == false && target != null && Vector3.Distance(transform.position, target.position) < 4f) {
 			missed = true;
 		}

@@ -38,7 +38,7 @@ public class CameraController : Singleton<CameraController>
         return Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out rayHit, 2000f);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -66,7 +66,8 @@ public class CameraController : Singleton<CameraController>
     //-----GIZMOS-----
     [Header("Gizmo Controls")]
     public bool drawGizmos;
-    void OnDrawGizmos()
+
+    private void OnDrawGizmos()
     {
         if (drawGizmos)
         {

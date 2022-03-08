@@ -6,27 +6,28 @@ public class FogOfWarMask : MonoBehaviour {
 
     //-----VARIABLES-----
 
-	public float maskRadius;
+    public float maskRadius;
 
     //-----METHODS-----
 
     /// <summary>
     /// 
     /// </summary>
-    private void Start () {
+    private void Start() {
         FogOfWarManager.instance.AddNewShipMask(gameObject.transform, maskRadius);
-	}
+    }
 
-    public void MarkAsEnemy () {
+    public void MarkAsEnemy() {
         FogOfWarManager.instance.RemoveShipMask(gameObject.transform);
     }
 
     //-----GIZMOS-----
     public bool drawGizmos;
-	void OnDrawGizmos () {
+
+    private void OnDrawGizmos() {
         if (drawGizmos) {
             Gizmos.color = Color.white;
-            GizmoExtras.DrawWireCircle(maskRadius, transform.position);            
+            GizmoExtensions.DrawWireCircle(transform.position, maskRadius);
         }
-	}
+    }
 }

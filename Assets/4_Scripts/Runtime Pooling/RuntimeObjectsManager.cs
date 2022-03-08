@@ -8,7 +8,7 @@ public class RuntimeObjectsManager : MonoBehaviour {
 
     public static RuntimeObjectsManager instance = null;
 
-    void Awake() {
+    private void Awake() {
         if (instance == null) {
             instance = this;
         } else {
@@ -57,7 +57,7 @@ public class RuntimeObjectsManager : MonoBehaviour {
 
     //-----GIZMOS-----
     //public bool drawGizmos;
-    void OnDrawGizmos() {
+    private void OnDrawGizmos() {
 
     }
 

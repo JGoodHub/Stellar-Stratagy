@@ -2,40 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
-{
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
     private static string singletonLog = "<color=yellow>Singleton: </color>";
 
     protected static T _instance;
 
     private static object _lock = new object();
 
-    public static T Instance
-    {
-        get
-        {
-            if (applicationIsQuitting)
-            {
+    public static T Instance {
+        get {
+            if (applicationIsQuitting) {
                 return null;
             }
 
-            lock (_lock)
-            {
-                if (_instance == null)
-                {
+            lock (_lock) {
+                if (_instance == null) {
                     _instance = (T)FindObjectOfType(typeof(T));
 
-                    if (FindObjectsOfType(typeof(T)).Length > 1)
-                    {
+                    if (FindObjectsOfType(typeof(T)).Length > 1) {
                         Debug.Log(singletonLog + "Something went really wrong " +
-                            " - there should never be more than 1 singleton!" +
-                            " Reopening the scene might fix it.");
+                            " - there should never be more than 1 singleton!");
 
                         return _instance;
                     }
 
-                    if (_instance == null)
-                    {
+                    if (_instance == null) {
                         GameObject singleton = new GameObject();
                         _instance = singleton.AddComponent<T>();
                         singleton.name = "(singleton) " + typeof(T).ToString();
@@ -45,9 +36,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                             " is needed in the scene, so '" + singleton +
                             "' was created with DontDestroyOnLoad.");
 
-                    }
-                    else
-                    {
+                    } else {
                         //Debug.Log(singletonLog + "Using instance already created: _instance.gameObject.name);"
                     }
                 }
@@ -66,13 +55,12 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     ///   even after stopping playing the Application. Really bad!
     /// So, this was made to be sure we're not creating that buggy ghost object.
     /// </summary>
-    public void OnDestroy()
-    {
+    public void OnDestroy() {
         applicationIsQuitting = true;
         _instance = null;
     }
-    void OnEnable()
-    {
+
+    private void OnEnable() {
         applicationIsQuitting = false;
     }
 }
