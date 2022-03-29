@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager> {
 
     public enum Faction {
-        PLAYER,
+        FRIENDLY,
         ENEMY,
-        INDEPENDENT,
+        NEUTRAL,
         NONE
     };
 
@@ -16,9 +16,9 @@ public class GameManager : Singleton<GameManager> {
     private void Start() {
         FactionColors = new Dictionary<Faction, Color>();
 
-        FactionColors.Add(Faction.PLAYER, Color.green);
+        FactionColors.Add(Faction.FRIENDLY, Color.green);
         FactionColors.Add(Faction.ENEMY, Color.red);
-        FactionColors.Add(Faction.INDEPENDENT, Color.yellow);
+        FactionColors.Add(Faction.NEUTRAL, Color.yellow);
         FactionColors.Add(Faction.NONE, Color.white);
     }
 

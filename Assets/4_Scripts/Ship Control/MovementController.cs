@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour {
-    ///<summary>Controls the point in the turn (in degrees) when the ships decelerates its annular velocity</summary>
+    
+    ///<summary>Controls the point in the turn (in degrees) when the ships decelerates its angular velocity</summary>
     private const float DECELERATION_ANGLE_CUTOFF = 10f;
 
     //-----VARIABLES-----

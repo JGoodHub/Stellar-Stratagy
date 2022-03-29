@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class ShipController : Entity {
 
-    public ManualFlightController FlightController => GetComponent<ManualFlightController>();
-    public ShipStats ShipStats => GetComponent<ShipStats>();
+    public FlightController Helm => GetComponent<FlightController>();
+    public StatsController Stats => GetComponent<StatsController>();
     public FogOfWarMask FogMask => GetComponent<FogOfWarMask>();
+    public LaserWeaponsController LaserWeaponsController => GetComponent<LaserWeaponsController>();
 
-    //protected override void Start() {
-    //    base.Start();
-    //}
+    public OrbitalController OrbitalController => GetComponent<OrbitalController>();
 
 }

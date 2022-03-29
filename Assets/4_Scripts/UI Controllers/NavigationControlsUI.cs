@@ -40,7 +40,7 @@ public class NavigationControlsUI : MonoBehaviour {
     }
 
     private void Update() {
-        float fuelBarFillAmount = PlayerManager.Instance.playerShip.ShipStats.GetResourceOfType(ShipStats.ResourceType.FUEL, true);
+        float fuelBarFillAmount = PlayerManager.Instance.playerShip.Stats.GetResource(ResourceType.FUEL).Normalised;
 
         if (fuelBarFillAmount <= 0) {
             fuelEmptyText.enabled = true;
@@ -61,11 +61,11 @@ public class NavigationControlsUI : MonoBehaviour {
     }
 
     public void IncreaseShipSpeed() {
-        PlayerManager.Instance.playerShip.FlightController.IncreaseSpeed();
+        PlayerManager.Instance.playerShip.Helm.IncreaseSpeed();
     }
 
     public void DecreaseShipSpeed() {
-        PlayerManager.Instance.playerShip.FlightController.DecreaseSpeed();
+        PlayerManager.Instance.playerShip.Helm.DecreaseSpeed();
     }
 
     public void UpdateEngineBars() {
@@ -73,7 +73,7 @@ public class NavigationControlsUI : MonoBehaviour {
             enginePowerBars[i].enabled = false;
         }
 
-        for (int i = 0; i < PlayerManager.Instance.playerShip.FlightController.speedSetting; i++) {
+        for (int i = 0; i < PlayerManager.Instance.playerShip.Helm.speedSetting; i++) {
             enginePowerBars[i].enabled = true;
         }
     }

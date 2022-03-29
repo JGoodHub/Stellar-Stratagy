@@ -23,9 +23,9 @@ public class SelectedStatsUI : MonoBehaviour {
     private void OnSelectionChangeHandler(object sender, Entity prevEntity, Entity newEntity) {
         if (newEntity != null) {
 
-            healthFillImage.color = GameManager.FactionColors[newEntity.owner];
+            healthFillImage.color = GameManager.FactionColors[newEntity.alignment];
 
-            healthFillImage.fillAmount = newEntity.GetComponent<ShipStats>().GetResourceOfType(ShipStats.ResourceType.HULL, true);
+            healthFillImage.fillAmount = newEntity.GetComponent<StatsController>().GetResource(ResourceType.HULL).Normalised;
 
             nameText.text = newEntity.name;
 

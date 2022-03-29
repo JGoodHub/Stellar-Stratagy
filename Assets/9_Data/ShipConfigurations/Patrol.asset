@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b99c71366b97f4f801e55d32e4227d, type: 3}
+  m_Name: Patrol
+  m_EditorClassIdentifier: 
+  name: Patrol Ship Config
+  id: partol_ship_config
+  hullStat:
+    type: 0
+    current: 10
+    max: 10
+  shieldStat:
+    type: 1
+    current: 15
+    max: 15
+  fuelStat:
+    type: 2
+    current: 20
+    max: 20
+  missileStat:
+    type: 3
+    current: 0
+    max: 0
+  crewStat:
+    type: 4
+    current: 5
+    max: 5

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Faction = GameManager.Faction;
 
-public class TargetController : MonoBehaviour
+public class LegacyTargetController : MonoBehaviour
 {
 
     //-----VARIABLES-----
@@ -43,7 +43,7 @@ public class TargetController : MonoBehaviour
             if (collider.tag == "Ship")
             {
                 ShipController otherShip = collider.gameObject.GetComponent<ShipController>();
-                if (otherShip.owner != shipController.owner)
+                if (otherShip.alignment != shipController.alignment)
                 {
                     targetsInRange.Add(otherShip);
                 }
@@ -65,7 +65,7 @@ public class TargetController : MonoBehaviour
             }
         }
 
-        if (target != null && shipController.owner == Faction.PLAYER)
+        if (target != null && shipController.alignment == Faction.FRIENDLY)
         {
             //Check which turrets have line of sight
             foreach (TurretController turretControl in turretControllers)

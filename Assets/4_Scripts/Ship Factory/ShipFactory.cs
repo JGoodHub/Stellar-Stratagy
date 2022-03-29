@@ -59,7 +59,7 @@ public class ShipFactory : Entity
 
         foreach (ShipFactory factory in allFactories)
         {
-            if (factory.owner == faction)
+            if (factory.alignment == faction)
             {
                 return factory;
             }

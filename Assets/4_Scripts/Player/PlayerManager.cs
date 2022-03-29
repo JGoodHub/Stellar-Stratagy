@@ -3,28 +3,46 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
 
-public class PlayerManager : Singleton<PlayerManager> {
+public class PlayerManager : SceneSingleton<PlayerManager>
+{
 
-    public ShipController playerShip;
+	public ShipController playerShip;
 
+	public void Start()
+	{
+		SelectionController.Instance.OnSelectionChanged += OnSelectionChanged;
+		SelectionController.Instance.OnNavPlaneQuery += OnNavPlaneQuery;
+	}
 
-    public void Start() {
-        SelectionController.Instance.OnSelectionTriggered += OnSelectionTriggered;
-    }
+	private void OnSelectionChanged(object sender, Entity oldEntity, Entity newEntity)
+	{
+		if (newEntity == null)
+			return;
 
-    private void OnSelectionTriggered(object sender, Entity selectedEntity) {
-        if (selectedEntity == null) {
-            MoveShip();
-        }
-    }
+		if (newEntity.TryGetComponent(out ShipController ship))
+			SetShipOrbitTarget(ship);
+	}
 
-    private void Update() {
+	private void OnNavPlaneQuery(object sender, Vector2 navPlanePoint)
+	{
+		if (SelectionController.SelectedEntity == null)
+		{
+			SetShipHeading(new Vector3(navPlanePoint.x, 0f, navPlanePoint.y));
+		}
+	}
 
-    }
+	public void SetShipHeading(Vector3 position)
+	{
+		playerShip.OrbitalController.SetOrbitTarget(null);
+		playerShip.Helm.SetHeading(position);
+		playerShip.Helm.SetDirectionRingVisible(true);
+	}
 
-    public void MoveShip() {
-        Vector3 target = NavigationPlane.Instance.RaycastNavPlane3D();
-        playerShip.FlightController.SetHeading(target);
-    }
+	private void SetShipOrbitTarget(ShipController otherShip)
+	{
+		playerShip.OrbitalController.SetOrbitTarget(otherShip.OrbitalController);
+		playerShip.Helm.SetDirectionRingVisible(false);
+
+	}
 
 }
