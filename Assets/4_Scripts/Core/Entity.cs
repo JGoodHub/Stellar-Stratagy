@@ -7,9 +7,11 @@ public class Entity : MonoBehaviour
 	[Header("Entity")]
 	public new string name;
 	public Type type;
-
+	public bool isStatic;
+	[Space]
 	[SerializeField] private GameObject selectionRing;
 	[SerializeField] private float selectionRadius;
+	[SerializeField] private float orbitRadius;
 
 	public float SelectionRadiusSqrd => selectionRadius * selectionRadius;
 
@@ -33,9 +35,9 @@ public class Entity : MonoBehaviour
 
 	public void SetSelected(bool state)
 	{
-		selectionRing.SetActive(state);
+		if (selectionRing != null)
+			selectionRing.SetActive(state);
 	}
-
 
 	private void OnDrawGizmos()
 	{
@@ -62,7 +64,6 @@ public class Entity : MonoBehaviour
 	{
 		SHIP,
 		STATION,
-		ASTEROID,
-		PLANET
+		ASTEROID
 	}
 }

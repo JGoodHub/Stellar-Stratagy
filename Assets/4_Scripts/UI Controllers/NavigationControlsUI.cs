@@ -3,80 +3,88 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NavigationControlsUI : MonoBehaviour {
+public class NavigationControlsUI : MonoBehaviour
+{
 
-    [Header("Thrust")]
+	[Header("Thrust")]
+	public Button increaseSpeedButton;
+	public Button decreaseSpeedButton;
 
-    public Button increaseSpeedButton;
-    public Button decreaseSpeedButton;
+	public Image[] enginePowerBars;
 
-    public Image[] enginePowerBars;
+	[Header("Fuel")]
+	public Image fuelBarFill;
+	public Text fuelEmptyText;
 
-    [Header("Fuel")]
+	public Color criticalColour;
+	public Color lowColour;
+	public Color highColour;
 
-    public Image fuelBarFill;
-    public Text fuelEmptyText;
+	public float criticalThreshold = 0.1f;
+	public float lowThreshold = 0.4f;
 
-    public Color criticalColour;
-    public Color lowColour;
-    public Color highColour;
-
-    public float criticalThreshold = 0.1f;
-    public float lowThreshold = 0.4f;
-
-    [Header("Mini-map")]
-
-    public Button zoomInButton;
-    public Button zooOutButton;
+	[Header("Mini-map")]
+	public Button zoomInButton;
+	public Button zooOutButton;
 
 
-    // Start is called before the first frame update
-    private void Start() {
-        increaseSpeedButton.onClick.AddListener(IncreaseShipSpeed);
-        increaseSpeedButton.onClick.AddListener(UpdateEngineBars);
+	// Start is called before the first frame update
+	private void Start()
+	{
+		increaseSpeedButton.onClick.AddListener(IncreaseShipSpeed);
+		increaseSpeedButton.onClick.AddListener(UpdateEngineBars);
 
-        decreaseSpeedButton.onClick.AddListener(DecreaseShipSpeed);
-        decreaseSpeedButton.onClick.AddListener(UpdateEngineBars);
-    }
+		decreaseSpeedButton.onClick.AddListener(DecreaseShipSpeed);
+		decreaseSpeedButton.onClick.AddListener(UpdateEngineBars);
+	}
 
-    private void Update() {
-        float fuelBarFillAmount = PlayerManager.Instance.playerShip.Stats.GetResource(ResourceType.FUEL).Normalised;
+	private void Update()
+	{
+		float fuelBarFillAmount = PlayerManager.PlayerShip.Stats.GetResource(ResourceType.FUEL).Normalised;
 
-        if (fuelBarFillAmount <= 0) {
-            fuelEmptyText.enabled = true;
-        } else {
-            fuelEmptyText.enabled = false;
+		if (fuelBarFillAmount <= 0)
+		{
+			fuelEmptyText.enabled = true;
+		}
+		else
+		{
+			fuelEmptyText.enabled = false;
 
-            fuelBarFill.fillAmount = fuelBarFillAmount;
+			fuelBarFill.fillAmount = fuelBarFillAmount;
 
-            if (fuelBarFillAmount <= criticalThreshold)
-                fuelBarFill.color = criticalColour;
-            else if (fuelBarFillAmount > criticalThreshold && fuelBarFillAmount <= lowThreshold)
-                fuelBarFill.color = lowColour;
-            else if (fuelBarFillAmount > lowThreshold)
-                fuelBarFill.color = highColour;
-        }
+			if (fuelBarFillAmount <= criticalThreshold)
+				fuelBarFill.color = criticalColour;
+			else if (fuelBarFillAmount > criticalThreshold && fuelBarFillAmount <= lowThreshold)
+				fuelBarFill.color = lowColour;
+			else if (fuelBarFillAmount > lowThreshold)
+				fuelBarFill.color = highColour;
+		}
 
-        UpdateEngineBars();
-    }
+		UpdateEngineBars();
+	}
 
-    public void IncreaseShipSpeed() {
-        PlayerManager.Instance.playerShip.Helm.IncreaseSpeed();
-    }
+	public void IncreaseShipSpeed()
+	{
+		PlayerManager.PlayerShip.Helm.ModifySpeed(1);
+	}
 
-    public void DecreaseShipSpeed() {
-        PlayerManager.Instance.playerShip.Helm.DecreaseSpeed();
-    }
+	public void DecreaseShipSpeed()
+	{
+		PlayerManager.PlayerShip.Helm.ModifySpeed(-1);
+	}
 
-    public void UpdateEngineBars() {
-        for (int i = 0; i < enginePowerBars.Length; i++) {
-            enginePowerBars[i].enabled = false;
-        }
+	public void UpdateEngineBars()
+	{
+		for (int i = 0; i < enginePowerBars.Length; i++)
+		{
+			enginePowerBars[i].enabled = false;
+		}
 
-        for (int i = 0; i < PlayerManager.Instance.playerShip.Helm.speedSetting; i++) {
-            enginePowerBars[i].enabled = true;
-        }
-    }
+		for (int i = 0; i < PlayerManager.PlayerShip.Helm.speedSetting; i++)
+		{
+			enginePowerBars[i].enabled = true;
+		}
+	}
 
 
 }

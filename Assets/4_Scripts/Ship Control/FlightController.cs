@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FlightController : ShipComponent
 {
@@ -24,24 +25,28 @@ public class FlightController : ShipComponent
 	[SerializeField] private GameObject directionRingObject;
 
 	[SerializeField] private float rotationAcceleration;
-	[SerializeField] private AnimationCurve rotationSpeedZeroOutCurve;
+	[FormerlySerializedAs("rotationSpeedZeroOutCurve"),SerializeField] private AnimationCurve rotationDecelerationCurve;
 
 	[SerializeField] private float peakRotationSpeed;
 	private float currentRotSpeed;
 
 	private Quaternion targetRotation;
-
 	private Transform waypoint;
+
 
 	[Header("Fuel Rate")]
 	public float maxFuelRate = 1f;
 
 	[Header("Debug")]
-	public bool showVisualisations;
+	public bool drawGizmos;
 
 	private Transform shipCompass;
+	
+	// PROPERTIES
+	
+	public Vector3 TargetDirection => targetRotation * Vector3.forward;
 
-	//-----METHODS-----
+	// METHODS
 
 	private void Awake()
 	{
@@ -50,6 +55,7 @@ public class FlightController : ShipComponent
 
 	private void Update()
 	{
+		//Update our target direction to point to the waypoint
 		if (waypoint != null)
 		{
 			Vector3 direction = waypoint.position - transform.position;
@@ -59,24 +65,24 @@ public class FlightController : ShipComponent
 		}
 
 		//Turning
-		if (Quaternion.Angle(transform.rotation, targetRotation) >= 0.01f)
+		if (Quaternion.Angle(transform.rotation, targetRotation) >= 0.025f)
 		{
 			Quaternion rotation = transform.rotation;
 			float degreesToTarget = Quaternion.Angle(rotation, targetRotation);
 
-			float newRotSpeed = Mathf.Clamp(currentRotSpeed + (rotationAcceleration * Time.deltaTime), 0, peakRotationSpeed);
-			currentRotSpeed = newRotSpeed * rotationSpeedZeroOutCurve.Evaluate(degreesToTarget);
+			currentRotSpeed = Mathf.Clamp(currentRotSpeed + (rotationAcceleration * Time.deltaTime), 0, peakRotationSpeed);
 
-			rotation = Quaternion.RotateTowards(rotation, targetRotation, currentRotSpeed * Time.deltaTime);
+			rotation = Quaternion.RotateTowards(rotation, targetRotation, currentRotSpeed * rotationDecelerationCurve.Evaluate(degreesToTarget) * Time.deltaTime);
 			transform.rotation = rotation;
 		}
 		else
 		{
 			transform.rotation = targetRotation;
+			currentRotSpeed = 0;
 		}
 
 		if (directionRingObject != null)
-			directionRingObject.transform.rotation = Quaternion.Lerp(directionRingObject.transform.rotation, Quaternion.LookRotation(targetRotation * Vector3.forward, Vector3.up), 0.2f);
+			directionRingObject.transform.rotation = Quaternion.Lerp(directionRingObject.transform.rotation, Quaternion.LookRotation(targetRotation * Vector3.forward, Vector3.up), 0.34f);
 
 		//Speed
 		if (currentSpeed < targetSpeed)
@@ -87,7 +93,7 @@ public class FlightController : ShipComponent
 		{
 			currentSpeed -= deceleration * Time.deltaTime;
 		}
-		else if (targetSpeed == 0 && currentSpeed < 0.01f)
+		else if (targetSpeed == 0 && currentSpeed < 0.02f)
 		{
 			currentSpeed = 0;
 		}
@@ -99,19 +105,9 @@ public class FlightController : ShipComponent
 		Ship.Stats.ModifyResource(ResourceType.FUEL, -currentFuelRate * Time.deltaTime);
 	}
 
-	public void IncreaseSpeed()
+	public void ModifySpeed(int modifier)
 	{
-		speedSetting++;
-		speedSetting = Mathf.Clamp(speedSetting, 0, speedSettingCap);
-
-		UpdateTargetSpeed();
-	}
-
-	public void DecreaseSpeed()
-	{
-		speedSetting--;
-		speedSetting = Mathf.Clamp(speedSetting, 0, speedSettingCap);
-
+		speedSetting = Mathf.Clamp(speedSetting + modifier, 0, speedSettingCap);
 		UpdateTargetSpeed();
 	}
 
@@ -128,23 +124,29 @@ public class FlightController : ShipComponent
 		UpdateTargetSpeed();
 	}
 
-	public void SetSpeedCap(int speedSettingCap)
+	public void SetSpeedCap(int tempSpeedCap)
 	{
-		this.speedSettingCap = Mathf.Clamp(speedSettingCap, 0, SPEED_DIVISIONS);
-		speedSetting = Mathf.Clamp(speedSetting, 0, speedSettingCap);
+		speedSettingCap = Mathf.Clamp(tempSpeedCap, 0, SPEED_DIVISIONS);
+		speedSetting = Mathf.Clamp(speedSetting, 0, tempSpeedCap);
 
 		UpdateTargetSpeed();
 	}
 
 	private void UpdateTargetSpeed()
 	{
-		targetSpeed = (speedSetting / (float)SPEED_DIVISIONS) * maxSpeed;
+		targetSpeed = speedSetting / (float)SPEED_DIVISIONS * maxSpeed;
 	}
 
-	public void SetHeading(Vector3 position)
+	public void SetHeadingPosition(Vector3 worldPosition)
 	{
-		Vector3 direction = (position - transform.position).normalized * 99999f;
+		Vector3 direction = (worldPosition - transform.position).normalized;
+		SetHeadingDirection(direction);
+	}
+
+	public void SetHeadingDirection(Vector3 direction)
+	{
 		direction.y = 0;
+		direction *= 9999f;
 
 		shipCompass.position = transform.position + direction;
 		SetWaypoint(shipCompass);
@@ -153,6 +155,13 @@ public class FlightController : ShipComponent
 	public void SetWaypoint(Transform newWaypoint)
 	{
 		waypoint = newWaypoint;
+
+		if (waypoint != null)
+		{
+			Vector3 direction = waypoint.position - transform.position;
+			direction.y = 0;
+			targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+		}
 	}
 
 	public void SetDirectionRingVisible(bool isVisible)
@@ -160,18 +169,24 @@ public class FlightController : ShipComponent
 		directionRingObject.SetActive(isVisible);
 	}
 
+	public enum FlightMode
+	{
+		MANUAL,
+		ORBITAL,
+		COMBAT,
+		FOLLOW,
+		PATROL
+	}
+
 	//-----GIZMOS-----
 
 	private void OnDrawGizmos()
 	{
-		if (showVisualisations)
+		if (drawGizmos)
 		{
-			//Player directional gizmos
-			Gizmos.color = Color.blue;
-			Gizmos.DrawRay(transform.position, transform.forward * 100f);
+			Gizmos.color = Color.green;
+			Gizmos.DrawRay(transform.position, TargetDirection * 20f);
 
-			//Player position gizmos
-			Gizmos.DrawCube(transform.position + (Vector3.up * 10f), Vector3.one * 2f);
 		}
 	}
 }

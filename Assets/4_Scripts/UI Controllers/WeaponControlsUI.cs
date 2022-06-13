@@ -1,68 +1,70 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WeaponControlsUI : SceneSingleton<WeaponControlsUI>
 {
 
-	public Image missileClipImage;
-	public Sprite[] missileClipSizeSprites;
+	private LaserWeaponsController laserController;
+	public Button laserFireBtn;
+	public Image laserCooldownFill;
 
-	private LaserWeaponsController playerLaserController;
-
-	public Button frontLaserBtn;
-	public Button rightLaserBtn;
-	public Button rearLaserBtn;
-	public Button leftLaserBtn;
+	private MissileWeaponsController missileController;
+	public Button missileFireBtn;
+	public Image missileClipFill;
 
 	public void Start()
 	{
-		frontLaserBtn.onClick.AddListener(() => FireDirectionalLaser(LaserDirection.FRONT));
-		rightLaserBtn.onClick.AddListener(() => FireDirectionalLaser(LaserDirection.RIGHT));
-		rearLaserBtn.onClick.AddListener(() => FireDirectionalLaser(LaserDirection.REAR));
-		leftLaserBtn.onClick.AddListener(() => FireDirectionalLaser(LaserDirection.LEFT));
+		laserController = PlayerManager.PlayerShip.LaserWeaponsController;
+		laserFireBtn.onClick.AddListener(() => laserController.FireAtTarget());
 
-		playerLaserController = PlayerManager.Instance.playerShip.LaserWeaponsController;
+		laserController.OnLaserReady += LaserReady;
+		laserController.OnLaserFired += LaserFired;
 
-		foreach (LaserStatus laser in playerLaserController.lasers)
+		missileController = PlayerManager.PlayerShip.MissileWeaponsController;
+		missileFireBtn.onClick.AddListener(() => missileController.FireAtTarget());
+
+		missileController.OnMissileFired += MissileFired;
+		missileController.OnMissileReady += MissileReady;
+
+		PlayerManager.PlayerShip.Stats.OnResourceValueChanged += MissileResourceChanged;
+	}
+
+	public void LaserReady(LaserWeaponsController laser)
+	{
+		laserFireBtn.interactable = true;
+		laserCooldownFill.fillAmount = 1f;
+	}
+
+	public void LaserFired(LaserWeaponsController laser)
+	{
+		laserFireBtn.interactable = false;
+
+		DOVirtual.Float(0f, 1f, laser.firingInterval, percent =>
 		{
-			laser.OnLaserReady += OnLaserReady;
-			laser.OnLaserFired += LaserFired;
-		}
+			laserCooldownFill.fillAmount = percent;
+		});
 	}
 
-	public void FireDirectionalLaser(LaserDirection direction)
+	private void MissileReady(MissileWeaponsController obj)
 	{
-		PlayerManager.Instance.playerShip.LaserWeaponsController.FireDirectionalLaser(direction);
+		missileFireBtn.interactable = true;
 	}
 
-	public void OnLaserReady(LaserStatus laser)
+	private void MissileFired(MissileWeaponsController obj)
 	{
-		GetButtonForDirection(laser.direction).interactable = true;
+		missileFireBtn.interactable = false;
 	}
 
-	public void LaserFired(LaserStatus laser)
+	private void MissileResourceChanged(StatsController stats, ResourceType type, float oldValue, float newValue)
 	{
-		GetButtonForDirection(laser.direction).interactable = false;
-	}
+		if (type != ResourceType.MISSILE)
+			return;
 
-	private Button GetButtonForDirection(LaserDirection direction)
-	{
-		switch (direction)
-		{
-			case LaserDirection.FRONT:
-				return frontLaserBtn;
-			case LaserDirection.RIGHT:
-				return rightLaserBtn;
-			case LaserDirection.REAR:
-				return rearLaserBtn;
-			case LaserDirection.LEFT:
-				return leftLaserBtn;
-			default:
-				throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-		}
+		missileClipFill.fillAmount = newValue / stats.GetResource(ResourceType.MISSILE).max;
 	}
 
 }

@@ -6,63 +6,89 @@ using UnityEngine;
 
 public class LaserWeaponsController : ShipComponent
 {
-	public float range;
+	public float range = 150;
+	public float damage = 1;
+	public float firingInterval = 1.5f;
+	[HideInInspector] public float firingCooldown;
+	public bool readyToFire = false;
 
-	public List<LaserStatus> lasers = new List<LaserStatus>();
+	public GameObject beamPrefab;
 	public LaserBeam beam;
 
-	public event Action<LaserStatus> OnLaserFired;
+	public event Action<LaserWeaponsController> OnLaserFired;
+	public event Action<LaserWeaponsController> OnLaserReady;
+
+	public event Action<LaserWeaponsController> OnTargetInRange;
+	public event Action<LaserWeaponsController> OnTargetOutOfRange;
+	private bool targetInRange = false;
 
 	private void Start()
 	{
+		GameObject beamObject = Instantiate(beamPrefab, Vector3.zero, Quaternion.identity);
+		beam = beamObject.GetComponent<LaserBeam>();
 		beam.Initialise(transform);
+
+		readyToFire = false;
 	}
 
 	private void Update()
 	{
-		foreach (LaserStatus laser in lasers)
-		{
-			laser.ReduceCooldown();
-		}
+		ReduceCooldown();
+
+		CheckForTargetInRange();
 	}
 
-	public void FireDirectionalLaser(LaserDirection direction)
+	public void FireAtTarget()
 	{
-		LaserStatus laser = lasers.Find(las => las.direction == direction);
+		ShipController target = Ship.Targeter.target;
 
-		if (laser == null || laser.readyToFire == false || Targeter.HasTarget == false)
+		if (readyToFire == false || target == null || targetInRange == false)
 			return;
 
-		//Check the direction of the laser can hit the target
-		Vector3 directionVector;
-		switch (direction)
-		{
-			case LaserDirection.FRONT:
-				directionVector = transform.forward;
-				break;
-			case LaserDirection.RIGHT:
-				directionVector = transform.right;
-				break;
-			case LaserDirection.REAR:
-				directionVector = -transform.right;
-				break;
-			case LaserDirection.LEFT:
-				directionVector = -transform.forward;
-				break;
-			default:
-				throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-		}
-
-		if (Vector3.Angle(directionVector, Targeter.target.transform.position - transform.position) > 45f)
-			return;
-
-		beam.SetBeamEnd(Targeter.target.transform);
+		beam.SetBeamEnd(target.transform);
 		beam.SetBeamVisible(true);
 		beam.HideAfterSeconds(0.67f);
 
-		laser.Fire();
+		firingCooldown = firingInterval;
+		readyToFire = false;
 
-		OnLaserFired?.Invoke(laser);
+		target.Stats.ModifyResource(ResourceType.HULL, -damage);
+
+		OnLaserFired?.Invoke(this);
+	}
+
+	public void ReduceCooldown()
+	{
+		if (readyToFire)
+			return;
+
+		firingCooldown -= Time.deltaTime;
+
+		if (firingCooldown <= 0f)
+		{
+			readyToFire = true;
+			OnLaserReady?.Invoke(this);
+		}
+	}
+
+	private void CheckForTargetInRange()
+	{
+		if (Ship.Targeter.TargetDistance <= range)
+		{
+			if (targetInRange == false)
+			{
+				targetInRange = true;
+				OnTargetInRange?.Invoke(this);
+			}
+		}
+		else
+		{
+			if (targetInRange == true)
+			{
+				targetInRange = false;
+				OnTargetOutOfRange?.Invoke(this);
+			}
+		}
 	}
 
 	//-----GIZMOS-----
@@ -76,48 +102,4 @@ public class LaserWeaponsController : ShipComponent
 			GizmoExtensions.DrawWireCircle(transform.position, range);
 		}
 	}
-}
-
-[Serializable]
-public class LaserStatus
-{
-	public bool enabled;
-	public LaserDirection direction;
-	public float firingInterval;
-	[HideInInspector] public float firingCooldown;
-	public bool readyToFire;
-
-	public event Action<LaserStatus> OnLaserReady;
-	public event Action<LaserStatus> OnLaserFired;
-
-	public void ReduceCooldown()
-	{
-		if (readyToFire)
-			return;
-
-		firingCooldown -= Time.deltaTime;
-
-		if (firingCooldown < 0f)
-		{
-			OnLaserReady?.Invoke(this);
-			readyToFire = true;
-		}
-	}
-
-	public void Fire()
-	{
-		firingCooldown = firingInterval;
-		readyToFire = false;
-
-		OnLaserFired?.Invoke(this);
-	}
-}
-
-public enum LaserDirection
-{
-	FRONT,
-	RIGHT,
-	REAR,
-	LEFT,
-	UNI
 }

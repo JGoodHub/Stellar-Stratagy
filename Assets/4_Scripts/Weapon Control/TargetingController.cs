@@ -9,11 +9,14 @@ public class TargetingController : ShipComponent
 	public ShipController target;
 
 	public bool HasTarget => target != null;
+	public float TargetDistance => target == null ? float.MaxValue : Vector3.Distance(transform.position, target.transform.position);
+
+	private bool lockTarget = false;
 
 	public bool debugLogs;
-	
+
 	public event Action<ShipController> OnTargetChanged;
-	
+
 	private void Start()
 	{
 		SelectionController.Instance.OnSelectionChanged += SelectionChanged;
@@ -34,7 +37,7 @@ public class TargetingController : ShipComponent
 		return Vector2.Distance(myPos, otherPos) <= range;
 	}
 
-	public bool SetTarget(ShipController other)
+	public bool SetTarget(ShipController other, bool forceSet = false)
 	{
 		if (other == null)
 		{
@@ -42,14 +45,17 @@ public class TargetingController : ShipComponent
 			OnTargetChanged?.Invoke(target);
 			return false;
 		}
-		
+
 		bool targetInRange = IsShipInRange(other);
 
-		if (targetInRange)
+		if (targetInRange || forceSet)
 		{
 			target = other;
 			OnTargetChanged?.Invoke(target);
-			
+
+			if (forceSet)
+				lockTarget = true;
+
 			Debug.Log($"Targeter: New target acquired {other.gameObject.name}");
 		}
 
@@ -58,18 +64,20 @@ public class TargetingController : ShipComponent
 
 	private void Update()
 	{
-		if (target != null && IsShipInRange(target) == false)
+		if (target != null && (IsShipInRange(target) == false && lockTarget == false))
 		{
 			target = null;
 			OnTargetChanged?.Invoke(target);
 		}
 	}
-	
+
 	//-----GIZMOS-----
 	public bool drawGizmos;
 
-	private void OnDrawGizmos() {
-		if (drawGizmos) {
+	private void OnDrawGizmos()
+	{
+		if (drawGizmos)
+		{
 			Gizmos.color = Color.green;
 			GizmoExtensions.DrawWireCircle(transform.position, range);
 		}

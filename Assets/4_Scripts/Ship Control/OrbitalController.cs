@@ -11,8 +11,11 @@ public class OrbitalController : ShipComponent
 	public Transform pointsParent;
 	private List<Transform> waypoints = new List<Transform>();
 
-	private OrbitalController orbitTarget;
+	public OrbitalController orbitTarget;
 	private Transform targetWaypoint;
+	public bool orbitDirectionClockwise = true;
+
+	public float nextNodeThreshold = 50f;
 
 	private void Awake()
 	{
@@ -26,30 +29,33 @@ public class OrbitalController : ShipComponent
 
 		if (targetWaypoint == null)
 		{
-			targetWaypoint = orbitTarget.GetOrbitInsertionPoint(transform, true).Key;
+			targetWaypoint = orbitTarget.GetOrbitInsertionPoint(transform, orbitDirectionClockwise).Key;
 
 			Ship.Helm.SetWaypoint(targetWaypoint);
-			//Ship.Helm.SetSpeed(3);
 		}
 
+		Debug.DrawLine(transform.position, targetWaypoint.position, Color.cyan);
+
 		//Set course for the next waypoint in the loop
-		if (Vector3.Distance(transform.position, targetWaypoint.position) < 60f)
+		if (Vector3.Distance(transform.position, targetWaypoint.position) < nextNodeThreshold)
 		{
-			targetWaypoint = orbitTarget.GetNextWaypoint(targetWaypoint, true);
+			targetWaypoint = orbitTarget.GetNextWaypoint(targetWaypoint, orbitDirectionClockwise);
 
 			Ship.Helm.SetWaypoint(targetWaypoint);
-			//Ship.Helm.SetSpeed(3);
 		}
 	}
 
-	public void SetOrbitTarget(OrbitalController otherController)
+	public void SetTarget(ShipController otherShip)
 	{
-		orbitTarget = otherController;
-
-		if (orbitTarget == null)
+		if (otherShip == null)
+		{
+			orbitTarget = null;
 			targetWaypoint = null;
-		else
-			Update();
+			return;
+		}
+
+		orbitTarget = otherShip.OrbitalController;
+		Update();
 	}
 
 	public KeyValuePair<Transform, float> GetOrbitInsertionPoint(Transform shipTransform, bool clockwiseInsertion)

@@ -33,9 +33,13 @@ public class SelectionController : SceneSingleton<SelectionController>
 
 	public static void UnregisterEntity(Entity entity)
 	{
+		if (entity == SelectedEntity)
+			Instance.ClearCurrentSelection();
+
 		if (allEntities.Contains(entity))
 			allEntities.Remove(entity);
 	}
+
 	private void Update()
 	{
 		if (Input.GetMouseButtonDown(0) && eventSystem.IsPointerOverGameObject() == false)
@@ -78,6 +82,17 @@ public class SelectionController : SceneSingleton<SelectionController>
 		}
 
 		return null;
+	}
+
+	public void ClearCurrentSelection()
+	{
+		if (selectedEntity != null)
+		{
+			selectedEntity.SetSelected(false);
+			OnSelectionChanged?.Invoke(this, selectedEntity, null);
+		}
+
+		selectedEntity = null;
 	}
 
 }

@@ -8,8 +8,7 @@ public class StatsController : MonoBehaviour
 {
 	//-----VARIABLES-----
 
-	public ShipController ShipController => GetComponent<ShipController>();
-
+	public ShipController Ship => GetComponent<ShipController>();
 
 	[Header("Resources")]
 	public ResourceStat hullStat = new ResourceStat(ResourceType.HULL, 0, 10);
@@ -18,16 +17,17 @@ public class StatsController : MonoBehaviour
 	public ResourceStat missileStat = new ResourceStat(ResourceType.MISSILE, 0, 10);
 	public ResourceStat crewStat = new ResourceStat(ResourceType.CREW, 0, 10);
 
-	public event Action<ResourceType, float, float> OnResourceValueChanged;
-	public event Action<ResourceType> OnResourceMinimumReached;
-	public event Action<ResourceType> OnResourceMaximumReached;
+	public event Action<StatsController, ResourceType, float, float> OnResourceValueChanged;
+	public event Action<StatsController, ResourceType> OnResourceMinimumReached;
+	public event Action<StatsController, ResourceType> OnResourceMaximumReached;
 
+	//public delegate void ResourceValueChanged(StatsController sender, float oldValue, float newValue);
+	//public event
+	
 
 	public GameObject shieldParent;
 	public GameObject shipExplosionPrefab;
-
-	public bool isFriendly;
-
+	
 	//-----METHODS-----
 
 	private void Start()
@@ -70,8 +70,8 @@ public class StatsController : MonoBehaviour
 			switch (type)
 			{
 				case ResourceType.HULL: //Should be made into a toggle
-					if (stat.current <= 0)
-						SelfDestruct();
+					//if (stat.current <= 0)
+					//Destruct();
 					break;
 				case ResourceType.SHIELD: //Should be placed in a shield controller for more parameters
 					if (stat.current > 0)
@@ -81,20 +81,20 @@ public class StatsController : MonoBehaviour
 					break;
 				case ResourceType.FUEL:
 					if (stat.current <= 0)
-						ShipController.Helm.SetSpeedCap(2);
+						Ship.Helm?.SetSpeedCap(2);
 					else
-						ShipController.Helm?.SetSpeedCap(FlightController.SPEED_DIVISIONS);
+						Ship.Helm?.SetSpeedCap(FlightController.SPEED_DIVISIONS);
 					break;
 
 			}
-			
-			//Call events
-			OnResourceValueChanged?.Invoke(type, oldValue, stat.current);
 
-			if (stat.current == 0)
-				OnResourceMinimumReached?.Invoke(type);
+			//Call events
+			OnResourceValueChanged?.Invoke(this, type, oldValue, stat.current);
+
+			if (stat.current <= 0)
+				OnResourceMinimumReached?.Invoke(this, type);
 			else if (Mathf.Approximately(stat.current, stat.max))
-				OnResourceMaximumReached?.Invoke(type);
+				OnResourceMaximumReached?.Invoke(this, type);
 		}
 	}
 
@@ -118,17 +118,12 @@ public class StatsController : MonoBehaviour
 		shieldParent.SetActive(false);
 	}
 
-	private void SelfDestruct()
+	private void Destruct()
 	{
 		GameObject shipExplosionObject = Instantiate(shipExplosionPrefab, transform.position, Quaternion.identity);
 		RuntimeObjectsManager.instance.AddToCollection(shipExplosionObject, "Explosions");
 
 		Destroy(shipExplosionObject, 5f);
-
-		if (isFriendly)
-		{
-			FogOfWarManager.instance.RemoveShipMask(gameObject.transform);
-		}
 
 		Destroy(gameObject);
 	}

@@ -21,9 +21,7 @@ public class MovementController : MonoBehaviour {
     [SerializeField] private float maxForwardSpeed;
     [SerializeField] private float forwardAcceleration;
     private float currentForwardSpeed;
-
     [Space]
-
     [SerializeField] private float distanceFalloff;
     [SerializeField] private float earlyTurnDistance;
 
@@ -31,9 +29,7 @@ public class MovementController : MonoBehaviour {
     [SerializeField] private float maxRotationSpeed;
     [SerializeField] private float rotationAcceleration;
     private float currentRotationSpeed;
-
-    public AnimationCurve rotationSpeedCurve;
-
+    
     [Header("Debug")]
     public bool logSpeedValues;
     public bool showVisualisations;

@@ -1,41 +1,36 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileProjectile : MonoBehaviour {
+public class MissileProjectile : MonoBehaviour
+{
 
 	public float speed;
-	private Transform target;
-	public Transform Target {
-		set => target = value;
+	public float damage;
+	private ShipController targetShip;
+
+	public GameObject explosionPrefab;
+
+	public void SetTarget(ShipController target)
+	{
+		targetShip = target;
 	}
 
-	[SerializeField] private ParticleSystem smokeTrail;
-	public ParticleSystem SmokeTrail => smokeTrail;
+	private void Update()
+	{
+		transform.LookAt(targetShip.transform);
+		transform.Translate(Vector3.forward * (speed * Time.deltaTime));
 
-	private bool missed = false;
-
-	private void Start () {
-		Init ();
-	}
-
-	public void Init () {
-		smokeTrail.Play ();
-		transform.LookAt (target.position);
-	}
-
-	private void FixedUpdate () {
-		if (missed == false && target != null && Vector3.Distance(transform.position, target.position) < 4f) {
-			missed = true;
+		if (Vector3.Distance(transform.position, targetShip.transform.position) <= 5f)
+		{
+			targetShip.Stats.ModifyResource(ResourceType.HULL, -damage);
+			
+			GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+			Destroy(explosion, 5f);
+			
+			Destroy(gameObject);
 		}
-
-		if (!missed && target != null) {
-			transform.LookAt (target.position);
-		}
-
-
-		transform.Translate (Vector3.forward * speed * Time.deltaTime);
-
 	}
 
 

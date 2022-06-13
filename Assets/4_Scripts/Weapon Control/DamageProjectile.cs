@@ -127,7 +127,7 @@ public class DamageProjectile : MonoBehaviour {
 			}
 			break;
 		case HardpointID.HardpointType.missileTurret:
-			GetComponent<MissileProjectile> ().SmokeTrail.Stop();
+			//GetComponent<MissileProjectile> ().SmokeTrail.Stop();
 
 			switch (projectileSize) {
 			case HardpointID.HardpointSize.small:					

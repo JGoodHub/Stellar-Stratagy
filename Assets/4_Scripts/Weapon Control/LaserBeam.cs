@@ -32,7 +32,7 @@ public class LaserBeam : MonoBehaviour
 		target = end;
 	}
 
-	private void Update()
+	private void LateUpdate()
 	{
 		if (source != null)
 			beamRenderer.SetPosition(0, source.position);

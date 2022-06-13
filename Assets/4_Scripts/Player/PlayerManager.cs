@@ -6,7 +6,9 @@ using UnityEngine;
 public class PlayerManager : SceneSingleton<PlayerManager>
 {
 
-	public ShipController playerShip;
+	[SerializeField] private ShipController playerShip;
+
+	public static ShipController PlayerShip => Instance.playerShip;
 
 	public void Start()
 	{
@@ -17,10 +19,19 @@ public class PlayerManager : SceneSingleton<PlayerManager>
 	private void OnSelectionChanged(object sender, Entity oldEntity, Entity newEntity)
 	{
 		if (newEntity == null)
+		{
+			SetOrbitTarget(null);
+			SetFollowTarget(null);
 			return;
+		}
 
 		if (newEntity.TryGetComponent(out ShipController ship))
-			SetShipOrbitTarget(ship);
+		{
+			if (ship.isStatic)
+				SetOrbitTarget(ship);
+			else
+				SetFollowTarget(ship);
+		}
 	}
 
 	private void OnNavPlaneQuery(object sender, Vector2 navPlanePoint)
@@ -33,14 +44,21 @@ public class PlayerManager : SceneSingleton<PlayerManager>
 
 	public void SetShipHeading(Vector3 position)
 	{
-		playerShip.OrbitalController.SetOrbitTarget(null);
-		playerShip.Helm.SetHeading(position);
+		playerShip.OrbitalController.SetTarget(null);
+		playerShip.Helm.SetHeadingPosition(position);
 		playerShip.Helm.SetDirectionRingVisible(true);
 	}
 
-	private void SetShipOrbitTarget(ShipController otherShip)
+	private void SetOrbitTarget(ShipController otherShip)
 	{
-		playerShip.OrbitalController.SetOrbitTarget(otherShip.OrbitalController);
+		playerShip.OrbitalController.SetTarget(otherShip);
+		playerShip.Helm.SetDirectionRingVisible(false);
+
+	}
+
+	private void SetFollowTarget(ShipController otherShip)
+	{
+		playerShip.FollowFlightController.SetTarget(otherShip);
 		playerShip.Helm.SetDirectionRingVisible(false);
 
 	}
