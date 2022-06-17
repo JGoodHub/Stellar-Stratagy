@@ -1,301 +1,19 @@
 fileFormatVersion: 2
-guid: cca6d5844c702354082f871f8e9fcb92
+guid: f83c2a302a00f85458f01d76a3ad2dc6
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: Body
-  - first:
-      1: 100002
-    second: Bridge
-  - first:
-      1: 100004
-    second: Bridge Tower
-  - first:
-      1: 100006
-    second: Engine
-  - first:
-      1: 100008
-    second: Engine Connector
-  - first:
-      1: 100010
-    second: Engine Connector.001
-  - first:
-      1: 100012
-    second: Engine.001
-  - first:
-      1: 100014
-    second: Engine.002
-  - first:
-      1: 100016
-    second: //RootNode
-  - first:
-      1: 100018
-    second: Rear Body
-  - first:
-      1: 100020
-    second: Hardpoint Small
-  - first:
-      1: 100022
-    second: Hardpoint Small.001
-  - first:
-      1: 100024
-    second: Hardpoint Small.002
-  - first:
-      1: 100026
-    second: Hardpoint Small.003
-  - first:
-      1: 100028
-    second: Hardpoint Small.004
-  - first:
-      1: 100030
-    second: Hardpoint Small.005
-  - first:
-      4: 400000
-    second: Body
-  - first:
-      4: 400002
-    second: Bridge
-  - first:
-      4: 400004
-    second: Bridge Tower
-  - first:
-      4: 400006
-    second: Engine
-  - first:
-      4: 400008
-    second: Engine Connector
-  - first:
-      4: 400010
-    second: Engine Connector.001
-  - first:
-      4: 400012
-    second: Engine.001
-  - first:
-      4: 400014
-    second: Engine.002
-  - first:
-      4: 400016
-    second: //RootNode
-  - first:
-      4: 400018
-    second: Rear Body
-  - first:
-      4: 400020
-    second: Hardpoint Small
-  - first:
-      4: 400022
-    second: Hardpoint Small.001
-  - first:
-      4: 400024
-    second: Hardpoint Small.002
-  - first:
-      4: 400026
-    second: Hardpoint Small.003
-  - first:
-      4: 400028
-    second: Hardpoint Small.004
-  - first:
-      4: 400030
-    second: Hardpoint Small.005
-  - first:
-      23: 2300000
-    second: Body
-  - first:
-      23: 2300002
-    second: Bridge
-  - first:
-      23: 2300004
-    second: Bridge Tower
-  - first:
-      23: 2300006
-    second: Engine
-  - first:
-      23: 2300008
-    second: Engine Connector
-  - first:
-      23: 2300010
-    second: Engine Connector.001
-  - first:
-      23: 2300012
-    second: Engine.001
-  - first:
-      23: 2300014
-    second: Engine.002
-  - first:
-      23: 2300016
-    second: Rear Body
-  - first:
-      23: 2300018
-    second: Hardpoint Small
-  - first:
-      23: 2300020
-    second: Hardpoint Small.001
-  - first:
-      23: 2300022
-    second: Hardpoint Small.002
-  - first:
-      23: 2300024
-    second: Hardpoint Small.003
-  - first:
-      23: 2300026
-    second: Hardpoint Small.004
-  - first:
-      23: 2300028
-    second: Hardpoint Small.005
-  - first:
-      33: 3300000
-    second: Body
-  - first:
-      33: 3300002
-    second: Bridge
-  - first:
-      33: 3300004
-    second: Bridge Tower
-  - first:
-      33: 3300006
-    second: Engine
-  - first:
-      33: 3300008
-    second: Engine Connector
-  - first:
-      33: 3300010
-    second: Engine Connector.001
-  - first:
-      33: 3300012
-    second: Engine.001
-  - first:
-      33: 3300014
-    second: Engine.002
-  - first:
-      33: 3300016
-    second: Rear Body
-  - first:
-      33: 3300018
-    second: Hardpoint Small
-  - first:
-      33: 3300020
-    second: Hardpoint Small.001
-  - first:
-      33: 3300022
-    second: Hardpoint Small.002
-  - first:
-      33: 3300024
-    second: Hardpoint Small.003
-  - first:
-      33: 3300026
-    second: Hardpoint Small.004
-  - first:
-      33: 3300028
-    second: Hardpoint Small.005
-  - first:
-      43: 4300000
-    second: Rear Body
-  - first:
-      43: 4300002
-    second: Engine Connector.001
-  - first:
-      43: 4300004
-    second: Engine
-  - first:
-      43: 4300006
-    second: Bridge
-  - first:
-      43: 4300008
-    second: Bridge Tower
-  - first:
-      43: 4300010
-    second: Body
-  - first:
-      43: 4300012
-    second: Hardpoint Small.005
-  - first:
-      64: 6400000
-    second: Body
-  - first:
-      64: 6400002
-    second: Bridge
-  - first:
-      64: 6400004
-    second: Bridge Tower
-  - first:
-      64: 6400006
-    second: Engine
-  - first:
-      64: 6400008
-    second: Engine Connector
-  - first:
-      64: 6400010
-    second: Engine Connector.001
-  - first:
-      64: 6400012
-    second: Engine.001
-  - first:
-      64: 6400014
-    second: Engine.002
-  - first:
-      64: 6400016
-    second: Rear Body
-  - first:
-      64: 6400018
-    second: Hardpoint Small
-  - first:
-      64: 6400020
-    second: Hardpoint Small.001
-  - first:
-      64: 6400022
-    second: Hardpoint Small.002
-  - first:
-      64: 6400024
-    second: Hardpoint Small.003
-  - first:
-      64: 6400026
-    second: Hardpoint Small.004
-  - first:
-      64: 6400028
-    second: Hardpoint Small.005
+  internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Body
-    second: {fileID: 2100000, guid: d02e34dac1077db4796b9d59df1cbbc3, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Body 2
-    second: {fileID: 2100000, guid: aa95a117c00cf3549aa8b8348a8f32d5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Engine Inner
-    second: {fileID: 2100000, guid: 1ec7af7d5217f2c489925f13cad8bea2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Internals
-    second: {fileID: 2100000, guid: fad23d9631ae05f459d5ef6da44837d0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Trim
-    second: {fileID: 2100000, guid: 9116510b0235d684da0061f9fd52d5f1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Trim 2
-    second: {fileID: 2100000, guid: cc9990e5c5d1134489d3c8cf4652a967, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Trim 3
-    second: {fileID: 2100000, guid: 9f1e6fa07e4d44c45b1d3315fca69bf1, type: 2}
+      name: body
+    second: {fileID: 2100000, guid: 59b0b65914feaeb4c9b999966180b2c6, type: 2}
   materials:
     materialImportMode: 1
-    materialName: 1
-    materialSearch: 0
-    materialLocation: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -318,19 +36,19 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.25
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
-    fileIdsGeneration: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -341,22 +59,22 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     meshOptimizationFlags: -1
-    indexFormat: 1
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 15
-    normalImportMode: 1
+    normalSmoothAngle: 60
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
@@ -368,14 +86,14 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.0025
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
   additionalBone: 0
