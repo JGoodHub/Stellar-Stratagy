@@ -42,10 +42,10 @@ public class EnemyManager : Singleton<EnemyManager>
 		sender.OnResourceValueChanged -= OnShipAttacked;
 
 		ShipController ship = sender.Ship;
-		ship.Targeter.SetTarget(PlayerManager.PlayerShip, true);
+		//ship.Targeter.SetTarget(PlayerCombatController.PlayerShip, true);
 		ship.GetComponent<PatrolController>().enabled = false;
-		ship.FollowFlightController.SetTarget(PlayerManager.PlayerShip);
-		ship.Helm.SetSpeed(4);
+		//ship.FollowFlightController.SetTarget(PlayerManager.PlayerShip);
+		//ship.Helm.SetSpeed(4);
 
 		ship.LaserWeaponsController.OnTargetInRange += FireLaserAtTarget;
 		ship.LaserWeaponsController.OnLaserReady += FireLaserAtTarget;

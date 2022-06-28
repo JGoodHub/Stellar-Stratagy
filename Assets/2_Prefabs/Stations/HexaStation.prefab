@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5051703177874002871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11829466265867959}
+  m_Layer: 10
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11829466265867959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051703177874002871}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6500711430260243755}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6500711430231903168
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +138,7 @@ GameObject:
   - component: {fileID: 6500711430260243753}
   - component: {fileID: 6500711430260243752}
   - component: {fileID: 6500711430260243926}
+  - component: {fileID: 6500711431099237720}
   m_Layer: 10
   m_Name: HexaStation
   m_TagString: Station
@@ -122,7 +153,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6500711430260243754}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -130,6 +161,7 @@ Transform:
   - {fileID: 6500711430231903169}
   - {fileID: 6500711431298523011}
   - {fileID: 6500711431730787331}
+  - {fileID: 11829466265867959}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -167,11 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitRadius: 130
-  pointsCount: 48
-  pointsParent: {fileID: 6500711431730787331}
-  orbitTarget: {fileID: 0}
-  orbitDirectionClockwise: 0
-  nextNodeThreshold: 50
+  rotatingAnchor: {fileID: 0}
+  rotatingAnchorSpeed: 0
   drawGizmos: 1
 --- !u!114 &6500711430260243926
 MonoBehaviour:
@@ -207,6 +236,25 @@ MonoBehaviour:
     max: 10
   shieldParent: {fileID: 6500711430231903168}
   shipExplosionPrefab: {fileID: 0}
+--- !u!114 &6500711431099237720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6500711430260243754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06939508536e4b149b89bcd30722fb78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: EarthStation
+  connectedWaypoints:
+  - {fileID: 0}
+  drawGizmos: 0
+  orbitRadius: 130
+  rotatingAnchor: {fileID: 11829466265867959}
+  rotatingAnchorSpeed: 10
 --- !u!1 &6500711431298523010
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,12 +79,12 @@ public class StatsController : MonoBehaviour
 					else
 						DropShield();
 					break;
-				case ResourceType.FUEL:
-					if (stat.current <= 0)
-						Ship.Helm?.SetSpeedCap(2);
-					else
-						Ship.Helm?.SetSpeedCap(FlightController.SPEED_DIVISIONS);
-					break;
+				// case ResourceType.FUEL:
+				// 	if (stat.current <= 0)
+				// 		Ship.Helm?.SetSpeedCap(2);
+				// 	else
+				// 		Ship.Helm?.SetSpeedCap(ManualFlightController.SPEED_DIVISIONS);
+				// 	break;
 
 			}
 

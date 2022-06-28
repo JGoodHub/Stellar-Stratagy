@@ -14,10 +14,8 @@ public class ShipController : Entity
 	public MissileWeaponsController MissileWeaponsController => GetComponent<MissileWeaponsController>();
 
 	//Flight controls
-	public FlightController Helm => GetComponent<FlightController>();
+	public AutoFlightController Helm => GetComponent<AutoFlightController>();
 	public OrbitalController OrbitalController => GetComponent<OrbitalController>();
-	public FollowFlightController FollowFlightController => GetComponent<FollowFlightController>();
-
 
 	[Header("Ship Controller")]
 	public GameObject explosionPrefab;
@@ -26,8 +24,9 @@ public class ShipController : Entity
 	{
 		base.Start();
 
-		Stats.OnResourceMinimumReached += OnHullDestroyed;
+		//Stats.OnResourceMinimumReached += OnHullDestroyed;
 	}
+	
 	private void OnHullDestroyed(StatsController sender, ResourceType resType)
 	{
 		if (resType != ResourceType.HULL)

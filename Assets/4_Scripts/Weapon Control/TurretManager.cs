@@ -11,7 +11,7 @@ public class TurretManager : MonoBehaviour
     public bool IsFriendly { set => isFriendly = value; }
 
     public Transform[] hardpointTransforms;
-    private TurretController[] turretControllers;
+    private Turret[] turretControllers;
 
     private Transform targetTransform;
     private bool targetChanged;
@@ -20,7 +20,7 @@ public class TurretManager : MonoBehaviour
 
     private void Initialise()
     {
-        turretControllers = new TurretController[hardpointTransforms.Length];
+        turretControllers = new Turret[hardpointTransforms.Length];
 
         for (int i = 0; i < hardpointTransforms.Length; i++)
         {
@@ -28,7 +28,7 @@ public class TurretManager : MonoBehaviour
 
             GameObject turretPrefab = null;
             GameObject turretClone;
-            TurretController turretCloneController;
+            Turret turretCloneController;
 
             switch (hardID.hardpointType)
             {
@@ -59,7 +59,7 @@ public class TurretManager : MonoBehaviour
             turretClone = (GameObject)Instantiate(turretPrefab, hardID.transform.position, hardID.transform.rotation);
             turretClone.transform.parent = hardID.transform;
 
-            turretCloneController = turretClone.GetComponent<TurretController>();
+            turretCloneController = turretClone.GetComponent<Turret>();
             turretControllers[i] = turretCloneController;
         }
 
@@ -70,7 +70,7 @@ public class TurretManager : MonoBehaviour
     {
         targetTransform = newTarget;
 
-        foreach (TurretController turretCont in turretControllers)
+        foreach (Turret turretCont in turretControllers)
         {
             //turretCont.target = newTarget;		
         }
@@ -82,7 +82,7 @@ public class TurretManager : MonoBehaviour
     {
         targetTransform = null;
 
-        foreach (TurretController turretCont in turretControllers)
+        foreach (Turret turretCont in turretControllers)
         {
             //turretCont.target = null;		
         }

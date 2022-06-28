@@ -84,6 +84,19 @@ public class SelectionController : SceneSingleton<SelectionController>
 		return null;
 	}
 
+	public static List<Entity> GetNearbyEntities(Vector3 queryPosition, float radius)
+	{
+		List<Entity> nearbyEntities = new List<Entity>();
+
+		foreach (Entity entity in allEntities)
+		{
+			if (Vector3.Distance(queryPosition, entity.transform.position) <= radius)
+				nearbyEntities.Add(entity);
+		}
+
+		return nearbyEntities;
+	}
+
 	public void ClearCurrentSelection()
 	{
 		if (selectedEntity != null)

@@ -18,7 +18,7 @@ public class PlayerStatsUI : Singleton<PlayerStatsUI>
 
 	private void Start()
 	{
-		PlayerManager.PlayerShip.Stats.OnResourceValueChanged += OnHullOrShieldChanged;
+		//PlayerCombatController.PlayerShip.Stats.OnResourceValueChanged += OnHullOrShieldChanged;
 	}
 
 	private void OnHullOrShieldChanged(StatsController sender, ResourceType resType, float oldValue, float newValue)

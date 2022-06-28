@@ -33,37 +33,37 @@ public class FollowFlightController : ShipComponent
 		if (targetShip == null)
 			return;
 
-		if (targetWaypoint == null)
-		{
-			//Check if the other ship is already targeting us
-			if (targetShip.FollowFlightController.targetShip == Ship)
-			{
-				if (targetShip.FollowFlightController.targetWaypoint == leftWaypoint)
-				{
-					targetWaypoint = targetShip.FollowFlightController.leftWaypoint;
-				}
-				else
-				{
-					targetWaypoint = targetShip.FollowFlightController.rightWaypoint;
-				}
-			}
-			else
-			{
-				float dot = Vector3.Dot(transform.right, targetShip.Helm.TargetDirection);
-
-				if (Mathf.Abs(dot) < 0.1f)
-				{
-					targetWaypoint = Random.Range(-1f, 1f) > 0f ? targetShip.FollowFlightController.rightWaypoint : targetShip.FollowFlightController.leftWaypoint;
-				}
-				else
-				{
-					targetWaypoint = dot > 0f ? targetShip.FollowFlightController.rightWaypoint : targetShip.FollowFlightController.leftWaypoint;
-				}
-			}
-			
-			Ship.Helm.SetWaypoint(targetWaypoint);
-
-		}
+		// if (targetWaypoint == null)
+		// {
+		// 	//Check if the other ship is already targeting us
+		// 	if (targetShip.FollowFlightController.targetShip == Ship)
+		// 	{
+		// 		if (targetShip.FollowFlightController.targetWaypoint == leftWaypoint)
+		// 		{
+		// 			targetWaypoint = targetShip.FollowFlightController.leftWaypoint;
+		// 		}
+		// 		else
+		// 		{
+		// 			targetWaypoint = targetShip.FollowFlightController.rightWaypoint;
+		// 		}
+		// 	}
+		// 	else
+		// 	{
+		// 		float dot = Vector3.Dot(transform.right, targetShip.Helm.TargetDirection);
+		//
+		// 		if (Mathf.Abs(dot) < 0.1f)
+		// 		{
+		// 			targetWaypoint = Random.Range(-1f, 1f) > 0f ? targetShip.FollowFlightController.rightWaypoint : targetShip.FollowFlightController.leftWaypoint;
+		// 		}
+		// 		else
+		// 		{
+		// 			targetWaypoint = dot > 0f ? targetShip.FollowFlightController.rightWaypoint : targetShip.FollowFlightController.leftWaypoint;
+		// 		}
+		// 	}
+		// 	
+		// 	Ship.Helm.SetWaypoint(targetWaypoint);
+		//
+		// }
 
 		/*
 		float angleToShip = Vector3.Angle(transform.forward, targetShip.transform.position - transform.position);

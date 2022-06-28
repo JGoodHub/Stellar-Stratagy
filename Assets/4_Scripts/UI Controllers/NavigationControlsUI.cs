@@ -40,37 +40,37 @@ public class NavigationControlsUI : MonoBehaviour
 
 	private void Update()
 	{
-		float fuelBarFillAmount = PlayerManager.PlayerShip.Stats.GetResource(ResourceType.FUEL).Normalised;
-
-		if (fuelBarFillAmount <= 0)
-		{
-			fuelEmptyText.enabled = true;
-		}
-		else
-		{
-			fuelEmptyText.enabled = false;
-
-			fuelBarFill.fillAmount = fuelBarFillAmount;
-
-			if (fuelBarFillAmount <= criticalThreshold)
-				fuelBarFill.color = criticalColour;
-			else if (fuelBarFillAmount > criticalThreshold && fuelBarFillAmount <= lowThreshold)
-				fuelBarFill.color = lowColour;
-			else if (fuelBarFillAmount > lowThreshold)
-				fuelBarFill.color = highColour;
-		}
-
-		UpdateEngineBars();
+		// float fuelBarFillAmount = PlayerCombatController.PlayerShip.Stats.GetResource(ResourceType.FUEL).Normalised;
+		//
+		// if (fuelBarFillAmount <= 0)
+		// {
+		// 	fuelEmptyText.enabled = true;
+		// }
+		// else
+		// {
+		// 	fuelEmptyText.enabled = false;
+		//
+		// 	fuelBarFill.fillAmount = fuelBarFillAmount;
+		//
+		// 	if (fuelBarFillAmount <= criticalThreshold)
+		// 		fuelBarFill.color = criticalColour;
+		// 	else if (fuelBarFillAmount > criticalThreshold && fuelBarFillAmount <= lowThreshold)
+		// 		fuelBarFill.color = lowColour;
+		// 	else if (fuelBarFillAmount > lowThreshold)
+		// 		fuelBarFill.color = highColour;
+		// }
+		//
+		// UpdateEngineBars();
 	}
 
 	public void IncreaseShipSpeed()
 	{
-		PlayerManager.PlayerShip.Helm.ModifySpeed(1);
+		//PlayerManager.PlayerShip.Helm.ModifySpeed(1);
 	}
 
 	public void DecreaseShipSpeed()
 	{
-		PlayerManager.PlayerShip.Helm.ModifySpeed(-1);
+		//PlayerManager.PlayerShip.Helm.ModifySpeed(-1);
 	}
 
 	public void UpdateEngineBars()
@@ -80,10 +80,10 @@ public class NavigationControlsUI : MonoBehaviour
 			enginePowerBars[i].enabled = false;
 		}
 
-		for (int i = 0; i < PlayerManager.PlayerShip.Helm.speedSetting; i++)
-		{
-			enginePowerBars[i].enabled = true;
-		}
+		// for (int i = 0; i < PlayerManager.PlayerShip.Helm.speedSetting; i++)
+		// {
+		// 	enginePowerBars[i].enabled = true;
+		// }
 	}
 
 
