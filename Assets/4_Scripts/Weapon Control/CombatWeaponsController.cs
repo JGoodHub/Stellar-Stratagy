@@ -21,6 +21,7 @@ public class CombatWeaponsController : MonoBehaviour
 		public Vector3 TargetPosition;
 	}
 
+	[NonReorderable]
 	public List<Hardpoint> Hardpoints;
 
 	private List<WeaponAction> WeaponActions = new List<WeaponAction>();

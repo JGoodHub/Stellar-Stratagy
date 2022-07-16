@@ -10,5 +10,12 @@ public class WeaponConfig : ScriptableObject
 	public bool RotateToFaceTarget;
 
 	public GameObject WeaponTileItem;
-	public GameObject TargeterReticle;
+	public GameObject TargetReticle;
+
+
+	public virtual void Fire(Entity targetEntity, Vector3 targetPosition)
+	{
+		
+	}
+	
 }
