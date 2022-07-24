@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1213211960333238578}
   m_LocalRotation: {x: 0.49996603, y: 0.4999646, z: 0.5000341, w: 0.5000354}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.5, z: 0.75}
+  m_LocalScale: {x: 0.75, y: 0.4, z: 0.75}
   m_Children: []
   m_Father: {fileID: 2425652637988943815}
   m_RootOrder: 1
@@ -92,7 +92,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2425652637988943815}
   - component: {fileID: 2425652637988943812}
-  - component: {fileID: 139723480}
   m_Layer: 0
   m_Name: LaserBoltGreen
   m_TagString: Untagged
@@ -128,20 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e657b977ae4809ad892a112d4e922c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _frozen: 0
---- !u!65 &139723480
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2425652637988943809}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.6, y: 1.6, z: 9}
-  m_Center: {x: 0, y: 0, z: 0}
+  _shieldHitEffect: {fileID: 1184543136216156, guid: ad44e9ac60264cd47af7d6788297a53b,
+    type: 3}
+  _hullHitEffect: {fileID: 1887096217870868, guid: d2e6db95297df63479b310cd26a53154,
+    type: 3}
+  _turnLifetime: 4
+  damage: 1
 --- !u!1 &3227044759549508023
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 3227044759549508023}
   m_LocalRotation: {x: 0.7070577, y: -0, z: -0, w: 0.70715594}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.5, z: 0.75}
+  m_LocalScale: {x: 0.75, y: 0.4, z: 0.75}
   m_Children: []
   m_Father: {fileID: 2425652637988943815}
   m_RootOrder: 0

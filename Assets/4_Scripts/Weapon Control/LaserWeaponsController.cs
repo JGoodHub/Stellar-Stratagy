@@ -13,7 +13,7 @@ public class LaserWeaponsController : ShipComponent
 	public bool readyToFire = false;
 
 	public GameObject beamPrefab;
-	public LaserBolt _bolt;
+	public CombatProjectileLaserBolt _bolt;
 
 	public event Action<LaserWeaponsController> OnLaserFired;
 	public event Action<LaserWeaponsController> OnLaserReady;
@@ -25,7 +25,7 @@ public class LaserWeaponsController : ShipComponent
 	private void Start()
 	{
 		GameObject beamObject = Instantiate(beamPrefab, Vector3.zero, Quaternion.identity);
-		_bolt = beamObject.GetComponent<LaserBolt>();
+		_bolt = beamObject.GetComponent<CombatProjectileLaserBolt>();
 		//beam.Initialise(transform);
 
 		readyToFire = false;
@@ -52,7 +52,7 @@ public class LaserWeaponsController : ShipComponent
 		firingCooldown = firingInterval;
 		readyToFire = false;
 
-		target.Stats.ModifyResource(ResourceType.HULL, -damage);
+		//target.Stats.Modify(StatType.HULL, -damage);
 
 		OnLaserFired?.Invoke(this);
 	}

@@ -21,20 +21,20 @@ public class PlayerStatsUI : Singleton<PlayerStatsUI>
 		//PlayerCombatController.PlayerShip.Stats.OnResourceValueChanged += OnHullOrShieldChanged;
 	}
 
-	private void OnHullOrShieldChanged(StatsController sender, ResourceType resType, float oldValue, float newValue)
+	private void OnHullOrShieldChanged(StatsController sender, StatType resType, float oldValue, float newValue)
 	{
-		if (resType != ResourceType.HULL && resType != ResourceType.SHIELD)
+		if (resType != StatType.HULL && resType != StatType.SHIELD)
 			return;
 
-		if (resType == ResourceType.HULL)
+		if (resType == StatType.HULL)
 		{
-			hullFillImage.fillAmount = newValue / sender.hullStat.max;
-			hullFillText.text = $"{newValue}/{sender.hullStat.max}";
+			//hullFillImage.fillAmount = newValue / sender.hullStat.max;
+			//hullFillText.text = $"{newValue}/{sender.hullStat.max}";
 		}
 		else
 		{
-			shieldFillImage.fillAmount = newValue / sender.shieldStat.max;
-			shieldFillText.text = $"{newValue}/{sender.shieldStat.max}";
+			//shieldFillImage.fillAmount = newValue / sender.shieldStat.max;
+			//shieldFillText.text = $"{newValue}/{sender.shieldStat.max}";
 		}
 	}
 

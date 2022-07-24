@@ -27,39 +27,20 @@ public class CameraController : Singleton<CameraController>
 		resetRotation = transform.rotation;
 	}
 
-	public Ray GetCameraRay()
-	{
-		return camera.ScreenPointToRay(Input.mousePosition);
-	}
-
-	public bool GetCameraRaycast(out RaycastHit rayHit)
-	{
-		return Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out rayHit, 2000f);
-	}
-
 	private void Update()
 	{
-		if (Input.GetKey(KeyCode.LeftArrow))
-		{
-			transform.Rotate(Vector3.up, orbitSpeedHorizontal * Time.deltaTime, Space.World);
-		}
-		else if (Input.GetKey(KeyCode.RightArrow))
-		{
-			transform.Rotate(Vector3.up, -orbitSpeedHorizontal * Time.deltaTime, Space.World);
-		}
-		else if (Input.GetKeyDown(KeyCode.Home))
-		{
-			transform.rotation = resetRotation;
-		}
+
+		
+		
 	}
 
 	private void LateUpdate()
 	{
-		if (target != null)
-		{
-			Vector3 velocity = Vector3.zero;
-			transform.position = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smoothTime);
-		}
+		if (target == null)
+			return;
+		
+		Vector3 velocity = Vector3.zero;
+		transform.position = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smoothTime);
 	}
 
 //-----GIZMOS-----

@@ -11,147 +11,120 @@ public class StatsController : MonoBehaviour
 	public ShipController Ship => GetComponent<ShipController>();
 
 	[Header("Resources")]
-	public ResourceStat hullStat = new ResourceStat(ResourceType.HULL, 0, 10);
-	public ResourceStat shieldStat = new ResourceStat(ResourceType.SHIELD, 0, 10);
-	public ResourceStat fuelStat = new ResourceStat(ResourceType.FUEL, 0, 10);
-	public ResourceStat missileStat = new ResourceStat(ResourceType.MISSILE, 0, 10);
-	public ResourceStat crewStat = new ResourceStat(ResourceType.CREW, 0, 10);
+	[SerializeField] private int _hullHP = 100;
+	[SerializeField] private int _hullMaximum = 100;
+	[SerializeField] private int _shieldHP = 100;
+	[SerializeField] private int _shieldMaximum = 100;
 
-	public event Action<StatsController, ResourceType, float, float> OnResourceValueChanged;
-	public event Action<StatsController, ResourceType> OnResourceMinimumReached;
-	public event Action<StatsController, ResourceType> OnResourceMaximumReached;
+	[SerializeField] private GameObject _shieldParent;
+	[SerializeField] private GameObject _shipExplosionPrefab;
 
-	//public delegate void ResourceValueChanged(StatsController sender, float oldValue, float newValue);
-	//public event
-	
+	private bool destroyed;
 
-	public GameObject shieldParent;
-	public GameObject shipExplosionPrefab;
-	
+	public event Action<float> OnHullValueChanged;
+	public event Action<float> OnShieldValueChanged;
+
+	public float HullHP => _hullHP;
+	public float ShieldHP => _shieldHP;
+
 	//-----METHODS-----
 
 	private void Start()
 	{
-		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
-		{
-			ResetResource(type);
-		}
+		_hullHP = _hullMaximum;
+		_shieldHP = _shieldMaximum;
 	}
 
-	public ResourceStat GetResource(ResourceType type)
+	public void DealDamage(int damage)
 	{
-		switch (type)
+		if (_shieldHP > 0)
 		{
-			case ResourceType.HULL:
-				return hullStat;
-			case ResourceType.SHIELD:
-				return shieldStat;
-			case ResourceType.FUEL:
-				return fuelStat;
-			case ResourceType.MISSILE:
-				return missileStat;
-			case ResourceType.CREW:
-				return crewStat;
-			default:
-				throw new ArgumentOutOfRangeException(nameof(type), type, null);
-		}
-	}
-
-	public void ModifyResource(ResourceType type, float amount)
-	{
-		ResourceStat stat = GetResource(type);
-		if (stat != null)
-		{
-			//Update the stat
-			float oldValue = stat.current;
-			stat.current = Mathf.Clamp(stat.current + amount, 0, stat.max);
-
-			//Handle ship reactions to stat changes
-			switch (type)
+			if (_shieldHP > damage)
 			{
-				case ResourceType.HULL: //Should be made into a toggle
-					//if (stat.current <= 0)
-					//Destruct();
-					break;
-				case ResourceType.SHIELD: //Should be placed in a shield controller for more parameters
-					if (stat.current > 0)
-						RaiseShield();
-					else
-						DropShield();
-					break;
-				// case ResourceType.FUEL:
-				// 	if (stat.current <= 0)
-				// 		Ship.Helm?.SetSpeedCap(2);
-				// 	else
-				// 		Ship.Helm?.SetSpeedCap(ManualFlightController.SPEED_DIVISIONS);
-				// 	break;
-
+				_shieldHP -= damage;
+				damage = 0;
+				OnShieldValueChanged?.Invoke(_shieldHP);
 			}
+			else
+			{
+				damage -= _shieldHP;
+				DropShield();
+			}
+		}
 
-			//Call events
-			OnResourceValueChanged?.Invoke(this, type, oldValue, stat.current);
-
-			if (stat.current <= 0)
-				OnResourceMinimumReached?.Invoke(this, type);
-			else if (Mathf.Approximately(stat.current, stat.max))
-				OnResourceMaximumReached?.Invoke(this, type);
+		if (damage > 0)
+		{
+			if (_hullHP > damage)
+			{
+				_hullHP -= damage;
+				damage = 0;
+				OnHullValueChanged?.Invoke(_hullHP);
+			}
+			else
+			{
+				damage -= _hullHP;
+				Destruct();
+			}
 		}
 	}
 
-	public void ClearResource(ResourceType type)
-	{
-		ModifyResource(type, -999999999);
-	}
+	public void Heal(int amount)
+	{ }
 
-	public void ResetResource(ResourceType type)
+	private void RaiseShield(int amount)
 	{
-		ModifyResource(type, 999999999);
-	}
+		_shieldHP = amount;
+		_shieldParent.SetActive(true);
 
-	private void RaiseShield()
-	{
-		shieldParent.SetActive(true);
+		OnShieldValueChanged?.Invoke(_shieldHP);
 	}
 
 	private void DropShield()
 	{
-		shieldParent.SetActive(false);
+		_shieldHP = 0;
+		_shieldParent.SetActive(false);
+
+		OnShieldValueChanged?.Invoke(0);
 	}
 
 	private void Destruct()
 	{
-		GameObject shipExplosionObject = Instantiate(shipExplosionPrefab, transform.position, Quaternion.identity);
-		RuntimeObjectsManager.instance.AddToCollection(shipExplosionObject, "Explosions");
+		destroyed = true;
+		_hullHP = 0;
+
+		OnHullValueChanged?.Invoke(0);
+
+		GameObject shipExplosionObject = Instantiate(_shipExplosionPrefab, transform.position, Quaternion.identity);
 
 		Destroy(shipExplosionObject, 5f);
 
 		Destroy(gameObject);
+
+		foreach (Collider collider in GetComponentsInChildren<Collider>())
+		{
+			collider.enabled = false;
+		}
 	}
 }
-
 
 [Serializable]
 public class ResourceStat
 {
-	public ResourceType type;
 	public float current;
 	public float max;
 
 	public float Normalised => current / max;
 
-	public ResourceStat(ResourceType type, int current, int max)
+	public ResourceStat(int current, int max)
 	{
-		this.type = type;
 		this.current = current;
 		this.max = max;
 	}
 }
 
-public enum ResourceType
+public enum StatType
 {
 	HULL,
 	SHIELD,
-	FUEL,
-	MISSILE,
 	CREW
 }

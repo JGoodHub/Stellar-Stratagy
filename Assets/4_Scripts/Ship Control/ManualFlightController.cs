@@ -101,8 +101,8 @@ public class ManualFlightController : ShipComponent
 		transform.Translate(Vector3.forward * (currentSpeed * Time.deltaTime), Space.Self);
 
 		//Fuel
-		float currentFuelRate = maxFuelRate * (currentSpeed / maxSpeed);
-		Ship.Stats.ModifyResource(ResourceType.FUEL, -currentFuelRate * Time.deltaTime);
+		// float currentFuelRate = maxFuelRate * (currentSpeed / maxSpeed);
+		// Ship.Stats.Modify(StatType.FUEL, -currentFuelRate * Time.deltaTime);
 	}
 
 	public void ModifySpeed(int modifier)

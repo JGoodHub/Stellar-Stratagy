@@ -9,9 +9,7 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 
 	[SerializeField] private float _maxFlightDistancePerTurn = 200;
 	[SerializeField] private float _maxAngleDeltaPerTurn = 90;
-
-	public bool _draggingLocked = true;
-
+	
 	private PathUtils.BezierCurve3 _flightPath;
 	private bool _isFlightPathValid = false;
 
@@ -37,7 +35,7 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 		_flightPathRenderer.positionCount = 0;
 		_ghostShipGO.transform.position = Vector3.up * 1000;
 
-		DOVirtual.Float(0f, 1f, CombatTurnController.TURN_DURATION, t =>
+		DOVirtual.Float(0f, 1f, TurnController.TURN_DURATION, t =>
 		{
 			transform.position = PathUtils.GetPointOnBezierCurve(_flightPath.Start, _flightPath.Mid, _flightPath.End, t);
 			transform.forward = PathUtils.GetDirectionOnBezierCurve(_flightPath.Start, _flightPath.Mid, _flightPath.End, t);
@@ -48,18 +46,20 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
-		if (_draggingLocked)
+		if (PlayerCombatController.Instance.OurTurn == false)
 			return;
-
+		
 		_flightPath = new PathUtils.BezierCurve3();
+		
+		CameraDragController.Instance.DragEnabled = false;
 	}
 
 	public void OnDrag(PointerEventData eventData)
 	{
-		if (_draggingLocked)
+		if (PlayerCombatController.Instance.OurTurn == false)
 			return;
 
-		Vector3 navPlanePoint = NavigationPlane.Instance.RaycastNavPlane3D();
+		Vector3 navPlanePoint = NavigationPlane.RaycastNavPlane();
 		_flightPath = PathUtils.GetBezierCurve(transform.position, transform.position + transform.forward * _forwardHandleOffset, navPlanePoint, 12);
 		_flightPathRenderer.positionCount = 12;
 		_flightPathRenderer.SetPositions(_flightPath.curve);
@@ -77,7 +77,7 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		if (_draggingLocked)
+		if (PlayerCombatController.Instance.OurTurn == false)
 			return;
 
 		if (_isFlightPathValid == false)
@@ -87,6 +87,8 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 
 			_ghostShipGO.transform.position = Vector3.up * 1000;
 		}
+		
+		CameraDragController.Instance.DragEnabled = true;
 	}
 
 }

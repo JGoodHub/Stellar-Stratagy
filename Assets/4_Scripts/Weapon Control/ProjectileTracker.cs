@@ -1,41 +1,47 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileTracker
+public class ProjectileTracker : MonoBehaviour
 {
 
-	private static HashSet<LaserBolt> _laserBolts = new HashSet<LaserBolt>();
+	private static HashSet<IFreezeable> _projectiles = new HashSet<IFreezeable>();
 
-	public static void RegisterLaserBolt(LaserBolt laserBolt)
+	private void Start()
 	{
-		if (_laserBolts.Contains(laserBolt))
-			return;
-
-		_laserBolts.Add(laserBolt);
+		TurnController.OnRealtimeStarted += UnfreezeAllProjectiles;
+		TurnController.OnRealtimeEnded += FreezeAllProjectiles;
 	}
 
-	public static void UnregisterLaserBolt(LaserBolt laserBolt)
+	public static void RegisterProjectile(IFreezeable projectile)
 	{
-		if (_laserBolts.Contains(laserBolt) == false)
+		if (_projectiles.Contains(projectile))
 			return;
 
-		_laserBolts.Remove(laserBolt);
+		_projectiles.Add(projectile);
+	}
+
+	public static void UnregisterProjectile(IFreezeable projectile)
+	{
+		if (_projectiles.Contains(projectile) == false)
+			return;
+
+		_projectiles.Remove(projectile);
 	}
 
 	public static void FreezeAllProjectiles()
 	{
-		foreach (LaserBolt bolt in _laserBolts)
+		foreach (IFreezeable projectile in _projectiles)
 		{
-			bolt._frozen = true;
+			projectile.Freeze();
 		}
-
 	}
 
 	public static void UnfreezeAllProjectiles()
 	{
-		foreach (LaserBolt bolt in _laserBolts)
+		foreach (IFreezeable projectile in _projectiles)
 		{
-			bolt._frozen = false;
+			projectile.Unfreeze();
 		}
 	}
 

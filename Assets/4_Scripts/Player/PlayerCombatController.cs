@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using DG.Tweening;
@@ -9,28 +10,35 @@ public class PlayerCombatController : SceneSingleton<PlayerCombatController>
 
 	[SerializeField] private CombatShipController playerShip;
 
+	private bool _ourTurn = false;
+
+	public bool OurTurn => _ourTurn;
 	public CombatShipController PlayerShip => playerShip;
 
-	public bool ourTurn = false;
-
-	public void StartTurn()
+	private void Awake()
 	{
-		playerShip.Helm._draggingLocked = false;
-		ourTurn = true;
+		TurnController.OnPlayersTurnStarted += UnlockInput;
+		TurnController.OnPlayersTurnEnded += LockInput;
+
+		TurnController.OnRealtimeStarted += PlayActions;
 	}
 
-	public void EndTurn()
+	public void UnlockInput()
 	{
-		playerShip.Helm._draggingLocked = true;
-		ourTurn = false;
+		playerShip.Flight.DraggingLocked = false;
+		_ourTurn = true;
+	}
 
-		playerShip.Helm.FollowFlightPath();
+	public void LockInput()
+	{
+		playerShip.Flight.DraggingLocked = true;
+		_ourTurn = false;
+	}
 
-		FindObjectOfType<LaserWeaponItem>().FireLasersAtTarget();
-
-		DOVirtual.DelayedCall(6f, StartTurn, false);
-		
-		
+	public void PlayActions()
+	{
+		playerShip.Flight.FollowFlightPath();
+		playerShip.Weapons.ProcessWeaponActions();
 	}
 
 }

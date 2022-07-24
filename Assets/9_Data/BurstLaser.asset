@@ -9,12 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f36e18d11e2c4397bc3610a052e33eb3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b9af9ee51c14810aff0b82acd8780a9, type: 3}
   m_Name: BurstLaser
   m_EditorClassIdentifier: 
   Id: Burst Laser
   TurretPrefab: {fileID: 4140394523609475211, guid: fcf7dadd78bd69649b143d578a62af3d,
     type: 3}
   RotateToFaceTarget: 1
-  WeaponTileItem: {fileID: 0}
-  TargeterReticle: {fileID: 0}
+  WeaponCardPrefab: {fileID: 1626466205901710758, guid: 85231df7ba0a55545bacf338ce3ac73c,
+    type: 3}
+  TargetReticlePrefab: {fileID: 2666480785440323700, guid: 3310d7ace78364c47b0b72c4a5b2eacc,
+    type: 3}
+  LaserPrefab: {fileID: 2425652637988943809, guid: f79787fbe18ca46b59f4c9ab13b727e1,
+    type: 3}
+  ShotsPerBurst: 10
+  BurstsPerAction: 3
+  FiringTimeStart: 0.167
+  FiringTimeEnd: 0.833
+  LaserSpeed: 75
+  ArcSpread: 5

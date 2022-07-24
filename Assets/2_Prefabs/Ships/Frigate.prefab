@@ -696,6 +696,7 @@ GameObject:
   - component: {fileID: 4595147169577758365}
   - component: {fileID: 4595147169577758363}
   - component: {fileID: 4595147169577758364}
+  - component: {fileID: 4595147169073650177}
   m_Layer: 10
   m_Name: Engine Halo
   m_TagString: Untagged
@@ -836,6 +837,18 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &4595147169073650177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595147169577758366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b659baf0a4843a5a14b76e04cea819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4595147169657223535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,7 +1584,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4595147170197879778}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1614,7 +1627,7 @@ MeshCollider:
   m_GameObject: {fileID: 4595147170197879778}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: -1
@@ -1757,25 +1770,18 @@ MonoBehaviour:
   hullStat:
     type: 0
     current: 0
-    max: 10
+    max: 100
   shieldStat:
     type: 1
     current: 0
-    max: 10
-  fuelStat:
+    max: 100
+  crewStat:
     type: 2
     current: 0
-    max: 10
-  missileStat:
-    type: 3
-    current: 0
-    max: 10
-  crewStat:
-    type: 4
-    current: 0
-    max: 10
+    max: 100
   shieldParent: {fileID: 4595147170197879778}
-  shipExplosionPrefab: {fileID: 0}
+  shipExplosionPrefab: {fileID: 122833922099907549, guid: 33342c178c7add6429b467a3c8a0babc,
+    type: 3}
 --- !u!114 &4595147170291285832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1789,12 +1795,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Frigate
+  id: 0
   type: 0
   selectionRing: {fileID: 0}
   selectionRadius: 0
   alignment: 0
-  explosionPrefab: {fileID: 122833922099907549, guid: 33342c178c7add6429b467a3c8a0babc,
-    type: 3}
 --- !u!114 &4595147170291285834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1807,9 +1812,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4089dde31408425a9adf713b3b50c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxFlightDistancePerTurn: 175
+  _maxFlightDistancePerTurn: 200
   _maxAngleDeltaPerTurn: 100
-  _draggingLocked: 0
+  DraggingLocked: 1
   _flightPathRenderer: {fileID: 4595147170291285833}
   _validFlightPathMaterial: {fileID: 2100000, guid: 877ccd44f82ba49988ed3d9b21cdd435,
     type: 2}
@@ -1951,10 +1956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hardpoints:
   - Transform: {fileID: 3626252064115817523}
-    WeaponConfig: {fileID: 0}
-    Turret: {fileID: 0}
-  - Transform: {fileID: 6337972409963275253}
-    WeaponConfig: {fileID: 0}
+    WeaponConfig: {fileID: 11400000, guid: 7858776bd30ec1448babe87d83d7b476, type: 2}
     Turret: {fileID: 0}
 --- !u!1 &4595147170333219055
 GameObject:

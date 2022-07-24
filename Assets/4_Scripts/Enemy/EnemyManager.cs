@@ -30,16 +30,16 @@ public class EnemyManager : Singleton<EnemyManager>
 		foreach (ShipController ship in enemyShips)
 		{
 			ship.alignment = GameManager.Faction.ENEMY;
-			ship.Stats.OnResourceValueChanged += OnShipAttacked;
+			//ship.Stats.OnResourceValueChanged += OnShipAttacked;
 		}
 	}
 
-	private void OnShipAttacked(StatsController sender, ResourceType resType, float oldValue, float newValue)
+	private void OnShipAttacked(StatsController sender, StatType resType, float oldValue, float newValue)
 	{
-		if (resType != ResourceType.HULL || oldValue < newValue)
+		if (resType != StatType.HULL || oldValue < newValue)
 			return;
 
-		sender.OnResourceValueChanged -= OnShipAttacked;
+		//sender.OnResourceValueChanged -= OnShipAttacked;
 
 		ShipController ship = sender.Ship;
 		//ship.Targeter.SetTarget(PlayerCombatController.PlayerShip, true);

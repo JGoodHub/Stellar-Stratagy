@@ -27,9 +27,9 @@ public class ShipController : Entity
 		//Stats.OnResourceMinimumReached += OnHullDestroyed;
 	}
 	
-	private void OnHullDestroyed(StatsController sender, ResourceType resType)
+	private void OnHullDestroyed(StatsController sender, StatType resType)
 	{
-		if (resType != ResourceType.HULL)
+		if (resType != StatType.HULL)
 			return;
 
 		GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);

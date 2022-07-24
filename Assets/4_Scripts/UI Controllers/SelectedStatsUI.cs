@@ -25,7 +25,7 @@ public class SelectedStatsUI : MonoBehaviour {
 
             healthFillImage.color = GameManager.FactionColors[newEntity.alignment];
 
-            healthFillImage.fillAmount = newEntity.GetComponent<StatsController>().GetResource(ResourceType.HULL).Normalised;
+            //healthFillImage.fillAmount = newEntity.GetComponent<StatsController>().GetResource(StatType.HULL).Normalised;
 
             nameText.text = newEntity.name;
 

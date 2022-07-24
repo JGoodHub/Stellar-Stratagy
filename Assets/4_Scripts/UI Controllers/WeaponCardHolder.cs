@@ -12,11 +12,12 @@ public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
 
 	[SerializeField] private Transform _cardsParent;
 
-	public void AddCardItemToContainer(WeaponCardItem cardItemPrefab)
+	public void CreateAndAddWeaponCard(WeaponConfig weaponConfig)
 	{
-		GameObject cardObject = Instantiate(cardItemPrefab.gameObject, _cardsParent);
-		WeaponCardItem weaponCardItem = cardObject.GetComponent<WeaponCardItem>();
-		
+		GameObject weaponCardObject = Instantiate(weaponConfig.WeaponCardPrefab.gameObject, _cardsParent);
+		WeaponCardItem weaponCardItem = weaponCardObject.GetComponent<WeaponCardItem>();
+		weaponCardItem.Initialise(weaponConfig);
+
 		_weaponCards.Add(weaponCardItem);
 	}
 

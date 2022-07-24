@@ -44,7 +44,7 @@ public class SelectionController : SceneSingleton<SelectionController>
 	{
 		if (Input.GetMouseButtonDown(0) && eventSystem.IsPointerOverGameObject() == false)
 		{
-			Vector2 navPlanePoint = NavigationPlane.Instance.RaycastNavPlane();
+			Vector2 navPlanePoint = NavigationPlane.RaycastNavPlane2D();
 			Entity newlySelectedEntity = CheckForChangeInSelection(navPlanePoint);
 
 			if (selectedEntity != null && newlySelectedEntity == null)

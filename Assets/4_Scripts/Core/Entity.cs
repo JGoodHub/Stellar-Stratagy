@@ -6,6 +6,7 @@ public class Entity : MonoBehaviour
 {
 	[Header("Entity")]
 	public new string name;
+	public int id;
 	public Type type;
 	[Space]
 	[SerializeField] private GameObject selectionRing;
@@ -29,6 +30,8 @@ public class Entity : MonoBehaviour
 	protected virtual void Start()
 	{
 		SetSelected(false);
+
+		id = Random.Range(0, 1000000);
 	}
 
 	public void SetSelected(bool state)
