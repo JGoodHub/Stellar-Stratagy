@@ -19,14 +19,14 @@ public class CameraDragController : SceneSingleton<CameraDragController>
 	
 	private void Start()
 	{
-		TouchInput.TouchDown += TouchInputOnTouchDown;
-		TouchInput.TouchDragStay += TouchInputOnTouchDragStay;
+		TouchInput.OnTouchDown += TouchInputOnTouchDown;
+		TouchInput.OnTouchDragStay += TouchInputOnTouchDragStay;
 	}
 
 	private void OnDestroy()
 	{
-		TouchInput.TouchDown -= TouchInputOnTouchDown;
-		TouchInput.TouchDragStay -= TouchInputOnTouchDragStay;
+		TouchInput.OnTouchDown -= TouchInputOnTouchDown;
+		TouchInput.OnTouchDragStay -= TouchInputOnTouchDragStay;
 	}
 
 	private void TouchInputOnTouchDown(TouchInput.TouchData touch)

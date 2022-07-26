@@ -23,7 +23,7 @@ public class PatrolController : ShipComponent
 		{
 			targetWaypoint = startFromFirstWaypoint ? waypoints[0] : GetNearestWaypoint();
 			waypointIndex = waypoints.IndexOf(targetWaypoint);
-			Ship.Helm.SetWaypoint(targetWaypoint);
+			//ShipController.Helm.SetWaypoint(targetWaypoint);
 		}
 
 		//Set course for the next waypoint in the loop
@@ -48,7 +48,7 @@ public class PatrolController : ShipComponent
 				}
 			}
 
-			Ship.Helm.SetWaypoint(targetWaypoint);
+			//ShipController.Helm.SetWaypoint(targetWaypoint);
 		}
 	}
 

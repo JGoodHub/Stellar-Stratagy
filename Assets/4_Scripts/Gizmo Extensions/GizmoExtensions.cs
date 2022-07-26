@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GizmoExtensions {
+public static class GizmoExtensions
+{
+    public static void DrawWireCircle(Vector3 position, float radius, Color color)
+    {
+        Color defaultCol = Gizmos.color;
 
-    public static void DrawWireCircle(Vector3 position, float radius) {
         List<Vector3> points = new List<Vector3>();
 
         for (float theta = 0f; theta < 2f * Mathf.PI; theta += 0.157f)
@@ -12,8 +15,11 @@ public static class GizmoExtensions {
 
         points.Add(points[0]);
 
+        Gizmos.color = color;
+
         for (int i = 0; i < points.Count - 1; i++)
             Gizmos.DrawLine(points[i], points[i + 1]);
-    }
 
+        Gizmos.color = defaultCol;
+    }
 }

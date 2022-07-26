@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Entity : MonoBehaviour
 {
@@ -12,26 +14,23 @@ public class Entity : MonoBehaviour
 	[SerializeField] private GameObject selectionRing;
 	[SerializeField] private float selectionRadius;
 
-	public float SelectionRadiusSqrd => selectionRadius * selectionRadius;
+	public float SelectionRadius => selectionRadius;
 
 	[Header("Factions")]
 	public GameManager.Faction alignment;
 
-	private void OnEnable()
-	{
-		SelectionController.RegisterEntity(this);
-	}
-
-	private void OnDisable()
-	{
-		SelectionController.UnregisterEntity(this);
-	}
-
+	
 	protected virtual void Start()
 	{
+		SelectionController.Instance.RegisterEntity(this);
 		SetSelected(false);
 
 		id = Random.Range(0, 1000000);
+	}
+	
+	private void OnDestroy()
+	{
+		SelectionController.Instance.UnregisterEntity(this);
 	}
 
 	public void SetSelected(bool state)
@@ -46,5 +45,10 @@ public class Entity : MonoBehaviour
 		STATION,
 		ASTEROID,
 		WARPGATE
+	}
+
+	private void OnDrawGizmos()
+	{
+		GizmoExtensions.DrawWireCircle(transform.position, selectionRadius, Color.green);
 	}
 }

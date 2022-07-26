@@ -17,12 +17,12 @@ public class FollowFlightController : ShipComponent
 	private void Start()
 	{
 		//Create the waypoint for the other ship to track
-		leftWaypoint = new GameObject($"[LEFT_WAYPOINT]_{Ship.name}").transform;
+		leftWaypoint = new GameObject($"[LEFT_WAYPOINT]_{ShipController.name}").transform;
 		leftWaypoint.parent = transform;
 		leftWaypoint.localPosition = Vector3.left * 80f + Vector3.back * 30f;
 		leftWaypoint.localRotation = Quaternion.identity;
 
-		rightWaypoint = new GameObject($"[RIGHT_WAYPOINT]_{Ship.name}").transform;
+		rightWaypoint = new GameObject($"[RIGHT_WAYPOINT]_{ShipController.name}").transform;
 		rightWaypoint.parent = transform;
 		rightWaypoint.localPosition = Vector3.right * 80f + Vector3.back * 30f;
 		rightWaypoint.localRotation = Quaternion.identity;

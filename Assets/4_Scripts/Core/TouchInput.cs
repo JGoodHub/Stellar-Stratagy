@@ -6,132 +6,144 @@ using UnityEngine.EventSystems;
 
 public class TouchInput : Singleton<TouchInput>
 {
-	public struct TouchData
-	{
-		public Vector2 DownPosition;
-		public Vector2 CurrentPosition;
-		public Vector2 UpPosition;
+    public struct TouchData
+    {
+        public Vector2 DownPosition;
+        public Vector2 CurrentPosition;
+        public Vector2 UpPosition;
 
-		public bool IsDown;
-		public bool IsDragging;
+        public bool IsDragging;
+        public float CurrentDragDistance;
 
-		public bool DownOverUI;
-		public bool CurrentlyOverUI;
-		public bool UpOverUI;
-	}
+        public bool DownOverUI;
+        public bool CurrentlyOverUI;
+        public bool UpOverUI;
+    }
 
-	public static event Action<TouchData> TouchDown;
-	public static event Action<TouchData> TouchUp;
-	
-	public static event Action<TouchData> TouchDragEnter;
-	public static event Action<TouchData> TouchDragStay;
-	public static event Action<TouchData> TouchDragEnd;
+    public static event Action<TouchData> OnTouchDown;
+    public static event Action<TouchData> OnTouchUp;
+    public static event Action<TouchData> OnTouchClick;
 
-	public float _relativeDistanceToDrag = 0.04f;
-	private float _pixelDistanceToDrag;
-	private float _currentPixelDragDistance;
+    public static event Action<TouchData> OnTouchDragEnter;
+    public static event Action<TouchData> OnTouchDragStay;
+    public static event Action<TouchData> OnTouchDragEnd;
 
-	private static TouchData _frameTouchData;
-	public static TouchData FrameTouchData => _frameTouchData;
+    public float _relativeDistanceToDrag = 0.04f;
+    private float _pixelDistanceToDrag;
 
-	public bool debugEvents;
+    private static TouchData _frameTouchData;
+    public static TouchData FrameTouchData => _frameTouchData;
 
-	private void Awake()
-	{
-		_pixelDistanceToDrag = Mathf.Sqrt(Mathf.Pow(Screen.width, 2) + Mathf.Pow(Screen.height, 2)) * _relativeDistanceToDrag;
-	}
+    public bool debugEvents;
 
-	private void Update()
-	{
-		if (Input.GetMouseButtonDown(0))
-		{
-			TriggerTouchDown();
-		}
+    private void Awake()
+    {
+        _pixelDistanceToDrag = Mathf.Sqrt(Mathf.Pow(Screen.width, 2) + Mathf.Pow(Screen.height, 2)) * _relativeDistanceToDrag;
+    }
 
-		if (Input.GetMouseButton(0))
-		{
-			_frameTouchData.IsDown = true;
+    private void Update()
+    {
+        _frameTouchData.CurrentPosition = Input.mousePosition;
+        _frameTouchData.CurrentlyOverUI = CameraHelper.IsMouseOverUI();
 
-			_currentPixelDragDistance = Vector2.Distance(_frameTouchData.DownPosition, Input.mousePosition);
+        if (Input.GetMouseButtonDown(0))
+        {
+            TriggerTouchDown();
+        }
 
-			if (_frameTouchData.IsDragging || _currentPixelDragDistance >= _pixelDistanceToDrag)
-			{
-				if (!_frameTouchData.IsDragging)
-				{
-					TriggerTouchDragEnter();
-				}
+        if (Input.GetMouseButton(0))
+        {
+            _frameTouchData.CurrentDragDistance = Vector2.Distance(_frameTouchData.DownPosition, _frameTouchData.CurrentPosition);
 
-				TriggerTouchDragStay();
-			}
-		}
-		else
-		{
-			_frameTouchData.IsDown = false;
+            if (_frameTouchData.IsDragging || _frameTouchData.CurrentDragDistance >= _pixelDistanceToDrag)
+            {
+                if (!_frameTouchData.IsDragging)
+                {
+                    TriggerTouchDragEnter();
+                }
 
-			if (_frameTouchData.IsDragging)
-			{
-				TriggerTouchDragExit();
-			}
+                TriggerTouchDragStay();
+            }
+        }
+        else
+        {
+            if (_frameTouchData.IsDragging)
+            {
+                TriggerTouchDragExit();
+            }
 
-			_currentPixelDragDistance = 0;
-		}
+            _frameTouchData.CurrentDragDistance = 0;
+        }
 
-		if (Input.GetMouseButtonUp(0))
-		{
-			TriggerTouchUp();
-		}
-	}
+        if (Input.GetMouseButtonUp(0))
+        {
+            TriggerTouchUp();
 
-	private void TriggerTouchDown()
-	{
-		_frameTouchData.DownPosition = Input.mousePosition;
-		_frameTouchData.DownOverUI = EventSystem.current.IsPointerOverGameObject();
+            if (_frameTouchData.CurrentDragDistance < _pixelDistanceToDrag)
+            {
+                TriggerTouchClick();
+            }
+        }
+    }
 
-		TouchDown?.Invoke(_frameTouchData);
+    private void TriggerTouchDown()
+    {
+        _frameTouchData.DownPosition = _frameTouchData.CurrentPosition;
+        _frameTouchData.DownOverUI = _frameTouchData.CurrentlyOverUI;
 
-		if (debugEvents)
-			Debug.Log("[DragCameraController]: Touch down triggered");
-	}
+        OnTouchDown?.Invoke(_frameTouchData);
 
-	private void TriggerTouchUp()
-	{
-		_frameTouchData.UpPosition = Input.mousePosition;
-		_frameTouchData.UpOverUI = EventSystem.current.IsPointerOverGameObject();
+        if (debugEvents)
+            Debug.Log("[DragCameraController]: Touch Down Triggered");
+    }
 
-		TouchUp?.Invoke(_frameTouchData);
+    private void TriggerTouchUp()
+    {
+        _frameTouchData.UpPosition = _frameTouchData.CurrentPosition;
+        _frameTouchData.UpOverUI = _frameTouchData.CurrentlyOverUI;
 
-		if (debugEvents)
-			Debug.Log("[DragCameraController]: Touch up triggered");
-	}
+        OnTouchUp?.Invoke(_frameTouchData);
 
-	private void TriggerTouchDragEnter()
-	{
-		_frameTouchData.IsDragging = true;
+        if (debugEvents)
+            Debug.Log("[DragCameraController]: Touch Up Triggered");
+    }
 
-		TouchDragEnter?.Invoke(_frameTouchData);
+    private void TriggerTouchClick()
+    {
+        OnTouchClick?.Invoke(_frameTouchData);
 
-		if (debugEvents)
-			Debug.Log("[DragCameraController]: Touch drag enter triggered");
-	}
+        if (debugEvents)
+            Debug.Log("[DragCameraController]: Touch Click Triggered");
+    }
 
-	private void TriggerTouchDragStay()
-	{
-		_frameTouchData.CurrentPosition = Input.mousePosition;
-		_frameTouchData.CurrentlyOverUI = EventSystem.current.IsPointerOverGameObject();
+    private void TriggerTouchDragEnter()
+    {
+        _frameTouchData.IsDragging = true;
 
-		TouchDragStay?.Invoke(_frameTouchData);
+        OnTouchDragEnter?.Invoke(_frameTouchData);
 
-		if (debugEvents)
-			Debug.Log("[DragCameraController]: Touch drag stay triggered");
-	}
+        if (debugEvents)
+            Debug.Log("[DragCameraController]: Touch Drag Enter Triggered");
+    }
 
-	private void TriggerTouchDragExit()
-	{
-		_frameTouchData.IsDragging = false;
+    private void TriggerTouchDragStay()
+    {
+        _frameTouchData.CurrentPosition = Input.mousePosition;
+        _frameTouchData.CurrentlyOverUI = EventSystem.current.IsPointerOverGameObject();
 
-		TouchDragEnd?.Invoke(_frameTouchData);
+        OnTouchDragStay?.Invoke(_frameTouchData);
 
-		if (debugEvents)
-			Debug.Log("[DragCameraController]: Touch drag exit triggered");
-	}
+        if (debugEvents)
+            Debug.Log("[DragCameraController]: Touch Drag Stay Triggered");
+    }
+
+    private void TriggerTouchDragExit()
+    {
+        _frameTouchData.IsDragging = false;
+
+        OnTouchDragEnd?.Invoke(_frameTouchData);
+
+        if (debugEvents)
+            Debug.Log("[DragCameraController]: Touch Drag Exit Triggered");
+    }
 }

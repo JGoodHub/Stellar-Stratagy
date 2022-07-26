@@ -8,12 +8,15 @@ using UnityEngine;
 public class PlayerCombatController : SceneSingleton<PlayerCombatController>
 {
 
-	[SerializeField] private CombatShipController playerShip;
+	[SerializeField] private List<CombatShipController> _playerShips;
 
+	private CombatShipController _focusedShip;
 	private bool _ourTurn = false;
 
 	public bool OurTurn => _ourTurn;
-	public CombatShipController PlayerShip => playerShip;
+	public CombatShipController FocusedShip => _focusedShip;
+
+	public event Action<CombatShipController> OnFocusedShipChanged;
 
 	private void Awake()
 	{
@@ -21,24 +24,53 @@ public class PlayerCombatController : SceneSingleton<PlayerCombatController>
 		TurnController.OnPlayersTurnEnded += LockInput;
 
 		TurnController.OnRealtimeStarted += PlayActions;
+		
+		SelectionController.Instance.OnSelectionChanged += OnSelectionChanged;
+	}
+
+	private void OnSelectionChanged(object sender, Entity oldEntity, Entity newEntity)
+	{
+		if (_focusedShip != null && newEntity == null)
+		{
+			_focusedShip = null;
+			OnFocusedShipChanged?.Invoke(null);
+			return;
+		}
+
+		if (_playerShips.Contains(newEntity as CombatShipController))
+		{
+			_focusedShip = newEntity as CombatShipController;
+			OnFocusedShipChanged?.Invoke(_focusedShip);
+			return;
+		}
 	}
 
 	public void UnlockInput()
 	{
-		playerShip.Flight.DraggingLocked = false;
 		_ourTurn = true;
 	}
 
 	public void LockInput()
 	{
-		playerShip.Flight.DraggingLocked = true;
 		_ourTurn = false;
 	}
 
 	public void PlayActions()
 	{
-		playerShip.Flight.FollowFlightPath();
-		playerShip.Weapons.ProcessWeaponActions();
+		foreach (CombatShipController playerShip in _playerShips)
+		{
+			playerShip.Flight.FollowFlightPath();
+			playerShip.Weapons.ProcessWeaponActions();
+		}
+	}
+
+	public void SetSelectedShip(CombatShipController shipController)
+	{
+		if (shipController == _focusedShip)
+			return;
+
+		_focusedShip = shipController;
+		OnFocusedShipChanged?.Invoke(shipController);
 	}
 
 }

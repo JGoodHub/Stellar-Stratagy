@@ -21,14 +21,14 @@ public class SelectedStatsUI : MonoBehaviour {
     }
 
     private void OnSelectionChangeHandler(object sender, Entity prevEntity, Entity newEntity) {
-        if (newEntity != null) {
-
-            healthFillImage.color = GameManager.FactionColors[newEntity.alignment];
-
-            //healthFillImage.fillAmount = newEntity.GetComponent<StatsController>().GetResource(StatType.HULL).Normalised;
-
-            nameText.text = newEntity.name;
-
-        }
+        // if (newEntity != null) {
+        //
+        //     healthFillImage.color = GameManager.FactionColors[newEntity.alignment];
+        //
+        //     //healthFillImage.fillAmount = newEntity.GetComponent<StatsController>().GetResource(StatType.HULL).Normalised;
+        //
+        //     nameText.text = newEntity.name;
+        //
+        // }
     }
 }

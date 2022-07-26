@@ -27,7 +27,7 @@ public class FogOfWarMask : MonoBehaviour {
     private void OnDrawGizmos() {
         if (drawGizmos) {
             Gizmos.color = Color.white;
-            GizmoExtensions.DrawWireCircle(transform.position, maskRadius);
+            GizmoExtensions.DrawWireCircle(transform.position, maskRadius, Color.blue);
         }
     }
 }

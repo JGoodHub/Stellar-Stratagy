@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ShipComponent : MonoBehaviour
 {
-	protected ShipController Ship => GetComponent<ShipController>();
+
+	private CombatShipController _shipController;
 	
-	
-	
+	protected CombatShipController ShipController => _shipController ??= GetComponent<CombatShipController>();
 }

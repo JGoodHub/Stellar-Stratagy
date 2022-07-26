@@ -23,7 +23,7 @@ public class TargetingController : ShipComponent
 	}
 	private void SelectionChanged(object sender, Entity oldEntity, Entity newEntity)
 	{
-		if (newEntity == null || newEntity.alignment == Ship.alignment)
+		if (newEntity == null || newEntity.alignment == ShipController.alignment)
 			return;
 
 		SetTarget(newEntity.GetComponent<ShipController>());
@@ -78,8 +78,7 @@ public class TargetingController : ShipComponent
 	{
 		if (drawGizmos)
 		{
-			Gizmos.color = Color.green;
-			GizmoExtensions.DrawWireCircle(transform.position, range);
+			GizmoExtensions.DrawWireCircle(transform.position, range, Color.red);
 		}
 	}
 }

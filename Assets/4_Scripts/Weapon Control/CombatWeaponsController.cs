@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CombatWeaponsController : MonoBehaviour
+public class CombatWeaponsController : ShipComponent
 {
 	[Serializable]
 	public class Hardpoint
@@ -31,8 +31,7 @@ public class CombatWeaponsController : MonoBehaviour
 		}
 	}
 
-	[NonReorderable]
-	public List<Hardpoint> Hardpoints;
+	[NonReorderable] public List<Hardpoint> Hardpoints;
 
 	private List<WeaponAction> WeaponActions = new List<WeaponAction>();
 
@@ -48,15 +47,17 @@ public class CombatWeaponsController : MonoBehaviour
 			GameObject turretObject = Instantiate(hardpoint.WeaponConfig.TurretPrefab, hardpoint.Transform);
 			hardpoint.Turret = turretObject.GetComponent<Turret>();
 
-			WeaponCardHolder.Instance.CreateAndAddWeaponCard(hardpoint.WeaponConfig);
+			WeaponCardHolder.Instance.CreateWeaponCard(ShipController, hardpoint.WeaponConfig);
 		}
+		
+		WeaponCardHolder.Instance.HideAllCards();
 	}
 
 	public void ProcessWeaponActions()
 	{
 		foreach (WeaponAction action in WeaponActions)
 		{
-			action.WeaponConfig.Fire(PlayerCombatController.Instance.PlayerShip, action.TargetEntity, action.TargetPosition);
+			action.WeaponConfig.Fire(ShipController, action.TargetEntity, action.TargetPosition);
 		}
 	}
 

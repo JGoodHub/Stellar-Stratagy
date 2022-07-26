@@ -1903,7 +1903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e597613817049aaac48631e996455f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _relativeDistanceToDrag: 0.035
+  _relativeDistanceToDrag: 0.05
   debugEvents: 0
 --- !u!1 &599147599
 GameObject:
@@ -2797,7 +2797,7 @@ Transform:
   - {fileID: 1925019066}
   - {fileID: 599147600}
   m_Father: {fileID: 1199114972}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -270, z: 0}
 --- !u!120 &906310458
 LineRenderer:
@@ -2909,7 +2909,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxFlightDistancePerTurn: 175
   _maxAngleDeltaPerTurn: 100
-  DraggingLocked: 1
   _flightPathRenderer: {fileID: 906310458}
   _validFlightPathMaterial: {fileID: 2100000, guid: 877ccd44f82ba49988ed3d9b21cdd435,
     type: 2}
@@ -2957,8 +2956,9 @@ MonoBehaviour:
   _hullMaximum: 100
   _shieldHP: 100
   _shieldMaximum: 100
-  _shieldParent: {fileID: 0}
-  _shipExplosionPrefab: {fileID: 0}
+  _shieldParent: {fileID: 1181662845}
+  _shipExplosionPrefab: {fileID: 8804078652673009744, guid: 0ec25fcc34ac843858d4c301386c8853,
+    type: 3}
 --- !u!1 &919990879
 GameObject:
   m_ObjectHideFlags: 0
@@ -3708,7 +3708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1181662846
 Transform:
   m_ObjectHideFlags: 0
@@ -3813,6 +3813,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2324697843189530292}
   - {fileID: 1486661299}
   - {fileID: 906310457}
   m_Father: {fileID: 0}
@@ -4263,7 +4264,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 264648ba5bb8e9d46b08db728152d519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerShip: {fileID: 1486661303}
+  _playerShips:
+  - {fileID: 1687085229}
+  - {fileID: 1486661303}
 --- !u!4 &1284750556
 Transform:
   m_ObjectHideFlags: 0
@@ -5917,6 +5920,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653092951}
   m_CullTransparentMesh: 0
+--- !u!114 &1687085229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4595147170291285832, guid: 13e0c229efecd40b290a10d354339a86,
+    type: 3}
+  m_PrefabInstance: {fileID: 2324697843189530291}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9ae388289b4c38aaf04105333d7b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1733757753
 GameObject:
   m_ObjectHideFlags: 0
@@ -8329,6 +8344,87 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &2324697843189530291
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1199114972}
+    m_Modifications:
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 199.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 120.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595147170291285837, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: m_Name
+      value: Frigate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982831992961418913, guid: 13e0c229efecd40b290a10d354339a86,
+        type: 3}
+      propertyPath: Hardpoints.Array.data[0].WeaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 75c58c8af06fdcc46b4fa1921c9de718,
+        type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 13e0c229efecd40b290a10d354339a86, type: 3}
+--- !u!4 &2324697843189530292 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
+    type: 3}
+  m_PrefabInstance: {fileID: 2324697843189530291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4595147169073650175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8336,21 +8432,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199114972}
     m_Modifications:
-    - target: {fileID: 4595147169577758364, guid: 13e0c229efecd40b290a10d354339a86,
-        type: 3}
-      propertyPath: m_Time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4595147170291285835, guid: 13e0c229efecd40b290a10d354339a86,
-        type: 3}
-      propertyPath: shipExplosionPrefab
-      value: 
-      objectReference: {fileID: 8804078652673009744, guid: 0ec25fcc34ac843858d4c301386c8853,
-        type: 3}
     - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4595147170291285836, guid: 13e0c229efecd40b290a10d354339a86,
         type: 3}

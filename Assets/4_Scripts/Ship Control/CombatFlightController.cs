@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class CombatFlightController : ShipComponent, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
 
 	[SerializeField] private float _maxFlightDistancePerTurn = 200;
@@ -48,6 +48,11 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 	{
 		if (PlayerCombatController.Instance.OurTurn == false)
 			return;
+
+		if (PlayerCombatController.Instance.FocusedShip != ShipController)
+		{
+			SelectionController.Instance.SetSelection(ShipController);
+		}
 		
 		_flightPath = new PathUtils.BezierCurve3();
 		
@@ -56,7 +61,7 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 
 	public void OnDrag(PointerEventData eventData)
 	{
-		if (PlayerCombatController.Instance.OurTurn == false)
+		if (PlayerCombatController.Instance.OurTurn == false || PlayerCombatController.Instance.FocusedShip != ShipController)
 			return;
 
 		Vector3 navPlanePoint = NavigationPlane.RaycastNavPlane();
@@ -77,7 +82,7 @@ public class CombatFlightController : MonoBehaviour, IBeginDragHandler, IEndDrag
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		if (PlayerCombatController.Instance.OurTurn == false)
+		if (PlayerCombatController.Instance.OurTurn == false || PlayerCombatController.Instance.FocusedShip != ShipController)
 			return;
 
 		if (_isFlightPathValid == false)

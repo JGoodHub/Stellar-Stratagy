@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9af9ee51c14810aff0b82acd8780a9, type: 3}
+  m_Name: HeavyLaser
+  m_EditorClassIdentifier: 
+  Id: Burst Laser
+  TurretPrefab: {fileID: 7039021572643695524, guid: e21d61040a22f3243acccf46c5a6a5b2,
+    type: 3}
+  RotateToFaceTarget: 1
+  WeaponCardPrefab: {fileID: 1626466205901710758, guid: 5aac459de3b9b2b4fb9a5799e7e9acae,
+    type: 3}
+  TargetReticlePrefab: {fileID: 2666480785440323700, guid: 3310d7ace78364c47b0b72c4a5b2eacc,
+    type: 3}
+  LaserPrefab: {fileID: 2425652637988943809, guid: ac88840200e55fe4faac58019d4b3400,
+    type: 3}
+  ShotsPerBurst: 1
+  BurstsPerAction: 4
+  FiringTimeStart: 0.1
+  FiringTimeEnd: 0.9
+  LaserSpeed: 75
+  ArcSpread: 2.5

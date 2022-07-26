@@ -40,7 +40,7 @@ public class LaserWeaponsController : ShipComponent
 
 	public void FireAtTarget()
 	{
-		ShipController target = Ship.Targeter.target;
+		ShipController target = ShipController.Targeter.target;
 
 		if (readyToFire == false || target == null || targetInRange == false)
 			return;
@@ -73,7 +73,7 @@ public class LaserWeaponsController : ShipComponent
 
 	private void CheckForTargetInRange()
 	{
-		if (Ship.Targeter.TargetDistance <= range)
+		if (ShipController.Targeter.TargetDistance <= range)
 		{
 			if (targetInRange == false)
 			{
@@ -98,8 +98,7 @@ public class LaserWeaponsController : ShipComponent
 	{
 		if (drawGizmos)
 		{
-			Gizmos.color = Color.red;
-			GizmoExtensions.DrawWireCircle(transform.position, range);
+			GizmoExtensions.DrawWireCircle(transform.position, range, Color.red);
 		}
 	}
 }

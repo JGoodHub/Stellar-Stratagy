@@ -13,7 +13,7 @@ public class SceneSingleton<T> : MonoBehaviour where T : MonoBehaviour
                 _instance = FindObjectOfType(typeof(T)) as T;
 
                 if (_instance == null)
-                    Debug.LogError($"ERROR: No active instance of the LocalSingleton {typeof(T)} found in this scene");
+                    Debug.LogWarning($"ERROR: No active instance of the LocalSingleton {typeof(T)} found in this scene");
             }
 
             return _instance;            

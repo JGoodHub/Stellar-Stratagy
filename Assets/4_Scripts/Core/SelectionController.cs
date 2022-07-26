@@ -1,111 +1,147 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class SelectionController : SceneSingleton<SelectionController>
 {
+    private HashSet<Entity> _allEntities = new HashSet<Entity>();
 
-	private static HashSet<Entity> allEntities = new HashSet<Entity>();
-	private Entity selectedEntity;
+    private Entity _selectedEntity;
 
-	public static Entity SelectedEntity => Instance.selectedEntity;
+    // Properties
 
-	private EventSystem eventSystem;
+    public static Entity SelectedEntity => Instance._selectedEntity;
 
-	//Events
-	public delegate void SelectionChange(object sender, Entity oldEntity, Entity newEntity);
-	public delegate void NavPlaneQuery(object sender, Vector2 navPlanePoint);
+    // Events
+    
+    public delegate void SelectionChange(object sender, Entity oldEntity, Entity newEntity);
+    
+    public event SelectionChange OnSelectionChanged;
 
-	public event SelectionChange OnSelectionChanged;
-	public event NavPlaneQuery OnNavPlaneQuery;
+    private void Start()
+    {
+        TouchInput.OnTouchClick += OnTouchClick;
+    }
 
-	private void Start()
-	{
-		eventSystem = FindObjectOfType<EventSystem>();
-	}
+    private void OnDestroy()
+    {
+        TouchInput.OnTouchClick -= OnTouchClick;
+    }
+    
+    
+    public void RegisterEntity(Entity entity)
+    {
+        if (_allEntities.Contains(entity) == false)
+            _allEntities.Add(entity);
+    }
 
-	public static void RegisterEntity(Entity entity)
-	{
-		if (allEntities.Contains(entity) == false)
-			allEntities.Add(entity);
-	}
+    public void UnregisterEntity(Entity entity)
+    {
+        if (entity == SelectedEntity)
+            Instance.ClearSelection();
 
-	public static void UnregisterEntity(Entity entity)
-	{
-		if (entity == SelectedEntity)
-			Instance.ClearCurrentSelection();
+        if (_allEntities.Contains(entity))
+            _allEntities.Remove(entity);
+    }
 
-		if (allEntities.Contains(entity))
-			allEntities.Remove(entity);
-	}
+    private void OnTouchClick(TouchInput.TouchData touchData)
+    {
+        if (touchData.DownOverUI || touchData.UpOverUI)
+            return;
 
-	private void Update()
-	{
-		if (Input.GetMouseButtonDown(0) && eventSystem.IsPointerOverGameObject() == false)
-		{
-			Vector2 navPlanePoint = NavigationPlane.RaycastNavPlane2D();
-			Entity newlySelectedEntity = CheckForChangeInSelection(navPlanePoint);
+        Vector2 selectionPoint = NavigationPlane.RaycastNavPlane2D();
+        Entity newlySelectedEntity = GetFirstSelectedEntity(selectionPoint);
 
-			if (selectedEntity != null && newlySelectedEntity == null)
-			{
-				selectedEntity.SetSelected(false);
+        SetSelection(newlySelectedEntity);
+    }
+    
+    public void SetSelection(Entity newSelection)
+    {
+        // Empty to empty so no change
+        if (_selectedEntity == null && newSelection == null)
+            return;
 
-				OnSelectionChanged?.Invoke(this, selectedEntity, null);
-				selectedEntity = null;
-			}
-			else if (newlySelectedEntity != selectedEntity)
-			{
-				if (selectedEntity != null)
-					selectedEntity.SetSelected(false);
+        // Selecting an entity from empty
+        if (_selectedEntity == null && newSelection != null)
+        {
+            _selectedEntity = newSelection;
 
-				newlySelectedEntity.SetSelected(true);
+            _selectedEntity.SetSelected(true);
 
-				OnSelectionChanged?.Invoke(this, selectedEntity, newlySelectedEntity);
-				selectedEntity = newlySelectedEntity;
-			}
+            OnSelectionChanged?.Invoke(this, null, newSelection);
+            return;
+        }
 
-			OnNavPlaneQuery?.Invoke(this, navPlanePoint);
-		}
-	}
+        // Changing from one entity to another
+        if (_selectedEntity != null && newSelection != null && _selectedEntity != newSelection)
+        {
+            Entity oldSelection = _selectedEntity;
+            _selectedEntity = newSelection;
 
-	public static Entity CheckForChangeInSelection(Vector2 selectionPoint)
-	{
-		foreach (Entity entity in allEntities)
-		{
-			float pointToEntitySqrd = (new Vector2(entity.transform.position.x, entity.transform.position.z) - selectionPoint).sqrMagnitude;
+            oldSelection.SetSelected(false);
+            newSelection.SetSelected(true);
 
-			if (pointToEntitySqrd <= entity.SelectionRadiusSqrd)
-			{
-				return entity;
-			}
-		}
+            OnSelectionChanged?.Invoke(this, oldSelection, newSelection);
+            return;
+        }
 
-		return null;
-	}
+        // Deselecting the current entity
+        if (_selectedEntity != null && newSelection == null)
+        {
+            Entity oldSelection = _selectedEntity;
+            _selectedEntity = null;
 
-	public static List<Entity> GetNearbyEntities(Vector3 queryPosition, float radius)
-	{
-		List<Entity> nearbyEntities = new List<Entity>();
+            oldSelection.SetSelected(false);
 
-		foreach (Entity entity in allEntities)
-		{
-			if (Vector3.Distance(queryPosition, entity.transform.position) <= radius)
-				nearbyEntities.Add(entity);
-		}
+            OnSelectionChanged?.Invoke(this, oldSelection, null);
 
-		return nearbyEntities;
-	}
+            return;
+        }
+    }
 
-	public void ClearCurrentSelection()
-	{
-		if (selectedEntity != null)
-		{
-			selectedEntity.SetSelected(false);
-			OnSelectionChanged?.Invoke(this, selectedEntity, null);
-		}
+    public void ClearSelection()
+    {
+        if (_selectedEntity == null)
+            return;
 
-		selectedEntity = null;
-	}
+        Entity oldSelectedEntity = _selectedEntity;
+        _selectedEntity = null;
 
+        oldSelectedEntity.SetSelected(false);
+
+        OnSelectionChanged?.Invoke(this, oldSelectedEntity, null);
+    }
+
+
+    public Entity GetFirstSelectedEntity(Vector2 selectionPoint)
+    {
+        foreach (Entity entity in _allEntities)
+        {
+            float entityDistanceFromSelectionPoint = Vector2.Distance(new Vector2(entity.transform.position.x, entity.transform.position.z), selectionPoint);
+
+            if (entityDistanceFromSelectionPoint <= entity.SelectionRadius)
+            {
+                return entity;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Entity> GetEntitiesWithinRadius(Vector3 queryPosition, float radius)
+    {
+        List<Entity> nearbyEntities = new List<Entity>();
+
+        foreach (Entity entity in _allEntities)
+        {
+            if (Vector3.Distance(queryPosition, entity.transform.position) <= radius)
+                nearbyEntities.Add(entity);
+        }
+
+        return nearbyEntities;
+    }
+
+    
 }

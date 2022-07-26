@@ -22,12 +22,10 @@ public class LaserWeaponConfig : WeaponConfig
 		if (FiringTimeStart > 0)
 			yield return new WaitForSeconds(FiringTimeStart * TurnController.TURN_DURATION);
 
-		float firingDuration = (FiringTimeEnd - FiringTimeStart) * TurnController.TURN_DURATION; // 4
-		float burstDuration = firingDuration / (BurstsPerAction * 2 - 1); // 0.8
-		float fireInterval = burstDuration / ShotsPerBurst; // 0.267
-
-		Debug.Log($"FD {firingDuration} BD {burstDuration} FI {fireInterval}");
-
+		float firingDuration = (FiringTimeEnd - FiringTimeStart) * TurnController.TURN_DURATION;
+		float burstDuration = firingDuration / (BurstsPerAction * 2 - 1);
+		float fireInterval = burstDuration / ShotsPerBurst;
+		
 		WaitForSeconds burstDurationYield = new WaitForSeconds(burstDuration);
 		WaitForSeconds fireIntervalYield = new WaitForSeconds(fireInterval);
 
@@ -35,10 +33,10 @@ public class LaserWeaponConfig : WeaponConfig
 		{
 			for (int shotCount = 0; shotCount < ShotsPerBurst; shotCount++)
 			{
-				GameObject laserObject = Instantiate(LaserPrefab, PlayerCombatController.Instance.PlayerShip.transform.position, Quaternion.identity);
+				GameObject laserObject = Instantiate(LaserPrefab, sourceEntity.transform.position, Quaternion.identity);
 				CombatProjectileLaserBolt combatProjectileLaserBolt = laserObject.GetComponent<CombatProjectileLaserBolt>();
 
-				Vector3 origin = PlayerCombatController.Instance.PlayerShip.transform.position;
+				Vector3 origin = sourceEntity.transform.position;
 				Vector3 direction = (targetEntity == null ? targetPosition : targetEntity.transform.position) - origin;
 
 				float arcTheta = Random.Range(-ArcSpread, ArcSpread);
