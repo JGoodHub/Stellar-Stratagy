@@ -13,7 +13,7 @@ public class LaserWeaponItem : WeaponCardItem
 		if (PlayerCombatController.Instance.OurTurn == false)
 			return;
 		
-		PlayerCombatController.Instance.FocusedShip.Weapons.RemoveWeaponActionUsingID(_id);
+		PlayerCombatController.Instance.PlayerShip.WeaponsController.RemoveWeaponActionUsingID(_id);
 
 		CameraDragController.Instance.DragEnabled = false;
 	}
@@ -57,7 +57,7 @@ public class LaserWeaponItem : WeaponCardItem
 		if (_validTarget)
 		{
 			CombatWeaponsController.WeaponAction weaponAction = new CombatWeaponsController.WeaponAction(_id, _weaponConfig, _targetEntity, _targetPosition);
-			PlayerCombatController.Instance.FocusedShip.Weapons.QueueWeaponAction(weaponAction);
+			PlayerCombatController.Instance.PlayerShip.WeaponsController.QueueWeaponAction(weaponAction);
 		}
 		else
 		{

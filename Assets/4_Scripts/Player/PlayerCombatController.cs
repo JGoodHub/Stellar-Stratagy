@@ -7,70 +7,50 @@ using UnityEngine;
 
 public class PlayerCombatController : SceneSingleton<PlayerCombatController>
 {
+    [SerializeField] private CombatShipController _playerShip;
 
-	[SerializeField] private List<CombatShipController> _playerShips;
+    private bool _ourTurn = false;
 
-	private CombatShipController _focusedShip;
-	private bool _ourTurn = false;
+    public bool OurTurn => _ourTurn;
 
-	public bool OurTurn => _ourTurn;
-	public CombatShipController FocusedShip => _focusedShip;
+    public CombatShipController PlayerShip => _playerShip;
 
-	public event Action<CombatShipController> OnFocusedShipChanged;
+    private void Awake()
+    {
+        TurnController.OnPlayersTurnStarted += UnlockInput;
+        TurnController.OnPlayersTurnEnded += LockInput;
 
-	private void Awake()
-	{
-		TurnController.OnPlayersTurnStarted += UnlockInput;
-		TurnController.OnPlayersTurnEnded += LockInput;
+        TurnController.OnRealtimeStarted += PlayActions;
 
-		TurnController.OnRealtimeStarted += PlayActions;
-		
-		SelectionController.Instance.OnSelectionChanged += OnSelectionChanged;
-	}
+        SelectionController.Instance.OnSelectionChanged += OnSelectionChanged;
+    }
 
-	private void OnSelectionChanged(object sender, Entity oldEntity, Entity newEntity)
-	{
-		if (_focusedShip != null && newEntity == null)
-		{
-			_focusedShip = null;
-			OnFocusedShipChanged?.Invoke(null);
-			return;
-		}
+    private void OnSelectionChanged(object sender, Entity oldEntity, Entity newEntity)
+    {
+    }
 
-		if (_playerShips.Contains(newEntity as CombatShipController))
-		{
-			_focusedShip = newEntity as CombatShipController;
-			OnFocusedShipChanged?.Invoke(_focusedShip);
-			return;
-		}
-	}
+    public void UnlockInput()
+    {
+        _ourTurn = true;
+    }
 
-	public void UnlockInput()
-	{
-		_ourTurn = true;
-	}
+    public void LockInput()
+    {
+        _ourTurn = false;
+    }
 
-	public void LockInput()
-	{
-		_ourTurn = false;
-	}
+    public void PlayActions()
+    {
+        _playerShip.FlightController.FollowFlightPath();
+        _playerShip.WeaponsController.ProcessWeaponActions();
+    }
 
-	public void PlayActions()
-	{
-		foreach (CombatShipController playerShip in _playerShips)
-		{
-			playerShip.Flight.FollowFlightPath();
-			playerShip.Weapons.ProcessWeaponActions();
-		}
-	}
-
-	public void SetSelectedShip(CombatShipController shipController)
-	{
-		if (shipController == _focusedShip)
-			return;
-
-		_focusedShip = shipController;
-		OnFocusedShipChanged?.Invoke(shipController);
-	}
-
+    // public void SetSelectedShip(CombatShipController shipController)
+    // {
+    // 	if (shipController == _focusedShip)
+    // 		return;
+    //
+    // 	_focusedShip = shipController;
+    // 	OnFocusedShipChanged?.Invoke(shipController);
+    // }
 }

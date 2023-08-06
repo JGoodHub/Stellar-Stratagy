@@ -28,6 +28,7 @@ public class TouchInput : Singleton<TouchInput>
     public static event Action<TouchData> OnTouchDragStay;
     public static event Action<TouchData> OnTouchDragEnd;
 
+    [Tooltip("The percentage of diagonal pixels needed to drag to start a drag gesture.")]
     public float _relativeDistanceToDrag = 0.04f;
     private float _pixelDistanceToDrag;
 

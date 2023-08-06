@@ -186,7 +186,7 @@ TextureImporter:
       213: 21300120
     second: Shield Hit Spritesheet_60
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -206,6 +206,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -214,9 +216,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -237,10 +239,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -268,6 +274,42 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1572,6 +1614,68 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Shield Hit Spritesheet_13: 21300026
+      Shield Hit Spritesheet_24: 21300048
+      Shield Hit Spritesheet_4: 21300008
+      Shield Hit Spritesheet_17: 21300034
+      Shield Hit Spritesheet_7: 21300014
+      Shield Hit Spritesheet_55: 21300110
+      Shield Hit Spritesheet_44: 21300088
+      Shield Hit Spritesheet_8: 21300016
+      Shield Hit Spritesheet_33: 21300066
+      Shield Hit Spritesheet_30: 21300060
+      Shield Hit Spritesheet_39: 21300078
+      Shield Hit Spritesheet_29: 21300058
+      Shield Hit Spritesheet_59: 21300118
+      Shield Hit Spritesheet_31: 21300062
+      Shield Hit Spritesheet_43: 21300086
+      Shield Hit Spritesheet_15: 21300030
+      Shield Hit Spritesheet_46: 21300092
+      Shield Hit Spritesheet_2: 21300004
+      Shield Hit Spritesheet_56: 21300112
+      Shield Hit Spritesheet_60: 21300120
+      Shield Hit Spritesheet_5: 21300010
+      Shield Hit Spritesheet_25: 21300050
+      Shield Hit Spritesheet_52: 21300104
+      Shield Hit Spritesheet_36: 21300072
+      Shield Hit Spritesheet_38: 21300076
+      Shield Hit Spritesheet_48: 21300096
+      Shield Hit Spritesheet_1: 21300002
+      Shield Hit Spritesheet_10: 21300020
+      Shield Hit Spritesheet_47: 21300094
+      Shield Hit Spritesheet_58: 21300116
+      Shield Hit Spritesheet_21: 21300042
+      Shield Hit Spritesheet_53: 21300106
+      Shield Hit Spritesheet_49: 21300098
+      Shield Hit Spritesheet_14: 21300028
+      Shield Hit Spritesheet_51: 21300102
+      Shield Hit Spritesheet_18: 21300036
+      Shield Hit Spritesheet_28: 21300056
+      Shield Hit Spritesheet_19: 21300038
+      Shield Hit Spritesheet_22: 21300044
+      Shield Hit Spritesheet_37: 21300074
+      Shield Hit Spritesheet_34: 21300068
+      Shield Hit Spritesheet_0: 21300000
+      Shield Hit Spritesheet_16: 21300032
+      Shield Hit Spritesheet_23: 21300046
+      Shield Hit Spritesheet_35: 21300070
+      Shield Hit Spritesheet_3: 21300006
+      Shield Hit Spritesheet_9: 21300018
+      Shield Hit Spritesheet_41: 21300082
+      Shield Hit Spritesheet_26: 21300052
+      Shield Hit Spritesheet_45: 21300090
+      Shield Hit Spritesheet_11: 21300022
+      Shield Hit Spritesheet_27: 21300054
+      Shield Hit Spritesheet_6: 21300012
+      Shield Hit Spritesheet_12: 21300024
+      Shield Hit Spritesheet_40: 21300080
+      Shield Hit Spritesheet_20: 21300040
+      Shield Hit Spritesheet_32: 21300064
+      Shield Hit Spritesheet_54: 21300108
+      Shield Hit Spritesheet_57: 21300114
+      Shield Hit Spritesheet_42: 21300084
+      Shield Hit Spritesheet_50: 21300100
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

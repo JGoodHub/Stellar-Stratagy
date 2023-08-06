@@ -18,7 +18,7 @@ MonoBehaviour:
   RotateToFaceTarget: 1
   WeaponCardPrefab: {fileID: 1626466205901710758, guid: 5aac459de3b9b2b4fb9a5799e7e9acae,
     type: 3}
-  TargetReticlePrefab: {fileID: 2666480785440323700, guid: 3310d7ace78364c47b0b72c4a5b2eacc,
+  TargetCrosshairPrefab: {fileID: 2666480785440323700, guid: 3310d7ace78364c47b0b72c4a5b2eacc,
     type: 3}
   LaserPrefab: {fileID: 2425652637988943809, guid: ac88840200e55fe4faac58019d4b3400,
     type: 3}

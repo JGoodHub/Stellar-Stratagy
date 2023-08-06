@@ -5,11 +5,12 @@ using UnityEngine.EventSystems;
 
 public class CombatShipController : Entity
 {
-	public StatsController Stats => GetComponent<StatsController>();
+	public StatsController StatsController => GetComponent<StatsController>();
 
 	public TargetingController Targeter => GetComponent<TargetingController>();
 	
-	public CombatWeaponsController Weapons => GetComponent<CombatWeaponsController>();
-	public CombatFlightController Flight => GetComponent<CombatFlightController>();
+	public CombatWeaponsController WeaponsController => GetComponent<CombatWeaponsController>();
+	
+	public CombatFlightController FlightController => GetComponent<CombatFlightController>();
 	
 }

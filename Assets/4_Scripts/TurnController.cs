@@ -5,31 +5,49 @@ using UnityEngine;
 
 public class TurnController : SceneSingleton<TurnController>
 {
+    [SerializeField] private float _turnRealtimeDuration = 12f;
 
-	public const float TURN_DURATION = 6f;
+    public float TurnRealtimeDuration => _turnRealtimeDuration;
 
-	public static event Action OnRealtimeStarted;
-	public static event Action OnRealtimeEnded;
+    public static event Action OnRealtimeStarted;
+    
+    public static event Action OnRealtimeEnded;
 
-	public static event Action OnPlayersTurnStarted;
-	public static event Action OnPlayersTurnEnded;
+    public static event Action OnPlayersTurnStarted;
+    
+    public static event Action OnPlayersTurnEnded;
 
-	private void Start()
-	{
-		OnPlayersTurnStarted?.Invoke();
-	}
+    public static event Action OnEnemyTurnStarted;
 
-	public void PlayerActionsSubmitted()
-	{
-		OnPlayersTurnEnded?.Invoke();
-		
-		OnRealtimeStarted?.Invoke();
-		
-		DOVirtual.DelayedCall(6f, () =>
-		{
-			OnRealtimeEnded?.Invoke();
-			OnPlayersTurnStarted?.Invoke();
-		}, false);
-	}
+    public static event Action OnEnemyTurnEnded;
 
+    private void Start()
+    {
+        OnPlayersTurnStarted?.Invoke();
+    }
+
+    public void PlayerActionsSubmitted()
+    {
+        OnPlayersTurnEnded?.Invoke();
+
+        OnEnemyTurnStarted?.Invoke();
+    }
+
+    public void EnemyActionSubmitted()
+    {
+        OnEnemyTurnEnded?.Invoke();
+
+        StartRealtime();
+    }
+
+    private void StartRealtime()
+    {
+        OnRealtimeStarted?.Invoke();
+
+        DOVirtual.DelayedCall(_turnRealtimeDuration, () =>
+        {
+            OnRealtimeEnded?.Invoke();
+            OnPlayersTurnStarted?.Invoke();
+        }, false);
+    }
 }

@@ -35,7 +35,7 @@ public class CombatProjectileLaserBolt : MonoBehaviour, IFreezeable
 
 		_timeAlive += Time.deltaTime;
 
-		if (_timeAlive >= TurnController.TURN_DURATION * _turnLifetime)
+		if (_timeAlive >= TurnController.Instance.TurnRealtimeDuration * _turnLifetime)
 		{
 			Destroy(gameObject);
 			return;
