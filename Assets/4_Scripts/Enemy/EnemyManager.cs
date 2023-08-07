@@ -33,7 +33,10 @@ public class EnemyManager : Singleton<EnemyManager>
 
     private void PlanEnemyAction()
     {
-        CombatShipController playerShip = PlayerCombatController.Instance.PlayerShip;
+        TurnController.Instance.EnemyActionSubmitted();
+        return;
+
+        CombatShipController playerShip = PlayerCombatController.Instance.FocusedShip;
 
         foreach (CombatShipController shipController in _ships)
         {

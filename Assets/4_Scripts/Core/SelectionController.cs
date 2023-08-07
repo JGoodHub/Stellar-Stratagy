@@ -12,7 +12,7 @@ public class SelectionController : SceneSingleton<SelectionController>
 
     // Properties
 
-    public static Entity SelectedEntity => Instance._selectedEntity;
+    public Entity SelectedEntity => _selectedEntity;
 
     // Events
     

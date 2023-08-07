@@ -140,26 +140,26 @@ public static class PathUtils
     public class BezierCurve3
     {
         public readonly Vector3 Start, Mid, End;
-        public readonly Vector3[] curve;
+        public readonly Vector3[] Curve;
 
-        public int Resolution => curve.Length;
+        public int Resolution => Curve.Length;
 
-        public Vector3 this[int index] => curve[index];
+        public Vector3 this[int index] => Curve[index];
 
         public BezierCurve3(Vector3 start, Vector3 mid, Vector3 end, Vector3[] curve)
         {
             Start = start;
             Mid = mid;
             End = end;
-            this.curve = curve;
+            this.Curve = curve;
         }
 
         public float Length()
         {
             float sum = 0;
 
-            for (int i = 0; i < curve.Length - 1; i++)
-                sum += (curve[i + 1] - curve[i]).magnitude;
+            for (int i = 0; i < Curve.Length - 1; i++)
+                sum += (Curve[i + 1] - Curve[i]).magnitude;
 
             return sum;
         }

@@ -2,9 +2,13 @@ Shader "Unlit/RingShader"
 {
     Properties
     {
-        _Color("Color", color) = (1, 1, 1, 1)
-        _InnerRadius("Inner Radius", Range(0, 0.5)) = 1
-        _Thickness("Thickness", Range(0, 0.5)) = 0.5
+        _CircleColor("Circle Color", color) = (1, 1, 1, 1)
+        _GlowColor("Glow Color", color) = (1, 1, 1, 1)
+
+        _GlowInnerRadius("Glow Inner Radius", Range(0, 0.5)) = 0.5
+
+        _CircleInnerRadius("Circle Inner Radius", Range(0, 0.5)) = 0.5
+        _CircleThickness("Circle Thickness", Range(0, 0.5)) = 0.5
     }
     SubShader
     {
@@ -37,9 +41,13 @@ Shader "Unlit/RingShader"
                 float4 vertex : SV_POSITION;
             };
 
-            float4 _Color;
-            float  _InnerRadius;
-            float  _Thickness;
+            float4 _CircleColor;
+            float4 _GlowColor;
+
+            float _GlowInnerRadius;
+
+            float _CircleInnerRadius;
+            float _CircleThickness;
 
             v2f vert(appdata v)
             {
@@ -49,16 +57,28 @@ Shader "Unlit/RingShader"
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_Target
+            fixed4 frag(v2f v) : SV_Target
             {
-                const float centreDistance = length(float2(0.5, 0.5) - i.uv);
+                const float distToCentre = length(float2(0.5, 0.5) - v.uv);
 
-                if(centreDistance <= _InnerRadius || centreDistance >= _InnerRadius + _Thickness)
-                {
+                // Outside the outer circle radius
+                if (distToCentre > _CircleInnerRadius + _CircleThickness)
                     return fixed4(0, 0, 0, 0);
+
+                // Inside the inner glow radius
+                if (_GlowInnerRadius < _CircleInnerRadius && distToCentre < _CircleInnerRadius)
+                {
+                    if (distToCentre < _GlowInnerRadius)
+                        return fixed4(0, 0, 0, 0);
+
+                    float glowAlpha = (distToCentre - _GlowInnerRadius) / (_CircleInnerRadius - _GlowInnerRadius);
+                    return fixed4(_GlowColor.r, _GlowColor.g, _GlowColor.b, _GlowColor.a * glowAlpha);
                 }
 
-                return _Color;
+                if (distToCentre < _CircleInnerRadius)
+                    return fixed4(0, 0, 0, 0);
+
+                return _CircleColor;
             }
             ENDCG
         }

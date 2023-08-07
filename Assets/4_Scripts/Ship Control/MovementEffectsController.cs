@@ -1,21 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementEffectsController : SceneSingleton<MovementEffectsController>
 {
-    [SerializeField] private LineRenderer _moveableAreaLineRenderer;
+    [SerializeField] private LineRenderer _moveableAreaRenderer;
+    [SerializeField] private LineRenderer _pathLineRenderer;
+
+    private void Start()
+    {
+        _moveableAreaRenderer.enabled = false;
+        _pathLineRenderer.enabled = false;
+    }
 
     public void ShowMoveableArea(List<Vector3> outlinePositions)
     {
-        _moveableAreaLineRenderer.enabled = true;
+        _moveableAreaRenderer.enabled = true;
 
-        _moveableAreaLineRenderer.positionCount = outlinePositions.Count;
-        _moveableAreaLineRenderer.SetPositions(outlinePositions.ToArray());
+        _moveableAreaRenderer.positionCount = outlinePositions.Count;
+        _moveableAreaRenderer.SetPositions(outlinePositions.ToArray());
+    }
+
+    public void ShowFlightTrajectory(List<Vector3> pathPositions)
+    {
+        _pathLineRenderer.enabled = true;
+
+        _pathLineRenderer.positionCount = pathPositions.Count;
+        _pathLineRenderer.SetPositions(pathPositions.ToArray());
     }
 
     public void ClearMoveableArea()
     {
-        _moveableAreaLineRenderer.enabled = false;
+        _moveableAreaRenderer.enabled = false;
+    }
+
+    public void ClearPathLine()
+    {
+        _pathLineRenderer.enabled = false;
     }
 }

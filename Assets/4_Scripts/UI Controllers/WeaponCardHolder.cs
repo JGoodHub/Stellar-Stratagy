@@ -14,15 +14,15 @@ public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
 
     private void Start()
     {
-        foreach (CombatWeaponsController.Hardpoint hardpoint in PlayerCombatController.Instance.PlayerShip.WeaponsController.Hardpoints)
+        foreach (CombatWeaponsController.Hardpoint hardpoint in PlayerCombatController.Instance.FocusedShip.WeaponsController.Hardpoints)
         {
             GameObject turretObject = Instantiate(hardpoint.WeaponConfig.TurretPrefab, hardpoint.Transform);
             hardpoint.Turret = turretObject.GetComponent<Turret>();
 
-            CreateWeaponCard(PlayerCombatController.Instance.PlayerShip, hardpoint.WeaponConfig);
+            CreateWeaponCard(PlayerCombatController.Instance.FocusedShip, hardpoint.WeaponConfig);
         }
         
-        ActivateCardsForFocusedShip(PlayerCombatController.Instance.PlayerShip);
+        ActivateCardsForFocusedShip(PlayerCombatController.Instance.FocusedShip);
     }
 
     public void CreateWeaponCard(CombatShipController shipController, WeaponConfig weaponConfig)
