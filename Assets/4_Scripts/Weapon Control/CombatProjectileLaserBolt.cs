@@ -25,7 +25,7 @@ public class CombatProjectileLaserBolt : MonoBehaviour, IFreezeable
 		_speed = speed;
 		_sourceId = sourceId;
 
-		ProjectileTracker.RegisterProjectile(this);
+		ProjectileController.RegisterProjectile(this);
 	}
 
 	private void Update()
@@ -78,7 +78,7 @@ public class CombatProjectileLaserBolt : MonoBehaviour, IFreezeable
 
 	private void OnDestroy()
 	{
-		ProjectileTracker.UnregisterProjectile(this);
+		ProjectileController.UnregisterProjectile(this);
 	}
 
 	public void Freeze()

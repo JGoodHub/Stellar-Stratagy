@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileTracker : MonoBehaviour
+public class ProjectileController : MonoBehaviour
 {
 
 	private static HashSet<IFreezeable> _projectiles = new HashSet<IFreezeable>();

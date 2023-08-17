@@ -9,16 +9,17 @@ public class PlayerCombatFlightController : CombatFlightController, IBeginDragHa
 {
     [SerializeField] private GameObject _ghostShipPrefab;
 
-    private GameObject _ghostShipGO;
+    private ShipGhostHandler _ghostShip;
 
     private void Start()
     {
-        _ghostShipGO = Instantiate(_ghostShipPrefab, Vector3.up * 5000, Quaternion.identity);
+        _ghostShip = Instantiate(_ghostShipPrefab, Vector3.up * 5000, Quaternion.identity).GetComponent<ShipGhostHandler>();
+        _ghostShip.Initialise(ShipController);
     }
 
     protected override void ClearTemporaryMarkers()
     {
-        _ghostShipGO.transform.position = Vector3.up * 1000;
+        _ghostShip.transform.position = Vector3.up * 1000;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -35,8 +36,10 @@ public class PlayerCombatFlightController : CombatFlightController, IBeginDragHa
 
         CameraDragController.Instance.DragEnabled = false;
 
-        List<Vector3> potentialTrajectoryArea = GetPotentialTrajectoryArea(transform.position, transform.forward, 14);
-        MovementEffectsController.Instance.ShowMoveableArea(potentialTrajectoryArea);
+        List<Vector3> potentialTrajectoryArea = GetPrimaryTrajectoryArea(transform.position, transform.forward, 14);
+        TurnEffectsController.Instance.ShowMoveableArea(potentialTrajectoryArea);
+
+        _ghostShip.SetInteractable(false);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -48,13 +51,13 @@ public class PlayerCombatFlightController : CombatFlightController, IBeginDragHa
 
         _flightPath = GetTargetedFlightPath(transform.position, transform.forward, navPlanePoint);
 
-        Vector3 _flightPathEndDirection = PathUtils.GetDirectionOnBezierCurve(_flightPath.Start, _flightPath.Mid, _flightPath.End, 1f);
+        Vector3 _flightPathEndDirection = _flightPath.GetDirectionOnCurve(1f);
 
-        _ghostShipGO.transform.position = _flightPath.End;
-        _ghostShipGO.transform.forward = _flightPathEndDirection;
+        _ghostShip.transform.position = _flightPath.D;
+        _ghostShip.transform.forward = _flightPathEndDirection;
 
         List<Vector3> trajectoryLine = GetTrajectoryLine();
-        MovementEffectsController.Instance.ShowFlightTrajectory(trajectoryLine);
+        TurnEffectsController.Instance.ShowFlightTrajectory(trajectoryLine);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -64,26 +67,9 @@ public class PlayerCombatFlightController : CombatFlightController, IBeginDragHa
 
         CameraDragController.Instance.DragEnabled = true;
 
-        MovementEffectsController.Instance.ClearMoveableArea();
-        MovementEffectsController.Instance.ClearPathLine();
-    }
+        TurnEffectsController.Instance.ClearMoveableArea();
+        TurnEffectsController.Instance.ClearPathLine();
 
-    private void OnDrawGizmos()
-    {
-        return;
-
-        for (float angle = -1f; angle <= 1f; angle += 0.0999999f)
-        {
-            for (float distance = 0.1f; distance <= 1f; distance += 0.0999999f)
-            {
-                PathUtils.BezierCurve3 manualFlightPath = GetManualFlightPath(transform.position, transform.forward, angle, distance);
-
-                Gizmos.color = Color.green;
-
-                Gizmos.DrawSphere(manualFlightPath.End, 2f);
-
-                Gizmos.DrawRay(manualFlightPath.End, manualFlightPath.GetTangent(1f).normalized * 4f);
-            }
-        }
+        _ghostShip.SetInteractable(true);
     }
 }

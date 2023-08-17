@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementEffectsController : SceneSingleton<MovementEffectsController>
+public class TurnEffectsController : SceneSingleton<TurnEffectsController>
 {
+    [Header("Movement")]
     [SerializeField] private LineRenderer _moveableAreaRenderer;
     [SerializeField] private LineRenderer _pathLineRenderer;
+
+    [Header("Targeting")]
+    [SerializeField] private Transform _reticlesContainer;
 
     private void Start()
     {

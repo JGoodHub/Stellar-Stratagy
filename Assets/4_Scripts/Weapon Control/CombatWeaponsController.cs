@@ -7,6 +7,7 @@ public class CombatWeaponsController : ShipComponent
     [Serializable]
     public class Hardpoint
     {
+        public string ID;
         public Transform Transform;
         public WeaponConfig WeaponConfig;
 
@@ -43,16 +44,16 @@ public class CombatWeaponsController : ShipComponent
 
     private void SetupWeapons()
     {
-        if (ShipController.alignment != GameManager.Faction.FRIENDLY)
-            return;
-        
-        foreach (Hardpoint hardpoint in _hardpoints)
-        {
-            GameObject turretObject = Instantiate(hardpoint.WeaponConfig.TurretPrefab, hardpoint.Transform);
-            hardpoint.Turret = turretObject.GetComponent<Turret>();
-
-            WeaponCardHolder.Instance.CreateWeaponCard(ShipController, hardpoint.WeaponConfig);
-        }
+        // if (ShipController.alignment != GameManager.Faction.FRIENDLY)
+        //     return;
+        //
+        // foreach (Hardpoint hardpoint in _hardpoints)
+        // {
+        //     GameObject turretObject = Instantiate(hardpoint.WeaponConfig.TurretPrefab, hardpoint.Transform);
+        //     hardpoint.Turret = turretObject.GetComponent<Turret>();
+        //
+        //     WeaponCardHolder.Instance.CreateWeaponCard(ShipController, hardpoint.WeaponConfig);
+        // }
 
         //WeaponCardHolder.Instance.HideAllCards();
     }

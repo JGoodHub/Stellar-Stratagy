@@ -116,24 +116,6 @@ public static class PathUtils
         return new BezierCurve3(a, b, c, curve.ToArray());
     }
 
-    public static List<Vector3> GetBezierCurve(Vector3 a, Vector3 b, Vector3 c, Vector3 d, int resolution)
-    {
-        List<Vector3> curve = new List<Vector3>();
-
-        for (float t = 0; t <= 1f; t += 1f / (resolution - 1))
-        {
-            Vector3 ab = Vector3.Lerp(a, b, t);
-            Vector3 bc = Vector3.Lerp(b, c, t);
-            Vector3 cd = Vector3.Lerp(c, d, t);
-            Vector3 ab_bc = Vector3.Lerp(ab, bc, t);
-            Vector3 bc_cd = Vector3.Lerp(bc, cd, t);
-            Vector3 abbc_bccd = Vector3.Lerp(ab_bc, bc_cd, t);
-            curve.Add(abbc_bccd);
-        }
-
-        return curve;
-    }
-
     /// <summary>
     /// A bezier curve represented by 3 Vector3 components.
     /// </summary>
@@ -151,7 +133,7 @@ public static class PathUtils
             Start = start;
             Mid = mid;
             End = end;
-            this.Curve = curve;
+            Curve = curve;
         }
 
         public float Length()
@@ -163,7 +145,7 @@ public static class PathUtils
 
             return sum;
         }
-        
+
         public float DirectLength()
         {
             return (End - Start).magnitude;
@@ -172,6 +154,82 @@ public static class PathUtils
         public Vector3 GetTangent(float t)
         {
             return GetDirectionOnBezierCurve(Start, Mid, End, t).normalized;
+        }
+    }
+
+    /// <summary>
+    /// A bezier curve represented by 4 Vector3 components.
+    /// </summary>
+    public class BezierCurve4
+    {
+        public Vector3 A, B, C, D;
+        public Vector3[] Curve;
+
+        public readonly int Resolution;
+
+        public Vector3 this[int index] => Curve[index];
+
+        public BezierCurve4(Vector3 a, Vector3 b, Vector3 c, Vector3 d, int resolution)
+        {
+            A = a;
+            B = b;
+            C = c;
+            D = d;
+
+            Resolution = resolution;
+
+            RecalculateCurve();
+        }
+
+        public void RecalculateCurve()
+        {
+            Curve = new Vector3[Resolution];
+
+            int index = 0;
+            float step = 1f / (Resolution - 1);
+
+            for (float t = 0; t <= 1.001f; t += step)
+            {
+                Curve[index] = GetPointOnCurve(t);
+                index++;
+            }
+        }
+
+        public float DirectLength()
+        {
+            return (D - A).magnitude;
+        }
+
+        public float CurveLength()
+        {
+            float sum = 0;
+
+            for (int i = 0; i < Curve.Length - 1; i++)
+                sum += (Curve[i + 1] - Curve[i]).magnitude;
+
+            return sum;
+        }
+
+        public Vector3 GetPointOnCurve(float t)
+        {
+            Vector3 ab = Vector3.Lerp(A, B, t);
+            Vector3 bc = Vector3.Lerp(B, C, t);
+            Vector3 cd = Vector3.Lerp(C, D, t);
+
+            Vector3 ab_bc = Vector3.Lerp(ab, bc, t);
+            Vector3 bc_cd = Vector3.Lerp(bc, cd, t);
+
+            Vector3 abbc_bccd = Vector3.Lerp(ab_bc, bc_cd, t);
+
+            return abbc_bccd;
+        }
+
+        public Vector3 GetDirectionOnCurve(float t)
+        {
+            Vector3 rearVector = GetPointOnCurve(Mathf.Clamp01(t - 0.01f));
+            Vector3 frontVector = GetPointOnCurve(Mathf.Clamp01(t + 0.01f));
+
+            return frontVector - rearVector;
         }
     }
 }

@@ -15,6 +15,8 @@ public class PlayerCombatController : SceneSingleton<PlayerCombatController>
 
     public bool OurTurn => _ourTurn;
 
+    public List<CombatShipController> PlayerShips => _playerShips;
+
     public CombatShipController FocusedShip => _focusedShip;
 
     public event Action<CombatShipController> OnFocusedShipChanged;

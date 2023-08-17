@@ -468,11 +468,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9ae388289b4c38aaf04105333d7b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Frigate
+  name: Destroyer
   id: 0
   type: 0
   selectionRing: {fileID: 660820893}
-  selectionRadius: 35
+  selectionRadius: 30
   alignment: 0
 --- !u!114 &4595147170291285834
 MonoBehaviour:
@@ -486,8 +486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2873567349caf4fed8b652be718f9300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDistancePerTurn: 120
-  _maxAngleDeltaPerTurn: 60
+  _maxDistancePerTurn: 140
+  _maxPrimaryAngleDeltaPerTurn: 50
+  _maxSecondaryAngleDeltaPerTurn: 30
   _pathEasingCurve:
     serializedVersion: 2
     m_Curve:
@@ -527,7 +528,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hardpoints:
-  - Transform: {fileID: 3626252064115817523}
+  - ID: front
+    Transform: {fileID: 3626252064115817523}
     WeaponConfig: {fileID: 11400000, guid: 7858776bd30ec1448babe87d83d7b476, type: 2}
     Turret: {fileID: 0}
 --- !u!1 &4750003766163369929

@@ -94,12 +94,12 @@ public class AutoFlightController : ShipComponent
 		this.path = path;
 		waypoint = path.Waypoints[1];
 		waypoint.GetTargetPositionAndAlignment(out Vector3 targetPosition, out Vector3 targetForward);
-		flightPath = PathUtils.GetBezierCurve(
-			transform.position, 
-			transform.position + transform.forward * 200, 
-			targetPosition - targetForward * 200, 
-			targetPosition, 
-			10);
+		// flightPath = PathUtils.GetBezierCurve(
+		// 	transform.position, 
+		// 	transform.position + transform.forward * 200, 
+		// 	targetPosition - targetForward * 200, 
+		// 	targetPosition, 
+		// 	10);
 
 		Debug.DrawRay(transform.position, Vector3.up * 5, Color.green, 5f);
 		Debug.DrawRay(transform.position + transform.forward * 50, Vector3.up * 5, Color.green, 5f);

@@ -14,15 +14,20 @@ public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
 
     private void Start()
     {
-        foreach (CombatWeaponsController.Hardpoint hardpoint in PlayerCombatController.Instance.FocusedShip.WeaponsController.Hardpoints)
+        foreach (CombatShipController playerShip in PlayerCombatController.Instance.PlayerShips)
         {
-            GameObject turretObject = Instantiate(hardpoint.WeaponConfig.TurretPrefab, hardpoint.Transform);
-            hardpoint.Turret = turretObject.GetComponent<Turret>();
+            foreach (CombatWeaponsController.Hardpoint hardpoint in playerShip.WeaponsController.Hardpoints)
+            {
+                GameObject turretObject = Instantiate(hardpoint.WeaponConfig.TurretPrefab, hardpoint.Transform);
+                hardpoint.Turret = turretObject.GetComponent<Turret>();
 
-            CreateWeaponCard(PlayerCombatController.Instance.FocusedShip, hardpoint.WeaponConfig);
+                CreateWeaponCard(playerShip, hardpoint.WeaponConfig);
+            }
         }
-        
-        ActivateCardsForFocusedShip(PlayerCombatController.Instance.FocusedShip);
+
+        HideAllCards();
+
+        PlayerCombatController.Instance.OnFocusedShipChanged += ActivateCardsForFocusedShip;
     }
 
     public void CreateWeaponCard(CombatShipController shipController, WeaponConfig weaponConfig)
@@ -41,7 +46,7 @@ public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
     {
         // Deactivate all cards
         HideAllCards();
-        
+
         if (shipController == null || _weaponCards.ContainsKey(shipController) == false)
             return;
 
@@ -53,7 +58,7 @@ public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
     public void HideAllCards()
     {
         foreach (List<WeaponCardItem> cardItems in _weaponCards.Values)
-            foreach (WeaponCardItem cardItem in cardItems)
-                cardItem.gameObject.SetActive(false);
+        foreach (WeaponCardItem cardItem in cardItems)
+            cardItem.gameObject.SetActive(false);
     }
 }

@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5969266399072862429}
+  - component: {fileID: 4838589108312297114}
+  - component: {fileID: 445462226799502954}
+  - component: {fileID: 1013795600777303420}
   m_Layer: 10
   m_Name: FrigateGhost
   m_TagString: Ship
@@ -26,11 +29,50 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 176.9, y: 0, z: 6.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6151250050387205052}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &4838589108312297114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969266399072862428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf6ca14e0ead4aa0a6805823511a4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &445462226799502954
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969266399072862428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14.640215, y: 6.444294, z: 52.681286}
+  m_Center: {x: -2.6789199e-14, y: 0, z: 9.88512}
+--- !u!65 &1013795600777303420
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969266399072862428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 28.22713, y: 11.757399, z: 20.080437}
+  m_Center: {x: 1.1801039e-14, y: 1.6020284, z: -4.8304234}
 --- !u!1001 &5969266399759285335
 PrefabInstance:
   m_ObjectHideFlags: 0
