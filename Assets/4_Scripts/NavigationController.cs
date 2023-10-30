@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
-public class NavigationController : Singleton<NavigationController>
+public class NavigationController : SceneSingleton<NavigationController>
 {
     private List<NavigationWaypoint> allWaypoints;
 

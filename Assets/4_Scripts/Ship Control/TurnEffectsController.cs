@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
 public class TurnEffectsController : SceneSingleton<TurnEffectsController>

@@ -1,4 +1,5 @@
 using System.Collections;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
 public class LaserWeaponConfig : WeaponConfig
@@ -12,17 +13,17 @@ public class LaserWeaponConfig : WeaponConfig
     public float LaserSpeed = 60;
     public float ArcSpread = 5f;
 
-    public override void Fire(Entity sourceEntity, Entity targetEntity, Transform turretTransform, Vector3 targetPosition)
+    public override void Fire(SelectableEntity sourceEntity, SelectableEntity targetEntity, Transform turretTransform, Vector3 targetPosition)
     {
         sourceEntity.StartCoroutine(FireLasersAtTargetCoroutine(sourceEntity, targetEntity, turretTransform, targetPosition));
     }
 
-    private IEnumerator FireLasersAtTargetCoroutine(Entity sourceEntity, Entity targetEntity, Transform turretTransform, Vector3 targetPosition)
+    private IEnumerator FireLasersAtTargetCoroutine(SelectableEntity sourceEntity, SelectableEntity targetEntity, Transform turretTransform, Vector3 targetPosition)
     {
         if (FiringTimeStart > 0)
-            yield return new WaitForSeconds(FiringTimeStart * TurnController.Instance.TurnRealtimeDuration);
+            yield return new WaitForSeconds(FiringTimeStart * TurnController.Singleton.TurnRealtimeDuration);
 
-        float firingDuration = (FiringTimeEnd - FiringTimeStart) * TurnController.Instance.TurnRealtimeDuration;
+        float firingDuration = (FiringTimeEnd - FiringTimeStart) * TurnController.Singleton.TurnRealtimeDuration;
         float burstDuration = firingDuration / (BurstsPerAction * 2 - 1);
         float fireInterval = burstDuration / ShotsPerBurst;
 

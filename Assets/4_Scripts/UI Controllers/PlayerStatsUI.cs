@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class PlayerStatsUI : Singleton<PlayerStatsUI>
+public class PlayerStatsUI : SceneSingleton<PlayerStatsUI>
 {
 
 	[Header("Player Stats UI")]

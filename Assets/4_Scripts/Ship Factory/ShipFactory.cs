@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using Faction = GameManager.Faction;
 
-public class ShipFactory : Entity
+public class ShipFactory : SelectableEntity
 {
 
     public enum Size
@@ -59,10 +60,10 @@ public class ShipFactory : Entity
 
         foreach (ShipFactory factory in allFactories)
         {
-            if (factory.alignment == faction)
-            {
-                return factory;
-            }
+            // if (factory.alignment == faction)
+            // {
+            //     return factory;
+            // }
         }
 
         return null;

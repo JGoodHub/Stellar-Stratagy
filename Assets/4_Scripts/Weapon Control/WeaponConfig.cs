@@ -1,3 +1,4 @@
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,7 +14,7 @@ public class WeaponConfig : ScriptableObject
     public GameObject WeaponCardPrefab;
     [FormerlySerializedAs("TargetReticlePrefab")] public GameObject TargetCrosshairPrefab;
     
-    public virtual void Fire(Entity sourceEntity, Entity targetEntity, Transform turretTransform, Vector3 targetPosition)
+    public virtual void Fire(SelectableEntity sourceEntity, SelectableEntity targetEntity, Transform turretTransform, Vector3 targetPosition)
     {
     }
 

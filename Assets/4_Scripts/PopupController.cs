@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
-public class PopupController : Singleton<PopupController>
+namespace GoodHub.Core.Runtime.PopupSystem
 {
 
-	public GameObject _starMapPopup;
-
-	public void ShowStarMapPopup()
+	public class PopupController : GlobalSingleton<PopupController>
 	{
-		Instantiate(_starMapPopup, transform);
+
+		public GameObject _starMapPopup;
+
+		public void ShowStarMapPopup()
+		{
+			Instantiate(_starMapPopup, transform);
+		}
+
 	}
 
 }

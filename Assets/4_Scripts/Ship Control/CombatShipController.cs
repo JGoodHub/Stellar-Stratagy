@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CombatShipController : Entity
+public class CombatShipController : SelectableEntity
 {
 	public StatsController StatsController => GetComponent<StatsController>();
 

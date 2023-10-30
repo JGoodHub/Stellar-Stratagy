@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
-public class ShipController : Entity
+public class ShipController : SelectableEntity
 {
 
 	//Basic components

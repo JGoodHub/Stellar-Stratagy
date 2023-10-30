@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,17 +11,17 @@ public class LaserWeaponItem : WeaponCardItem
 
 	public override void OnBeginDrag(PointerEventData eventData)
 	{
-		if (PlayerCombatController.Instance.OurTurn == false)
+		if (PlayerCombatController.Singleton.OurTurn == false)
 			return;
 		
-		PlayerCombatController.Instance.FocusedShip.WeaponsController.RemoveWeaponActionUsingID(_id);
+		PlayerCombatController.Singleton.FocusedShip.WeaponsController.RemoveWeaponActionUsingID(_id);
 
-		CameraDragController.Instance.DragEnabled = false;
+		CameraDragController.Singleton.DragEnabled = false;
 	}
 
 	public override void OnDrag(PointerEventData eventData)
 	{
-		if (PlayerCombatController.Instance.OurTurn == false)
+		if (PlayerCombatController.Singleton.OurTurn == false)
 			return;
 
 		if (CameraHelper.IsMouseOverUI())
@@ -33,7 +34,7 @@ public class LaserWeaponItem : WeaponCardItem
 
 			_pointReticleObject.transform.position = _targetPosition = navPlanePoint;
 
-			List<Entity> nearbyEntities = SelectionController.Instance.GetEntitiesWithinRadius(navPlanePoint, 35f);
+			List<SelectableEntity> nearbyEntities = SelectionController.Singleton.GetEntitiesWithinRadius(navPlanePoint, 35f);
 
 			if (nearbyEntities.Count > 0)
 			{
@@ -49,7 +50,7 @@ public class LaserWeaponItem : WeaponCardItem
 
 	public override void OnEndDrag(PointerEventData eventData)
 	{
-		if (PlayerCombatController.Instance.OurTurn == false)
+		if (PlayerCombatController.Singleton.OurTurn == false)
 			return;
 		
 		_validTarget = CameraHelper.IsMouseOverUI() == false;
@@ -57,7 +58,7 @@ public class LaserWeaponItem : WeaponCardItem
 		if (_validTarget)
 		{
 			CombatWeaponsController.WeaponAction weaponAction = new CombatWeaponsController.WeaponAction(_id, _weaponConfig, _targetEntity, _targetPosition);
-			PlayerCombatController.Instance.FocusedShip.WeaponsController.QueueWeaponAction(weaponAction);
+			PlayerCombatController.Singleton.FocusedShip.WeaponsController.QueueWeaponAction(weaponAction);
 		}
 		else
 		{
@@ -65,7 +66,7 @@ public class LaserWeaponItem : WeaponCardItem
 			_targetEntity = null;
 		}
 		
-		CameraDragController.Instance.DragEnabled = true;
+		CameraDragController.Singleton.DragEnabled = true;
 	}
 
 	

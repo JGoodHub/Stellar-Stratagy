@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using GoodHub.Core.Runtime;
 
 public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
 {
@@ -14,7 +15,7 @@ public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
 
     private void Start()
     {
-        foreach (CombatShipController playerShip in PlayerCombatController.Instance.PlayerShips)
+        foreach (CombatShipController playerShip in PlayerCombatController.Singleton.PlayerShips)
         {
             foreach (CombatWeaponsController.Hardpoint hardpoint in playerShip.WeaponsController.Hardpoints)
             {
@@ -27,7 +28,7 @@ public class WeaponCardHolder : SceneSingleton<WeaponCardHolder>
 
         HideAllCards();
 
-        PlayerCombatController.Instance.OnFocusedShipChanged += ActivateCardsForFocusedShip;
+        PlayerCombatController.Singleton.OnFocusedShipChanged += ActivateCardsForFocusedShip;
     }
 
     public void CreateWeaponCard(CombatShipController shipController, WeaponConfig weaponConfig)

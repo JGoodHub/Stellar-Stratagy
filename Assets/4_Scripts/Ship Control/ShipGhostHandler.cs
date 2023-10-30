@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -33,18 +34,18 @@ public class ShipGhostHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (PlayerCombatController.Instance.OurTurn == false)
+        if (PlayerCombatController.Singleton.OurTurn == false)
             return;
 
-        if (PlayerCombatController.Instance.FocusedShip != _shipController || SelectionController.Instance.SelectedEntity == null)
+        if (PlayerCombatController.Singleton.FocusedShip != _shipController || SelectionController.Singleton.SelectedEntity == null)
         {
-            SelectionController.Instance.SetSelection(_shipController);
+            SelectionController.Singleton.SetSelection(_shipController);
         }
 
-        CameraDragController.Instance.DragEnabled = false;
+        CameraDragController.Singleton.DragEnabled = false;
 
         List<Vector3> secondaryTrajectoryArea = _shipController.FlightController.GetSecondaryTrajectoryArea(transform.position, transform.forward, 14);
-        TurnEffectsController.Instance.ShowMoveableArea(secondaryTrajectoryArea);
+        TurnEffectsController.Singleton.ShowMoveableArea(secondaryTrajectoryArea);
 
         _initialEndForward = transform.forward;
 
@@ -54,7 +55,7 @@ public class ShipGhostHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (PlayerCombatController.Instance.OurTurn == false || PlayerCombatController.Instance.FocusedShip != _shipController)
+        if (PlayerCombatController.Singleton.OurTurn == false || PlayerCombatController.Singleton.FocusedShip != _shipController)
             return;
 
         Vector3 navPlanePoint = NavigationPlane.RaycastNavPlane();
@@ -78,14 +79,14 @@ public class ShipGhostHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         transform.forward = flightPath.GetDirectionOnCurve(1f);
 
         List<Vector3> trajectoryLine = _shipController.FlightController.GetTrajectoryLine();
-        TurnEffectsController.Instance.ShowFlightTrajectory(trajectoryLine);
+        TurnEffectsController.Singleton.ShowFlightTrajectory(trajectoryLine);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        CameraDragController.Instance.DragEnabled = true;
+        CameraDragController.Singleton.DragEnabled = true;
 
-        TurnEffectsController.Instance.ClearMoveableArea();
-        TurnEffectsController.Instance.ClearPathLine();
+        TurnEffectsController.Singleton.ClearMoveableArea();
+        TurnEffectsController.Singleton.ClearPathLine();
     }
 }

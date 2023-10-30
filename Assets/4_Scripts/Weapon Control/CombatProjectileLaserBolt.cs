@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
 public class CombatProjectileLaserBolt : MonoBehaviour, IFreezeable
@@ -35,7 +36,7 @@ public class CombatProjectileLaserBolt : MonoBehaviour, IFreezeable
 
 		_timeAlive += Time.deltaTime;
 
-		if (_timeAlive >= TurnController.Instance.TurnRealtimeDuration * _turnLifetime)
+		if (_timeAlive >= TurnController.Singleton.TurnRealtimeDuration * _turnLifetime)
 		{
 			Destroy(gameObject);
 			return;
@@ -47,9 +48,9 @@ public class CombatProjectileLaserBolt : MonoBehaviour, IFreezeable
 		if (Physics.Raycast(_previousFramePosition, rayDir, out RaycastHit rayHit, rayDir.magnitude))
 		{
 			GameObject hitGO = rayHit.collider.gameObject;
-			if (hitGO.layer == 10) // Entity Layer
+			if (hitGO.layer == 10) // SelectableEntity Layer
 			{
-				Entity entity = hitGO.GetComponentInParent<Entity>();
+				SelectableEntity entity = hitGO.GetComponentInParent<SelectableEntity>();
 
 				if (entity.id != _sourceId)
 				{

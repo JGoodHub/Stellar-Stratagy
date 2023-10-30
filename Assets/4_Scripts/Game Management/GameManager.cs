@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager> {
+public class GameManager : SceneSingleton<GameManager> {
 
     public enum Faction {
         FRIENDLY,

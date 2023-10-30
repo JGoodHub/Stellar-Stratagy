@@ -1,3 +1,4 @@
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
 public class OrbitableNavigationWaypoint : NavigationWaypoint
@@ -33,7 +34,7 @@ public class OrbitableNavigationWaypoint : NavigationWaypoint
 		forward = Vector3.Cross(transform.position - pointOnOrbit, Vector3.up).normalized;
 	}
 	
-	public void AddOrbitingEntity(Entity entity, bool clockwise)
+	public void AddOrbitingEntity(SelectableEntity entity, bool clockwise)
 	{
 		
 	}

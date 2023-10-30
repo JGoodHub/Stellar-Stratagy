@@ -29,7 +29,7 @@ public class CombatFlightController : ShipComponent
 
         ClearTemporaryMarkers();
 
-        Tweener tweener = DOVirtual.Float(0f, 1f, TurnController.Instance.TurnRealtimeDuration, t =>
+        Tweener tweener = DOVirtual.Float(0f, 1f, TurnController.Singleton.TurnRealtimeDuration, t =>
         {
             transform.position = _flightPath.GetPointOnCurve(t);
             transform.forward = _flightPath.GetDirectionOnCurve(t);

@@ -23,13 +23,13 @@ public class TurnControls : MonoBehaviour
         TurnController.OnRealtimeStarted += () =>
         {
             _turnProgressFill.fillAmount = 0;
-            _turnProgressFill.DOFillAmount(1f, TurnController.Instance.TurnRealtimeDuration);
+            _turnProgressFill.DOFillAmount(1f, TurnController.Singleton.TurnRealtimeDuration);
         };
     }
 
     private void EndTurnClicked()
     {
-        TurnController.Instance.PlayerActionsSubmitted();
+        TurnController.Singleton.PlayerActionsSubmitted();
 
         _endTurnButton.interactable = false;
     }

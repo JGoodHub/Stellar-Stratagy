@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using DG.Tweening;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
 public class PlayerCombatController : SceneSingleton<PlayerCombatController>
@@ -28,10 +29,10 @@ public class PlayerCombatController : SceneSingleton<PlayerCombatController>
 
         TurnController.OnRealtimeStarted += PlayActions;
 
-        SelectionController.Instance.OnSelectionChanged += OnSelectionChanged;
+        SelectionController.Singleton.OnSelectionChanged += OnSelectionChanged;
     }
 
-    private void OnSelectionChanged(object sender, Entity oldEntity, Entity newEntity)
+    private void OnSelectionChanged(object sender, SelectableEntity oldEntity, SelectableEntity newEntity)
     {
         if (_focusedShip != null && newEntity == null)
         {

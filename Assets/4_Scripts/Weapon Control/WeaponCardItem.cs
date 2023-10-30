@@ -1,4 +1,5 @@
 using System;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,7 +13,7 @@ public class WeaponCardItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
 	protected int _id;
 	protected WeaponConfig _weaponConfig;
-	protected Entity _targetEntity;
+	protected SelectableEntity _targetEntity;
 	protected Vector3 _targetPosition;
 
 	public virtual void OnBeginDrag(PointerEventData eventData)

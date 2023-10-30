@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
-public class EnemyManager : Singleton<EnemyManager>
+public class EnemyManager : SceneSingleton<EnemyManager>
 {
     public List<CombatShipController> _ships;
 
@@ -13,7 +14,7 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         foreach (CombatShipController ship in _ships)
         {
-            ship.alignment = GameManager.Faction.ENEMY;
+            //ship.alignment = GameManager.Faction.ENEMY;
             //ship.Stats.OnResourceValueChanged += OnShipAttacked;
         }
 
@@ -33,10 +34,10 @@ public class EnemyManager : Singleton<EnemyManager>
 
     private void PlanEnemyAction()
     {
-        TurnController.Instance.EnemyActionSubmitted();
+        TurnController.Singleton.EnemyActionSubmitted();
         return;
 
-        CombatShipController playerShip = PlayerCombatController.Instance.FocusedShip;
+        CombatShipController playerShip = PlayerCombatController.Singleton.FocusedShip;
 
         foreach (CombatShipController shipController in _ships)
         {
@@ -64,7 +65,7 @@ public class EnemyManager : Singleton<EnemyManager>
             // shipController.WeaponsController.QueueWeaponAction(weaponAction);
         }
 
-        TurnController.Instance.EnemyActionSubmitted();
+        TurnController.Singleton.EnemyActionSubmitted();
     }
 
     private void OnShipAttacked(StatsController sender, StatType resType, float oldValue, float newValue)

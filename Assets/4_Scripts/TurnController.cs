@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Tracing;
 using DG.Tweening;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
 public class TurnController : SceneSingleton<TurnController>

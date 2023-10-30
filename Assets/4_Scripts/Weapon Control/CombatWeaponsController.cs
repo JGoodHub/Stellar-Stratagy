@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 
 public class CombatWeaponsController : ShipComponent
@@ -19,10 +20,10 @@ public class CombatWeaponsController : ShipComponent
     {
         public int ID;
         public WeaponConfig WeaponConfig;
-        public Entity TargetEntity;
+        public SelectableEntity TargetEntity;
         public Vector3 TargetPosition;
 
-        public WeaponAction(int id, WeaponConfig weaponConfig, Entity targetEntity, Vector3 targetPosition)
+        public WeaponAction(int id, WeaponConfig weaponConfig, SelectableEntity targetEntity, Vector3 targetPosition)
         {
             ID = id;
             WeaponConfig = weaponConfig;

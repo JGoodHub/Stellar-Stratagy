@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -24,27 +25,27 @@ public class PlayerCombatFlightController : CombatFlightController, IBeginDragHa
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (PlayerCombatController.Instance.OurTurn == false)
+        if (PlayerCombatController.Singleton.OurTurn == false)
             return;
 
-        if (PlayerCombatController.Instance.FocusedShip != ShipController || SelectionController.Instance.SelectedEntity == null)
+        if (PlayerCombatController.Singleton.FocusedShip != ShipController || SelectionController.Singleton.SelectedEntity == null)
         {
-            SelectionController.Instance.SetSelection(ShipController);
+            SelectionController.Singleton.SetSelection(ShipController);
         }
 
         _flightPath = null;
 
-        CameraDragController.Instance.DragEnabled = false;
+        CameraDragController.Singleton.DragEnabled = false;
 
         List<Vector3> potentialTrajectoryArea = GetPrimaryTrajectoryArea(transform.position, transform.forward, 14);
-        TurnEffectsController.Instance.ShowMoveableArea(potentialTrajectoryArea);
+        TurnEffectsController.Singleton.ShowMoveableArea(potentialTrajectoryArea);
 
         _ghostShip.SetInteractable(false);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (PlayerCombatController.Instance.OurTurn == false || PlayerCombatController.Instance.FocusedShip != ShipController)
+        if (PlayerCombatController.Singleton.OurTurn == false || PlayerCombatController.Singleton.FocusedShip != ShipController)
             return;
 
         Vector3 navPlanePoint = NavigationPlane.RaycastNavPlane();
@@ -57,18 +58,18 @@ public class PlayerCombatFlightController : CombatFlightController, IBeginDragHa
         _ghostShip.transform.forward = _flightPathEndDirection;
 
         List<Vector3> trajectoryLine = GetTrajectoryLine();
-        TurnEffectsController.Instance.ShowFlightTrajectory(trajectoryLine);
+        TurnEffectsController.Singleton.ShowFlightTrajectory(trajectoryLine);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (PlayerCombatController.Instance.OurTurn == false || PlayerCombatController.Instance.FocusedShip != ShipController)
+        if (PlayerCombatController.Singleton.OurTurn == false || PlayerCombatController.Singleton.FocusedShip != ShipController)
             return;
 
-        CameraDragController.Instance.DragEnabled = true;
+        CameraDragController.Singleton.DragEnabled = true;
 
-        TurnEffectsController.Instance.ClearMoveableArea();
-        TurnEffectsController.Instance.ClearPathLine();
+        TurnEffectsController.Singleton.ClearMoveableArea();
+        TurnEffectsController.Singleton.ClearPathLine();
 
         _ghostShip.SetInteractable(true);
     }

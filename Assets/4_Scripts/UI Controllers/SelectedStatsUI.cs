@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GoodHub.Core.Runtime;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -17,10 +18,10 @@ public class SelectedStatsUI : MonoBehaviour {
     public TextMeshProUGUI healthFillText;
 
     private void Start() {
-        SelectionController.Instance.OnSelectionChanged += OnSelectionChangeHandler;
+        SelectionController.Singleton.OnSelectionChanged += OnSelectionChangeHandler;
     }
 
-    private void OnSelectionChangeHandler(object sender, Entity prevEntity, Entity newEntity) {
+    private void OnSelectionChangeHandler(object sender, SelectableEntity prevEntity, SelectableEntity newEntity) {
         // if (newEntity != null) {
         //
         //     healthFillImage.color = GameManager.FactionColors[newEntity.alignment];
